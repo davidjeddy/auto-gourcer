@@ -1,0 +1,10 @@
+version: '2'
+services:
+    gource:
+        build:
+              context: ./
+              dockerfile: Dockerfile
+        environment:
+            - REPO_PATH=/repos
+        volumes:
+            - ./:/auto_gourcer

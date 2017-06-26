@@ -46,8 +46,9 @@ RUN git clone https://github.com/acaudwell/Gource.git ./gource
 WORKDIR /gource
 RUN ./autogen.sh && ./configure --with-tinyxml && make && make install
 
-WORKDIR /ag
-COPY ./ /ag/
+WORKDIR /auto_gourcer
+#RUN git clone https://github.com/acaudwell/Gource.git ./
+#RUN ./autogen.sh && ./configure --with-tinyxml && make && make install
 
 #set this to be xvfb
-CMD bash
+CMD ["vim"]
