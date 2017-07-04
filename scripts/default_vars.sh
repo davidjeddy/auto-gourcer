@@ -13,7 +13,7 @@ fi
 
 if [ !${REPO_PATH} ]
 then
-    export REPO_PATH=/repos/naabs
+    export REPO_PATH=/repos
 fi
 
 if [ !${REPO_NAME} ]
