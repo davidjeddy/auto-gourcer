@@ -15,6 +15,7 @@ RUN apt-get update -y
 RUN apt-get install -y \
     autoconf \
     build-essential \
+    curl \
     pkg-config \
     gcc \
     git \

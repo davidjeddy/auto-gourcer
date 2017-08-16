@@ -7,21 +7,23 @@ finally S/FTP to destination with a M3U playlist.
 
 # Requirements
 
- - Unix / Linux based system
  - Terminal Access
- - Reasonable recent version og [Handbrake]()
- - All dependant systems dependencies (C++, pkg-config, etc)
-
-# Recommendations
- - All Requirements
+ - [Docker](https://www.docker.com/)
  - Ability to edit CRON jobs
 
 # Installation
 
-    `cd {project root}`
-    Edit `repo_sources.sh` with the relative file paths to the repositiories to be rendered.
+    `git clone {repo uri}`
 
 # Usage
 
     `cd {project root}`
-    Execute `run.sh`, sit back, relax, and wait.
+    `cp .env.dist .env`
+
+ - Edit .env with appropriate values for your situation.
+
+ - Execute the process.
+
+    `./run.sh`
+
+ - Sit back, relax, and enjoy the bacon
