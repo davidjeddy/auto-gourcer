@@ -2,8 +2,8 @@
 
 exec_gource()
 {
-    # --background-image ${PATH_BASE}/background/background.png \
     xvfb-run -a -s "-screen 0 ${SCREEN_RES}" gource \
+    --background-image ${PATH_BASE}/background/background.png \
     --start-date "${START_DATE}" \
     --stop-date "${STOP_DATE}" \
     --path ${PATH_BASE}${REPO_PATH} \
