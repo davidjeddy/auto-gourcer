@@ -40,19 +40,12 @@ RUN apt-get install -y \
 
 RUN apt remove -y libavcodec-ffmpeg-extra56
 
-RUN git clone https://github.com/acaudwell/Gource.git ./gource
-
+# install and compile gource
 WORKDIR /gource
-
+RUN git clone https://github.com/acaudwell/Gource.git ./
 RUN ./autogen.sh && ./configure --with-tinyxml && make && make install
 
-WORKDIR /auto_gourcer
-
-#RUN git clone https://github.com/acaudwell/Gource.git ./
-#RUN ./autogen.sh && ./configure --with-tinyxml && make && make install
-#
-#CMD ["tail", "-f", "/dev/null"]
-
+# install php 7.1
 RUN apt-get install python-software-properties software-properties-common
 RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 RUN apt-get update -y
