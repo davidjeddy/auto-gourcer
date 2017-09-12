@@ -46,7 +46,28 @@ class Gource
     /**
      * @var string
      */
-    public $startDate = '2017-09-05';
+    public $startDate = '2017-09-01';
+
+    /**
+     * Do not re-render the repo video if the render is less than X seconds old
+     *
+     * @param string $filePath
+     * @param int $secondsAgo
+     * @return bool
+     */
+    public function doesNewRenderExist(string $filePath = null, int $secondsAgo = 7200): bool
+    {
+        if ($filePath === null) {
+            $filePath = $this->basePath . '/renders/' . $this->slug . '.mp4';
+        }
+
+        if (file_exists($filePath) && filemtime($filePath) > (time() - $secondsAgo)) {
+            echo "New render exists, will not render.\n";
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * @param string $xvfb
@@ -69,11 +90,21 @@ class Gource
             $ffmpeg = "-y -r {$this->frameRate} -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 {$this->basePath}/renders/{$this->slug}.mp4";
         }
 
-        $command = "xvfb-run {$xvfb} gource {$gource} | ffmpeg {$ffmpeg} >> {$this->basePath}/logs/rendering.log";
+        $command = "xvfb-run {$xvfb} gource {$gource} | ffmpeg {$ffmpeg} 2>> {$this->basePath}/logs/gource.log";
 
         echo ("Running rendering command `{$command}`.\n");
 
-        //exec($command, $returnData, $errorCode);
+        if ($this->dryRun === true) {
+            echo "`dryRun` set to true, will not render output.";
+            return true;
+        }
+
+        exec($command, $returnData, $errorCode);
+
+        // remove file if rendering fails
+        if ($errorCode !== 0) {
+            exec("rm {$this->basePath}/renders/{$this->slug}.mp4");
+        }
 
         return true;
     }
