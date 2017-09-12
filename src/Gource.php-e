@@ -31,16 +31,6 @@ class Gource
     /**
      * @var string
      */
-    public $output = './test.mp4';
-
-    /**
-     * @var string
-     */
-    public $repoPath = './';
-
-    /**
-     * @var string
-     */
     public $basePath = '/auto_gourcer';
 
     /**
@@ -83,14 +73,14 @@ class Gource
         }
 
         if ($gource === null) {
-            $gource = "--path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' --start-date '{$this->startDate}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} --output-ppm-stream - ";
+            $gource = "--path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' --start-date '{$this->startDate}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} --default-user-image '{$this->basePath}/avatars/default.png' --output-ppm-stream - ";
         }
 
         if ($ffmpeg === null) {
             $ffmpeg = "-y -r {$this->frameRate} -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 {$this->basePath}/renders/{$this->slug}.mp4";
         }
 
-        $command = "xvfb-run {$xvfb} gource {$gource} | ffmpeg {$ffmpeg} 2>> {$this->basePath}/logs/gource.log";
+        $command = "xvfb-run {$xvfb} gource {$gource} | ffmpeg {$ffmpeg}"; // 2>> {$this->basePath}/logs/gource.log";
 
         echo ("Running rendering command `{$command}`.\n");
 
@@ -99,10 +89,11 @@ class Gource
             return true;
         }
 
+        echo "Executing rendering...\n";
         exec($command, $returnData, $errorCode);
 
         // remove file if rendering fails
-        if ($errorCode !== 0) {
+        if ($errorCode !== 0 && file_exists("{$this->basePath}/renders/{$this->slug}.mp4")) {
             exec("rm {$this->basePath}/renders/{$this->slug}.mp4");
         }
 

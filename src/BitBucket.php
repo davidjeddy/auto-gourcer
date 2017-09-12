@@ -12,4 +12,8 @@ namespace davidjeddy\AutoGourcer;
 class BitBucket
 {
 
+    public $username = '';
+    public $password = '';
+    public $organization = '';
+    public $repolist = '';
 }

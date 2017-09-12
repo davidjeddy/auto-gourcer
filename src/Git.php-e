@@ -46,24 +46,23 @@ class Git
      * @param null $branch
      * @return bool
      */
-    public function checkout($path = null, $branch = null): bool
+    public function checkout($path = null, $branch = 'latest'): bool
     {
         if ($branch === 'latest') {
             // @source https://gist.github.com/jasonrudolph/1810768
-            exec ('cd ./repos/epublish && for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\t$branch; done | sort -r', $responseData, $errorCode);
+            exec ('cd ' . $path . ' && for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\ $branch; done | sort -r', $responseData, $errorCode);
 
-            print_r( $responseData );
-            exit(1);
-
-            $branch = $responseData[count($responseData)];
-
-            echo $branch;
-            exit(1);
+            // parse the string and get the latest branch text
+            $branch = $responseData[0];
+            $branch = explode(' ', $branch);
+            $branch = $branch[count($branch) - 1];
+            $branch = explode('/', $branch);
+            $branch = $branch[count($branch) - 1];
         }
 
         // exec git command
-        exec ("echo 'Checking out branch\hash {$branch}.");
-        exec ("git checkout {$branch} 2>> /auto_gourcer/logs/git.log");
+        echo ("Checking out branch {$branch} of repo {$path} .\n");
+        exec ("cd {$path} && git checkout {$branch} 2>> /auto_gourcer/logs/git.log");
 
         return true;
     }
