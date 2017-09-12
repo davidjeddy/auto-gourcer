@@ -5,38 +5,35 @@ include_once './src/Gource.php';
 $repo_count = 5;
 
 // function exec ($command, array &$output = null, &$re turn_var = null) {}
-//$creds = 'david@sourcetoad.com:Asdf1234';
-//$repoList = 'https://api.bitbucket.org/1.0/user/repositories';
-//$command = "curl -u {$creds} {$repoList} --compressed --output ./logs/repos.json 2>> ./logs/curl.log";
-//exec($command, $responseData, $errorCode);
-//if ($errorCode !== 0) { exit($errorCode); }
+$creds = 'david@sourcetoad.com:Asdf1234';
+$repoList = 'https://api.bitbucket.org/1.0/user/repositories';
+$command = "curl -u {$creds} {$repoList} --compressed --output ./logs/repos.json 2>> ./logs/curl.log";
+exec($command, $responseData, $errorCode);
+if ($errorCode !== 0) { exit($errorCode); }
 
 $responseData = \json_decode(\file_get_contents('./logs/repos.json'), true);
 
 usort($responseData, "method1");
 
 // clone remote repo onto local FS
-//$gitClass = new \davidjeddy\AutoGourcer\Git();
-//for ($i = 0; $i < $repo_count; $i++) {
-//    if ($i > $repo_count) { break; }
-//
-//    echo "Repo to clone is {$responseData[$i]['slug']}.\n";
-//
-//    // note what repos are to be rendered
-//    exec("echo {$responseData[$i]['slug']}\n 2>> ./logs/rendered_repos.log");
-//
-//    // replace with .env values
-//    $url = 'https://David_Eddy:Asdf1234@bitbucket.org/Sourcetoad/' . $responseData[$i]['slug'] . '.git';
-//
-//    // clone repo
-//    echo "URI is {$url}.\nSlug is {$responseData[$i]['slug']}.\n";
-//    $gitClass->clone($url, $responseData[$i]['slug']);
-//    $gitClass->checkout('latest');
-//}
+$gitClass = new \davidjeddy\AutoGourcer\Git();
+for ($i = 0; $i < $repo_count; $i++) {
+    if ($i > $repo_count) { break; }
+
+    echo "Repo to clone is {$responseData[$i]['slug']}.\n";
+
+    // replace with .env values
+    $url = 'https://David_Eddy:Asdf1234@bitbucket.org/Sourcetoad/' . $responseData[$i]['slug'] . '.git';
+
+    // clone repo
+    echo "URI is {$url}.\nSlug is {$responseData[$i]['slug']}.\n";
+    $gitClass->clone($url, $responseData[$i]['slug']);
+
+    $gitClass->checkout("/auto_gourcer/repos/{$responseData[$i]['slug']}");
+}
 
 // now render the repo using vfb and gource
 $gourceClass = new \davidjeddy\AutoGourcer\Gource();
-$gourceClass->dryRun = true;
 for ($i = 0; $i < $repo_count; $i++) {
     if ($i > $repo_count) {
         break;
@@ -52,8 +49,6 @@ for ($i = 0; $i < $repo_count; $i++) {
         echo 'Rendering video for ' . $gourceClass->slug . ".\n";
         $gourceClass->render();
     }
-
-    echo "\n\n\n";
 }
 
 /**
