@@ -32,23 +32,12 @@ class Git
 
         echo "Command: {$command}.\n";
         // fetch all remote branch
-        //exec($command, $responseData, $errorCode);
+        exec($command, $responseData, $errorCode);
 
         if ($errorCode !== 0 ) {
             throw new \Exception($errorCode);
         }
 
         return true;
-    }
-
-
-    public function checkout($branch)
-    {
-
-    }
-
-    private function clean($type)
-    {
-
     }
 }
