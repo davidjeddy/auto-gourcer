@@ -12,4 +12,5 @@ function sortInReverseOrder($a,$b)
 }
 
 $ag = new \davidjeddy\AutoGourcer\AutoGourcer();
+$ag->repoCount = 5;
 $ag->run();

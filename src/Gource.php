@@ -45,17 +45,16 @@ class Gource
      * @param int $secondsAgo
      * @return bool
      */
-    public function doesNewRenderExist(string $filePath = null, int $secondsAgo = 7200): bool
+    public function doesNewRenderExist(string $filePath , int $secondsAgo = 7200): bool
     {
-        if ($filePath === null) {
-            $filePath = $this->basePath . '/renders/' . $this->slug . '.mp4';
-        }
+        echo __METHOD__ . " : Does {$filePath} already exist? ";
 
         if (file_exists($filePath) && filemtime($filePath) > (time() - $secondsAgo)) {
-            echo "New render exists, will not render.\n";
+            echo "Yes.\n";
             return true;
         }
 
+        echo "No.\n";
         return false;
     }
 
@@ -85,7 +84,7 @@ class Gource
         echo ("Running rendering command `{$command}`.\n");
 
         if ($this->dryRun === true) {
-            echo "`dryRun` set to true, will not render output.";
+            echo "`dryRun` set to true, will not render output.\n";
             return true;
         }
 
