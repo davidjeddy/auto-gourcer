@@ -1,29 +1,42 @@
 # Auto Gourcer
 
-Generate a collection of source version control repositories, transcode the results, create a playlist (*.m4u), and
-finally S/FTP to destination with a M3U playlist.
-
-
-
 # Requirements
 
- - Terminal Access
- - [Docker](https://www.docker.com/)
- - Ability to edit CRON jobs
+ - Access to application code SCM
+    - [BitBucket](https://bitbucket.org), [GitHub](https://github.com), etc.
+ - Shell / Terminal Access
+ - [Docker](https://www.docker.com/) client for Linux, OSX, or Windows
+
+# Optional
+
+ - Ability to add / edit CRON jobs
 
 # Installation
 
-    `git clone {repo uri}`
+    `cd {projecr root parent directory}`
+    `git clone git@github.com:davidjeddy/auto-gourcer.git`
+    `cd ./auto-gourcer`
+
+# Build
+
+As the project uses docker no system dependencies are required! Edit the applications environmental file and then run the Docker build command
+
+    `cp .env.dist .env`
+
+Edit .env values as required based on SCM host
+
+    `docker-compose up --build`
 
 # Usage
 
-    `cd {project root}`
-    `cp .env.dist .env`
+Now that the application is configured and built, execution is a single command!
 
- - Edit .env with appropriate values for your situation.
+    `docker exec -it autogourcer_gource_1 php /auto_gourcer/src/run.php`
 
- - Execute the process.
+Wait for the process to complete.
 
-    `./run.sh`
+Check ./renders directory for your Gource'd repository visualization!
 
- - Sit back, relax, and enjoy the bacon
+# Optional Automation
+
+Add process to your systems CRON process no less than every 24 hours.
