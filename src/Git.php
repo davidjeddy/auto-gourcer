@@ -29,7 +29,9 @@ class Git
                 $command = "cd /auto_gourcer/repos/{$slug} && git fetch --all > /auto_gourcer/logs/git.log && cd ../";
             }
 
+            // TODO remove password so it does not show up in logs
             echo "Git command: {$command}.\n";
+
             // fetch all remote branch
             \exec($command, $responseData, $errorCode);
         } catch (\Throwable $e) {
