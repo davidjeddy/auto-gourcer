@@ -1,5 +1,5 @@
 <?php
-include_once './AutoGourcer.php';
+include_once './src/AutoGourcer.php';
 
 /**
  * @param $a

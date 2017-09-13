@@ -2,9 +2,9 @@
 declare(strict_types=1);
 namespace davidjeddy\AutoGourcer;
 
-include_once ('../vendor/autoload.php');
-include_once ('./Git.php');
-include_once ('./Gource.php');
+include_once ('/auto_gourcer/vendor/autoload.php');
+include_once ('/auto_gourcer/src/Git.php');
+include_once ('/auto_gourcer/src/Gource.php');
 
 class AutoGourcer
 {
@@ -36,8 +36,7 @@ class AutoGourcer
     {
         $dotenv = new \Dotenv\Dotenv($this->basePath);
         $dotenv->load();
-
-        $this->host = getenv('HOST');
+        $this->host = strtolower(getenv('HOST'));
     }
 
     /**
@@ -55,10 +54,11 @@ class AutoGourcer
             }
 
             echo "Host is {$this->host}.\n";
-            if ($this->host === 'BitBucket') {
+
+            if ($this->host === 'bitbucket.org') {
                 // replace with .env values
-                $repoUrl = "https://{getenv('user')}:{getenv('PASS')}@bitbucket.org/" . (getenv('ORG') ? getenv('ORG')
-                    . '/' :  null) . "{$this->repoData[$i]['slug']}.git";
+                $repoUrl = "https://" . getenv('GITUSER') . ":" . getenv('GITPASS') . "@" . getenv('HOST') . "/"
+                    . getenv('ORG') . "/{$this->repoData[$i]['slug']}.git";
             }
 
             $gitClass       = new Git();
@@ -82,33 +82,60 @@ class AutoGourcer
      */
     public function getRepoList()
     {
-        $user = getenv('USER');
-        $pass = getenv('PASS');
-        $responseData = [];
-
-        if ($this->host === 'BitBucket') {
+        if ($this->host === 'bitbucket.org') {
             $bbr = new \Bitbucket\API\User\Repositories();
-            $bbr->setCredentials( new \Bitbucket\API\Authentication\Basic($user, $pass) );
-            $responseData = $bbr->get();
+            $bbr->setCredentials(new \Bitbucket\API\Authentication\Basic(getenv('USERAUTH'), getenv('PASS')));
+            $this->repoData = $bbr->get()->getContent();
+
+            if (!$this->repoData) {
+                throw new \Exception('No data returned from host.');
+            }
+
+            $this->repoData = $this->handleResponse($bbr->get()->getContent(), 'json');
         }
 
-        // TODO move response handling to another method, return valid array
-        if (empty($responseData)) {
+        // if not data returned from host, try to use the last data set saved in ./logs/*
+        if (empty($this->repoData)) {
             // if no response from remote, use logged data
-            $responseData = \file_get_contents("{$this->basePath}/logs/repos.json");
+            $this->repoData = \file_get_contents("{$this->basePath}/logs/repos.json");
         }
 
-        $responseData = \json_decode($responseData, true);
-
-        if (json_last_error()) {
-            echo \json_last_error_msg();
-            exit(1);
-        }
-
-        usort($responseData, "sortInReverseOrder");
-
-        $this->repoData = $responseData;
+        $this->repoData = $this->sortPayload($this->repoData);
 
         return $this;
+    }
+
+    /**
+     * @param $data
+     * @param string $type
+     * @return array
+     */
+    private function handleResponse($data, string $type): array
+    {
+        try {
+            if ($type === 'json') {
+                $responseData = \json_decode($data, true);
+
+                if (json_last_error()) {
+                    throw new \Exception(\json_last_error_msg());
+                }
+
+                return $responseData;
+            }
+
+        } catch (\Throwable $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    /**
+     * @param array $responseData
+     * @return array
+     */
+    private function sortPayload(array $responseData)
+    {
+        usort($responseData, "sortInReverseOrder");
+
+        return $responseData;
     }
 }

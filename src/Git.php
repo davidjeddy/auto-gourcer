@@ -16,7 +16,6 @@ class Git
     public function clone(string $uri, string $slug): self
     {
         $command    = '';
-        $errorCode  = 0;
 
         try {
             // check if folder exists
@@ -32,6 +31,11 @@ class Git
             echo "Git command: {$command}.\n";
             // fetch all remote branch
             exec($command, $responseData, $errorCode);
+
+            if ($errorCode !== 0) {
+                throw new \Exception('Error code {$errorCode} returned.');
+            }
+
         } catch (\Throwable $e) {
             echo $e->getMessage() . "\n";
         }
