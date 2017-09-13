@@ -4,14 +4,12 @@ RUN export TERM=xterm
 
 RUN apt-get clean -y
 
+# ffmpeg installation
 RUN apt-get update -y
-
 RUN apt-get install -y \
         software-properties-common \
         python-software-properties
-
 RUN add-apt-repository ppa:no1wantdthisname/ppa -y
-
 RUN apt-get install -y \
         autoconf \
         build-essential \
@@ -37,22 +35,19 @@ RUN apt-get install -y \
         gource \
         ffmpeg \
         libavcodec-extra
-
 RUN apt remove -y libavcodec-ffmpeg-extra56
 
-# install and compile gource
+# gource installation
 WORKDIR /gource
 RUN git clone https://github.com/acaudwell/Gource.git ./
 RUN ./autogen.sh && ./configure --with-tinyxml && make && make install
 
-# install php 7.1
+# php 7.1 installation
 RUN apt-get install python-software-properties software-properties-common
 RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 RUN apt-get update -y
 RUN apt-get install -y php7.1
+RUN apt-get install -y php7.1-dom php7.1-cli php7.1-json php7.1-common php7.1-mbstring php7.1-xml php7.1-dom php7.1-curl
 
-# instal php depenendies for application depenedencies
-RUN  apt-get install php-xml php-dom php-mbstring php-curl
-
-#RUN php ./src/ExecuteTask.php
+# exec containerp
 CMD ["tail", "-f", "/dev/null"]
