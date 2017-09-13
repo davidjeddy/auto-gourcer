@@ -1,5 +1,11 @@
 # Auto Gourcer
 
+# What does this do?
+
+Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads your top active repositories and renders the history in a cool looking video.
+
+[Gource Examples](https://github.com/acaudwell/Gource/wiki/Videos)
+
 # Requirements
 
  - Access to application code SCM
