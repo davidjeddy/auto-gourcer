@@ -1,7 +1,7 @@
 <?php
-include_once './AutoGourcer.php';
-include_once './Git.php';
-include_once './Gource.php';
+include_once '/auto_gourcer/src/AutoGourcer.php';
+include_once '/auto_gourcer/src/Git.php';
+include_once '/auto_gourcer/src/Gource.php';
 
 /**
  * @param $a

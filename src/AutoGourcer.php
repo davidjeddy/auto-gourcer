@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace davidjeddy\AutoGourcer;
 
-include_once '../vendor/autoload.php';
+include_once '/auto_gourcer/vendor/autoload.php';
 
 class AutoGourcer
 {
@@ -41,7 +41,7 @@ class AutoGourcer
         \davidjeddy\AutoGourcer\Gource $gourceClass
     ) {
         // load ENV handler
-        $dotenv = new \Dotenv\Dotenv('../');
+        $dotenv = new \Dotenv\Dotenv($this->basePath);
         $dotenv->load();
 
         $this->host = strtolower(getenv('HOST'));
