@@ -38,85 +38,69 @@ class AutoGourcer
     }
 
     /**
+     * Execute the actual logic to get `stuff` done
+     */
+    public function run()
+    {
+        $gitClass = new Git();
+        $gourceClass = new Gource();
+        $repoUrl = '';
+
+        $this->getRepoList();
+        for ($i = 0; $i < $this->repoCount; $i++) {
+            if ($i > $this->repoCount) {
+                break;
+            }
+
+            if (getenv('HOST') === 'BitBucket') {
+                // replace with .env values
+                $repoUrl = "https://{getenv('user')}:{getenv('PASS')}@bitbucket.org/" . (getenv('ORG') ? getenv('ORG')
+                    . '/' :  null) . "{$this->repoData[$i]['slug']}.git";
+            }
+
+            // clone repo
+            $gitClass->clone($repoUrl, $this->repoData[$i]['slug']);
+            $gitClass->checkout("{$this->basePath}/repos/{$this->repoData[$i]['slug']}");
+
+            // render repo visualization
+            if (!$gourceClass->doesNewRenderExist("{$this->basePath}/renders/{$this->repoData[$i]['slug']}.mp4")) {
+                $gourceClass->render();
+            }
+
+        }
+    }
+
+    /**
      * @return $this
      */
     public function getRepoList()
     {
         $user = getenv('USER');
         $pass = getenv('PASS');
+        $responseData = [];
 
         if (getenv('HOST') === 'BitBucket') {
-            $dk = new \Bitbucket\API\User\Repositories();
-            $dk->setCredentials( new \Bitbucket\API\Authentication\Basic($user, $pass) );
-            $responseData = (array)$dk->get();
-
-            if (!$responseData) {
-                // print response out to log file
-                exec($responseData . " 2>> " . $this->basePath . "/logs/repos.json");
-            }
+            $bbr = new \Bitbucket\API\User\Repositories();
+            $bbr->setCredentials( new \Bitbucket\API\Authentication\Basic($user, $pass) );
+            $responseData = $bbr->get();
         }
 
+        // TODO move response handling to another method, return valid array
         if (empty($responseData)) {
             // if no response from remote, use logged data
-            $responseData = \json_decode(\file_get_contents("{$this->basePath}/logs/repos.json"), true);
+            $responseData = \file_get_contents("{$this->basePath}/logs/repos.json");
+        }
 
+        $responseData = \json_decode($responseData, true);
+
+        if (json_last_error()) {
+            echo \json_last_error_msg();
+            exit(1);
         }
 
         usort($responseData, "sortInReverseOrder");
 
         $this->repoData = $responseData;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function cloneRepos()
-    {
-        // clone remote repo onto local FS
-        $gitClass = new Git();
-        for ($i = 0; $i < $this->repoCount; $i++) {
-            if ($i > $this->repoCount) { break; }
-
-            echo "Repo to clone is {$this->repoData[$i]['slug']}.\n";
-
-            // replace with .env values
-            $url = 'https://David_Eddy:Asdf1234@bitbucket.org/Sourcetoad/' . $this->repoData[$i]['slug'] . '.git';
-
-            // clone repo
-            echo "URI is {$url}.\nSlug is {$this->repoData[$i]['slug']}.\n";
-            $gitClass->clone($url, $this->repoData[$i]['slug']);
-
-            $gitClass->checkout("/auto_gourcer/repos/{$this->repoData[$i]['slug']}");
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function gourceRender()
-    {
-        // now render the repo using vfb and gource
-        $gourceClass = new Gource();
-        for ($i = 0; $i < $this->repoCount; $i++) {
-            if ($i > $this->repoCount) {
-                break;
-            }
-
-            echo "Render counter: {$i}.\n";
-            echo "Repo slug is {$this->repoData[$i]['slug']}.\n";
-            echo "Last updated on {$this->repoData[$i]['utc_last_updated']}.\n";
-
-            $gourceClass->slug = $this->repoData[$i]['slug'];
-
-            if ($gourceClass->doesNewRenderExist() === false) {
-                echo 'Rendering video for ' . $gourceClass->slug . ".\n";
-                $gourceClass->render();
-            }
-        }
 
         return $this;
     }

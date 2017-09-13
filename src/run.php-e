@@ -12,4 +12,4 @@ function sortInReverseOrder($a,$b)
 }
 
 $ag = new \davidjeddy\AutoGourcer\AutoGourcer();
-$ag->getRepoList()->cloneRepos()->gourceRender();
+$ag->run();

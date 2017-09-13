@@ -19,22 +19,22 @@ class Git
         $command    = '';
         $errorCode  = 0;
 
-        // check if folder exists
-        if (!file_exists("/auto_gourcer/repos/{$slug}/")) {
-            $command = "git clone {$uri} /auto_gourcer/repos/{$slug} > /auto_gourcer/logs/git.log";
-        }
+        try {
+            // check if folder exists
+            if (!file_exists("/auto_gourcer/repos/{$slug}/")) {
+                $command = "git clone {$uri} /auto_gourcer/repos/{$slug} > /auto_gourcer/logs/git.log";
+            }
 
-        if (file_exists("/auto_gourcer/repos/{$slug}/")) {
+            if (file_exists("/auto_gourcer/repos/{$slug}/")) {
+                // fetch all remote branch
+                $command = "cd /auto_gourcer/repos/{$slug} && git fetch --all > /auto_gourcer/logs/git.log && cd ../";
+            }
+
+            echo "Git command: {$command}.\n";
             // fetch all remote branch
-            $command = "cd /auto_gourcer/repos/{$slug} && git fetch --all > /auto_gourcer/logs/git.log && cd ../";
-        }
-
-        echo "Command: {$command}.\n";
-        // fetch all remote branch
-        exec($command, $responseData, $errorCode);
-
-        if ($errorCode !== 0 ) {
-            throw new \Exception($errorCode);
+            exec($command, $responseData, $errorCode);
+        } catch (\Throwable $e) {
+            echo $e->getMessage() . "\n";
         }
 
         return true;
