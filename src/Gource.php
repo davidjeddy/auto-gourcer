@@ -21,34 +21,22 @@ class Gource
     /**
      * @var int
      */
-    public $frameRate = null;
+    public $frameRate = 30;
 
     /**
      * @var string
      */
-    public $resolution = null;
+    public $resolution = '640x480';
 
     /**
      * @var string
      */
-    public $basePath = null;
+    public $basePath = '/auto_gourcer';
 
     /**
      * @var string
      */
-    public $startDate = null;
-
-    /**
-     * Gource constructor.
-     */
-    public  function __construct()
-    {
-        // TODO read the .env values from GOURCE_*
-        $this->startDate    = DATE('Y') . '-01-01';
-        $this->resolution   = '1920x1080';
-        $this->basePath     = '/auto_gourcer';
-        $this->frameRate    = 60;
-    }
+    public $startDate = '2018-09-01';
 
     /**
      * Do not re-render the repo video if the render is less than X seconds old. Default is 200s short of a day
