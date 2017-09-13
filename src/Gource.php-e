@@ -16,7 +16,7 @@ class Gource
     /**
      * @var string
      */
-    public $slug = 'm3-api';
+    public $slug = '';
 
     /**
      * @var int
