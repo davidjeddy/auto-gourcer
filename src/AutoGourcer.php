@@ -90,9 +90,9 @@ class AutoGourcer
     }
 
     /**
-     * @return $this
+     * @return AutoGourcer
      */
-    public function getRepoList()
+    public function getRepoList(): self
     {
         // the output of this if()... block should be a json string
         if ($this->host === 'bitbucket.org') {
@@ -121,7 +121,7 @@ class AutoGourcer
             return \file_get_contents("{$this->basePath}/logs/{$repoFile}");
         }
 
-        return '';
+        return false;
     }
 
     /**

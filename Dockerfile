@@ -42,6 +42,11 @@ WORKDIR /gource
 RUN git clone https://github.com/acaudwell/Gource.git ./
 RUN ./autogen.sh && ./configure --with-tinyxml && make && make install
 
+# handbrake install
+#RUN add-apt-repository ppa:stebbins/handbrake-releases
+#RUN apt-get update -y
+#RUN apt-get install -y handbrake-releases
+
 # php 7.1 installation
 RUN apt-get install python-software-properties software-properties-common
 RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php

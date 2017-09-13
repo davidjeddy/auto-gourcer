@@ -21,62 +21,50 @@ class Gource
     /**
      * @var int
      */
-    public $frameRate = null;
+    public $frameRate = 30;
 
     /**
      * @var string
      */
-    public $resolution = null;
+    public $resolution = '640x480';
 
     /**
      * @var string
      */
-    public $basePath = null;
+    public $basePath = '/auto_gourcer';
 
     /**
      * @var string
      */
-    public $startDate = null;
-
-    /**
-     * Gource constructor.
-     */
-    public  function __construct()
-    {
-        // TODO read the .env values from GOURCE_*
-        $this->startDate    = DATE('Y') . '-01-01';
-        $this->resolution   = '1920x1080';
-        $this->basePath     = '/auto_gourcer';
-        $this->frameRate    = 60;
-    }
+    public $startDate = '2018-09-01';
 
     /**
      * Do not re-render the repo video if the render is less than X seconds old. Default is 200s short of a day
      *
      * @param string $filePath
      * @param int $secondsAgo
-     * @return bool
+     * @return Gource
      */
-    public function doesNewRenderExist(string $filePath , int $secondsAgo = 7000): bool
+    public function doesNewRenderExist(string $filePath , int $secondsAgo = 7000): self
     {
         echo __METHOD__ . " : Does {$filePath} already exist? ";
 
         if (\file_exists($filePath) && \filemtime($filePath) > (\time() - $secondsAgo)) {
             echo "Yes. Not rendering new output for now.\n";
-            return true;
+            return $this;
         }
 
-        echo "No.\n";
-        return false;
+        echo "No. Rendering new video.\n";
+        return $this;
     }
 
     /**
      * @param string $xvfb
      * @param string $gource
      * @param string $ffmpeg
-     * @return bool
+     * @return self
      */
-    public function render(string $xvfb =  null, string $gource =  null, string $ffmpeg =  null)
+    public function render(string $xvfb =  null, string $gource =  null, string $ffmpeg =  null): self
     {
         // todo abstract these three parts into classes
         if ($xvfb === null) {
@@ -97,7 +85,7 @@ class Gource
 
         if ($this->dryRun === true) {
             echo "`dryRun` set to true, will not render output.\n";
-            return true;
+            return $this;
         }
 
         echo "Executing rendering...\n";
@@ -108,6 +96,6 @@ class Gource
             \exec("rm {$this->basePath}/renders/{$this->slug}.mp4");
         }
 
-        return true;
+        return $this;
     }
 }
