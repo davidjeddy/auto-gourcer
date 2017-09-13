@@ -39,18 +39,18 @@ class Gource
     public $startDate = '2017-09-01';
 
     /**
-     * Do not re-render the repo video if the render is less than X seconds old
+     * Do not re-render the repo video if the render is less than X seconds old. Default is 200s short of a day
      *
      * @param string $filePath
      * @param int $secondsAgo
      * @return bool
      */
-    public function doesNewRenderExist(string $filePath , int $secondsAgo = 7200): bool
+    public function doesNewRenderExist(string $filePath , int $secondsAgo = 7000): bool
     {
         echo __METHOD__ . " : Does {$filePath} already exist? ";
 
         if (file_exists($filePath) && filemtime($filePath) > (time() - $secondsAgo)) {
-            echo "Yes.\n";
+            echo "Yes. Not rendering new output for now.\n";
             return true;
         }
 
@@ -72,7 +72,7 @@ class Gource
         }
 
         if ($gource === null) {
-            $gource = "--path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' --start-date '{$this->startDate}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} --default-user-image '{$this->basePath}/avatars/default.png' --output-ppm-stream - ";
+            $gource = "--path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' --start-date '{$this->startDate}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} --default-user-image '{$this->basePath}/avatars/Default.jpg' --output-ppm-stream - ";
         }
 
         if ($ffmpeg === null) {
