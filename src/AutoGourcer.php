@@ -40,12 +40,19 @@ class AutoGourcer
         \davidjeddy\AutoGourcer\Git $gitClass,
         \davidjeddy\AutoGourcer\Gource $gourceClass
     ) {
+        // load ENV handler
         $dotenv = new \Dotenv\Dotenv('../');
         $dotenv->load();
 
         $this->host = strtolower(getenv('HOST'));
         echo "Host is {$this->host}.\n";
 
+        // class properties
+        foreach ($configArray as $key => $value) {
+            $this->{$key} = $value;
+        }
+
+        // dependant classes
         $this->depLib['Git']    = new $gitClass();
         $this->depLib['Gource'] = new $gourceClass();
     }
@@ -76,6 +83,7 @@ class AutoGourcer
             // Gourcer commands
             $filePath = "{$this->basePath}/renders/{$this->repoData[$i]['slug']}.mp4";
             if ($this->depLib['Gource']->doesNewRenderExist($filePath) === false) {
+                $this->depLib['Gource']->slug = $this->repoData[$i]['slug'];
                 $this->depLib['Gource']->render();
             }
         }
