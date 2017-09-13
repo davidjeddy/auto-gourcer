@@ -51,5 +51,8 @@ RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 RUN apt-get update -y
 RUN apt-get install -y php7.1
 
+# instal php depenendies for application depenedencies
+RUN  apt-get install php-xml php-dom php-mbstring
+
 #RUN php ./src/ExecuteTask.php
 CMD ["tail", "-f", "/dev/null"]
