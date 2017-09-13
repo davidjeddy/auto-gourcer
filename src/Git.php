@@ -27,7 +27,6 @@ class Git
         if (file_exists("/auto_gourcer/repos/{$slug}/")) {
             // fetch all remote branch
             $command = "cd /auto_gourcer/repos/{$slug} && git fetch --all > /auto_gourcer/logs/git.log && cd ../";
-
         }
 
         echo "Command: {$command}.\n";
