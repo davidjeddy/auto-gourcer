@@ -2,9 +2,7 @@
 declare(strict_types=1);
 namespace davidjeddy\AutoGourcer;
 
-include_once ('../vendor/autoload.php');
-include_once ('./Git.php');
-include_once ('./Gource.php');
+include_once '../vendor/autoload.php';
 
 class AutoGourcer
 {
@@ -29,15 +27,27 @@ class AutoGourcer
     private $repoData = [];
 
     /**
+     * @var array
+     */
+    private $depLib = [];
+
+    /**
      * AutoGourcer constructor.
      * @param null $basePath
      */
-    public function __construct($basePath = null)
-    {
-        $dotenv = new \Dotenv\Dotenv($this->basePath);
+    public function __construct(
+        $configArray = [],
+        \davidjeddy\AutoGourcer\Git $gitClass,
+        \davidjeddy\AutoGourcer\Gource $gourceClass
+    ) {
+        $dotenv = new \Dotenv\Dotenv('../');
         $dotenv->load();
 
-        $this->host = getenv('HOST');
+        $this->host = strtolower(getenv('HOST'));
+        echo "Host is {$this->host}.\n";
+
+        $this->depLib['Git']    = new $gitClass();
+        $this->depLib['Gource'] = new $gourceClass();
     }
 
     /**
@@ -54,25 +64,19 @@ class AutoGourcer
                 break;
             }
 
-            echo "Host is {$this->host}.\n";
-            if ($this->host === 'BitBucket') {
+            if ($this->host === 'bitbucket.org') {
                 // replace with .env values
-                $repoUrl = "https://{getenv('user')}:{getenv('PASS')}@bitbucket.org/" . (getenv('ORG') ? getenv('ORG')
-                    . '/' :  null) . "{$this->repoData[$i]['slug']}.git";
+                $repoUrl = "https://" . getenv('GITUSER') . ":" . getenv('GITPASS') ."@" .getenv('HOST') . "/" . getenv('ORG') . "/{$this->repoData[$i]['slug']}.git";
             }
 
-            $gitClass       = new Git();
-            $gourceClass    = new Gource();
+            // Git commands
+            $this->depLib['Git']->clone($repoUrl, $this->repoData[$i]['slug']);
+            $this->depLib['Git']->checkout("{$this->basePath}/repos/{$this->repoData[$i]['slug']}");
 
-            // clone repo
-            $gitClass->clone($repoUrl, $this->repoData[$i]['slug']);
-            $gitClass->checkout("{$this->basePath}/repos/{$this->repoData[$i]['slug']}");
-
-            // render repo visualization
+            // Gourcer commands
             $filePath = "{$this->basePath}/renders/{$this->repoData[$i]['slug']}.mp4";
-            if ($gourceClass->doesNewRenderExist($filePath) === false) {
-                $gourceClass->dryRun = true;
-                $gourceClass->render();
+            if ($this->depLib['Gource']->doesNewRenderExist($filePath) === false) {
+                $this->depLib['Gource']->render();
             }
         }
     }
@@ -82,32 +86,62 @@ class AutoGourcer
      */
     public function getRepoList()
     {
-        $user = getenv('USER');
-        $pass = getenv('PASS');
-        $responseData = [];
-
-        if ($this->host === 'BitBucket') {
+        // the output of this if()... block should be a json string
+        if ($this->host === 'bitbucket.org') {
             $bbr = new \Bitbucket\API\User\Repositories();
-            $bbr->setCredentials( new \Bitbucket\API\Authentication\Basic($user, $pass) );
-            $responseData = $bbr->get();
+            $bbr->setCredentials( new \Bitbucket\API\Authentication\Basic (getenv('BBUSER'), getenv('BBPASS')) );
+            $this->repoData = $bbr->get()->getContent();
         }
 
-        // TODO move response handling to another method, return valid array
-        if (empty($responseData)) {
+        if (empty($this->repoData)) {
+            $this->repoData = $this->emptyHostResponse();
+        }
+
+        return $this->jsonDecode()->sortArray();
+    }
+
+    // private methods
+
+    /**
+     * @param string $repoFile
+     * @return bool|string
+     */
+    private function emptyHostResponse(string $repoFile = 'repos.json')
+    {
+        if (file_exists("{$this->basePath}/logs/{$repoFile}")) {
             // if no response from remote, use logged data
-            $responseData = \file_get_contents("{$this->basePath}/logs/repos.json");
+            return \file_get_contents("{$this->basePath}/logs/{$repoFile}");
         }
 
-        $responseData = \json_decode($responseData, true);
+        return '';
+    }
 
-        if (json_last_error()) {
-            echo \json_last_error_msg();
-            exit(1);
+    /**
+     * @return AutoGourcer
+     * @throws \Exception
+     */
+    private function jsonDecode(): self
+    {
+        $this->repoData = \json_decode($this->repoData, true);
+
+        if (\json_last_error()) {
+            throw new \Exception(\json_last_error_msg());
         }
 
-        usort($responseData, "sortInReverseOrder");
+        return $this;
+    }
 
-        $this->repoData = $responseData;
+    /**
+     * @return AutoGourcer
+     * @throws \Exception
+     */
+    private function sortArray(): self
+    {
+        try {
+            usort($this->repoData, "sortInReverseOrder");
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
 
         return $this;
     }
