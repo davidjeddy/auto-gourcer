@@ -44,7 +44,7 @@ class AutoGourcer
         $dotenv = new \Dotenv\Dotenv($this->basePath);
         $dotenv->load();
 
-        $this->host = strtolower(getenv('HOST'));
+        $this->host = \strtolower(getenv('HOST'));
         echo "Host is {$this->host}.\n";
 
         // class properties
@@ -116,7 +116,7 @@ class AutoGourcer
      */
     private function emptyHostResponse(string $repoFile = 'repos.json')
     {
-        if (file_exists("{$this->basePath}/logs/{$repoFile}")) {
+        if (\file_exists("{$this->basePath}/logs/{$repoFile}")) {
             // if no response from remote, use logged data
             return \file_get_contents("{$this->basePath}/logs/{$repoFile}");
         }
@@ -146,7 +146,7 @@ class AutoGourcer
     private function sortArray(): self
     {
         try {
-            usort($this->repoData, "sortInReverseOrder");
+            \usort($this->repoData, "sortInReverseOrder");
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }

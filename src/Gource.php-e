@@ -61,7 +61,7 @@ class Gource
     {
         echo __METHOD__ . " : Does {$filePath} already exist? ";
 
-        if (file_exists($filePath) && filemtime($filePath) > (time() - $secondsAgo)) {
+        if (\file_exists($filePath) && \filemtime($filePath) > (\time() - $secondsAgo)) {
             echo "Yes. Not rendering new output for now.\n";
             return true;
         }
@@ -101,11 +101,11 @@ class Gource
         }
 
         echo "Executing rendering...\n";
-        exec($command, $returnData, $errorCode);
+        \exec($command, $returnData, $errorCode);
 
         // remove file if rendering fails
         if ($errorCode !== 0 && file_exists("{$this->basePath}/renders/{$this->slug}.mp4")) {
-            exec("rm {$this->basePath}/renders/{$this->slug}.mp4");
+            \exec("rm {$this->basePath}/renders/{$this->slug}.mp4");
         }
 
         return true;
