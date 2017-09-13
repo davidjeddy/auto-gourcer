@@ -11,10 +11,9 @@ class Git
     /**
      * @param string $uri
      * @param string $slug
-     * @return bool
-     * @throws \Exception
+     * @return Git
      */
-    public function clone(string $uri, string $slug)
+    public function clone(string $uri, string $slug): self
     {
         $command    = '';
         $errorCode  = 0;
@@ -37,15 +36,15 @@ class Git
             echo $e->getMessage() . "\n";
         }
 
-        return true;
+        return $this;
     }
 
     /**
      * @param null $path
-     * @param null $branch
-     * @return bool
+     * @param string $branch
+     * @return Git
      */
-    public function checkout($path = null, $branch = 'latest'): bool
+    public function checkout($path = null, $branch = 'latest'): self
     {
         if ($branch === 'latest') {
             // @source https://gist.github.com/jasonrudolph/1810768
@@ -63,6 +62,6 @@ class Git
         echo ("Checking out branch {$branch} of repo {$path} .\n");
         exec ("cd {$path} && git checkout {$branch} 2>> /auto_gourcer/logs/git.log");
 
-        return true;
+        return $this;
     }
 }
