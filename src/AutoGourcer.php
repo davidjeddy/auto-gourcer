@@ -2,7 +2,9 @@
 declare(strict_types=1);
 namespace davidjeddy\AutoGourcer;
 
-include_once ('./vendor/autoload.php');
+include_once ('../vendor/autoload.php');
+include_once ('./Git.php');
+include_once ('./Gource.php');
 
 class AutoGourcer
 {
@@ -32,8 +34,14 @@ class AutoGourcer
             $this->basePath = $basePath;
         }
 
-        $dotenv = new \Dotenv\Dotenv($this->basePath . "/.env");
+        new \Dotenv\Dotenv($this->basePath . "/.env");
+    }
 
+    /**
+     * @return $this
+     */
+    public function getRepoList()
+    {
         $user = getenv('USER');
         $pass = getenv('PASS');
 
@@ -50,10 +58,11 @@ class AutoGourcer
 
         if (empty($responseData)) {
             // if no response from remote, use logged data
-            $responseData = \json_decode(file_get_contents($this->basePath . "/logs/repos.json"));
+            $responseData = \json_decode(\file_get_contents("{$this->basePath}/logs/repos.json"), true);
+
         }
 
-        usort($responseData, "reverseOrderSort");
+        usort($responseData, "sortInReverseOrder");
 
         $this->repoData = $responseData;
 
@@ -61,22 +70,12 @@ class AutoGourcer
     }
 
     /**
-     * Run the auto gourcer process
-     */
-    public function execute()
-    {
-        $this->cloneRepos();
-
-        $this->gourceRender();
-    }
-
-    /**
      * @return $this
      */
-    private function cloneRepos()
+    public function cloneRepos()
     {
         // clone remote repo onto local FS
-        $gitClass = new \davidjeddy\AutoGourcer\Git();
+        $gitClass = new Git();
         for ($i = 0; $i < $this->repoCount; $i++) {
             if ($i > $this->repoCount) { break; }
 
@@ -98,10 +97,10 @@ class AutoGourcer
     /**
      * @return $this
      */
-    private function gourceRender()
+    public function gourceRender()
     {
         // now render the repo using vfb and gource
-        $gourceClass = new \davidjeddy\AutoGourcer\Gource();
+        $gourceClass = new Gource();
         for ($i = 0; $i < $this->repoCount; $i++) {
             if ($i > $this->repoCount) {
                 break;
@@ -120,15 +119,5 @@ class AutoGourcer
         }
 
         return $this;
-    }
-
-    /**
-     * @param $a array
-     * @param $b array
-     * @return int
-     */
-    function reverseOrderSort($a,$b)
-    {
-        return ($a['utc_last_updated'] <= $b['utc_last_updated']) ? 1 : -1;
     }
 }
