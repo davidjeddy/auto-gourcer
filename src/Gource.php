@@ -28,12 +28,12 @@ class Gource
     /**
      * @var string
      */
-    private $resolution = '640x480';
+    private $basePath = '/auto_gourcer';
 
     /**
      * @var string
      */
-    private $basePath = '/auto_gourcer';
+    private $resolution = '640x480';
 
     /**
      * @var string
@@ -110,11 +110,11 @@ class Gource
 
     /**
      * @param string $param
-     * @return string
+     * @return Gource
      */
-    public function setSlug(string $param): self
+    public function setBasePath(string $param): self
     {
-        $this->slug = $param;
+        $this->basePath = $param;
 
         return $this;
     }
@@ -123,22 +123,20 @@ class Gource
      * @param array $configArray
      * @return Gource
      */
-    public function setGourceParamaters(array $configArray): self
+    public function setResolution(string $param): self
     {
-        foreach ($configArray as $key => $value) {
-            $this->{$key} = $value;
-        }
+        $this->resolution = $param;
 
         return $this;
     }
 
     /**
      * @param string $param
-     * @return Gource
+     * @return string
      */
-    public function setBasePath(string $param): self
+    public function setSlug(string $param): self
     {
-        $this->basePath = $param;
+        $this->slug = $param;
 
         return $this;
     }
