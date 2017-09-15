@@ -120,6 +120,17 @@ class Gource
     }
 
     /**
+     * @param int $param
+     * @return Gource
+     */
+    public function setFramerate(int $param): self
+    {
+        $this->frameRate = $param;
+
+        return $this;
+    }
+
+    /**
      * @param array $configArray
      * @return Gource
      */
@@ -137,6 +148,13 @@ class Gource
     public function setSlug(string $param): self
     {
         $this->slug = $param;
+
+        return $this;
+    }
+
+    public function setStartDate(string $param): self
+    {
+        $this->startDate = $param;
 
         return $this;
     }

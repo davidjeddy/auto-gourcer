@@ -13,9 +13,10 @@ $gitClass  = new Git();
 $gitClass->setHost('<creds_here')->setUser('<creds_here')->setPass('<creds_here')->setOrg('<creds_here');
 
 $gourceClass = new Gource();
-$gourceClass->setResolution('1920x1080');
+# Optional changes to Gource CLI options
+$gourceClass->setFramerate('60')->setResolution('1920x1080')->setStartDate('2017-01-01');
 
 $ag = new AutoGourcer();
-$ag->setCount(3);
+$ag->setCount(10);
 
 $ag->setGit($gitClass)->setGource($gourceClass)->run();
