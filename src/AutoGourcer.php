@@ -1,14 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace davidjeddy\AutoGourcer;
-
-include_once '/auto_gourcer/vendor/autoload.php';
-
-use \Bitbucket\API\User\Repositories;
-use \Bitbucket\API\Authentication\Basic;
-use \Dotenv\Dotenv;
-use \davidjeddy\AutoGourcer\Git;
-use \davidjeddy\AutoGourcer\Gource;
+namespace dje\AutoGourcer;
 
 class AutoGourcer
 {
@@ -16,11 +8,6 @@ class AutoGourcer
      * @var string
      */
     public $basePath = '/auto_gourcer';
-
-    /**
-     * @var string
-     */
-    private $host = '';
 
     /**
      * @var int
@@ -33,131 +20,89 @@ class AutoGourcer
     private $repoData = [];
 
     /**
-     * @var array
+     * @var \dje\AutoGourcer\Git
      */
-    private $depLib = [];
+    private $gitClass;
 
     /**
-     * AutoGourcer constructor.
-     * @param array $configArray
-     * @param \davidjeddy\AutoGourcer\Git $gitClass
-     * @param \davidjeddy\AutoGourcer\Gource $gourceClass
+     * @var \dje\AutoGourcer\Gource
      */
-    public function __construct(
-        $configArray = [],
-        Git $gitClass,
-        Gource $gourceClass
-    ) {
-        // load ENV handler
-        $dotenv = new Dotenv($this->basePath);
-        $dotenv->load();
-
-        // class properties
-        foreach ($configArray as $key => $value) {
-            $this->{$key} = $value;
-        }
-
-        $this->host = \strtolower(getenv('HOST'));
-        echo "Host is {$this->host}.\n";
-
-        // dependant classes
-        $this->depLib['Git']    = new $gitClass();
-        $this->depLib['Gource'] = new $gourceClass();
-    }
+    private $gourceClass;
 
     /**
-     *
+     * @return $this
      */
     public function run()
     {
+        $this->createLogDir();
+
         $repoUrl = '';
 
-        $this->getRepoList();
+        $this->gitClass->getRepoList();
 
         for ($i = 0; $i < $this->repoCount; $i++) {
             if ($i > $this->repoCount) {
                 break;
             }
 
-            $repoSlug = $this->repoData[$i]['slug'];
-
-            if ($this->host === 'bitbucket.org') {
-                // replace with .env values
-                $repoUrl = "https://" . getenv('GITUSER') . ":" . getenv('GITPASS') ."@" .getenv('HOST') . "/" . getenv('ORG') . "/{$repoSlug}.git";
-            }
+            $repoSlug = $this->gitClass->repoData[$i]['slug'];
 
             // Git commands
-            $this->depLib['Git']->clone($repoUrl, $repoSlug);
-            $this->depLib['Git']->checkout("{$this->basePath}/repos/{$repoSlug}");
+            $this->gitClass->clone($repoUrl, $repoSlug);
+            $this->gitClass->checkout("{$this->basePath}/repos/{$repoSlug}");
 
             // Gourcer commands
-            $this->depLib['Gource']->slug = $repoSlug;
-            $this->depLib['Gource']->render("{$this->basePath}/renders/{$repoSlug}.mp4");
+            $this->gourceClass->slug = $repoSlug;
+            $this->gourceClass->render("{$this->basePath}/renders/{$repoSlug}.mp4");
         }
+
+        return $this;
+    }
+
+    // getter and setters
+
+    /**
+     * @param Git $class
+     * @return $this
+     * @throws \Exception
+     */
+    public function setGit(\dje\AutoGourcer\Git $class)
+    {
+        if (!$class instanceof \dje\AutoGourcer\Git) {
+            throw new \Exception('Git dependency must inherit from class \dje\AutoGourcer\Git');
+        }
+
+        $this->gitClass = $class;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @param Gource $class
+     * @return $this
+     * @throws \Exception
      */
-    public function getRepoList()
+    public function setGource(\dje\AutoGourcer\Gource $class)
     {
-        // the output of this if()... block should be a json string
-        if ($this->host === 'bitbucket.org') {
-            $bbr = new Repositories();
-            $bbr->setCredentials(new Basic (getenv('BBUSER'), getenv('BBPASS')));
-            $this->repoData = $bbr->get()->getContent();
+        if (!$class instanceof \dje\AutoGourcer\Gource) {
+            throw new \Exception('Gource dependency must inherit from class \dje\AutoGourcer\Gource');
         }
 
-        if (empty($this->repoData)) {
-            $this->repoData = $this->emptyHostResponse();
-        }
+        $this->gourceClass = $class;
 
-        return $this->jsonDecode()->sortArray();
+        return $this;
     }
 
     // private methods
 
     /**
-     * @param string $repoFile
-     * @return bool|string
+     *
      */
-    private function emptyHostResponse(string $repoFile = 'repos.json')
+    private function createLogDir()
     {
-        if (\file_exists("{$this->basePath}/logs/{$repoFile}")) {
-            // if no response from remote, use logged data
-            return \file_get_contents("{$this->basePath}/logs/{$repoFile}");
+        // if log dir does not exist, create it
+        if (!file_exists('/var/log/auto-gourcer')) {
+            exec('mkdir /var/log/auto-gourcer');
         }
-
-        return '';
-    }
-
-    /**
-     * @return AutoGourcer
-     * @throws \Exception
-     */
-    private function jsonDecode(): self
-    {
-        $this->repoData = \json_decode($this->repoData, true);
-
-        if (\json_last_error()) {
-            throw new \Exception(\json_last_error_msg());
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return AutoGourcer
-     * @throws \Exception
-     */
-    private function sortArray(): self
-    {
-        try {
-            \usort($this->repoData, "sortInReverseOrder");
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
-
-        return $this;
     }
 }
