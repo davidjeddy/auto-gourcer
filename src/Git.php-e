@@ -242,7 +242,9 @@ class Git
         try {
             $paramData = $this->jsonDecode($paramData);
             \file_put_contents("/var/log/auto-gourcer/repos.json", \json_encode($this->repoData));
-            \usort($paramData, "sortInReverseOrder");
+            \usort($paramData, function ($a, $b) {
+                return ($a['utc_last_updated'] <= $b['utc_last_updated']) ? 1 : -1;
+            });
             $this->repoData = $paramData;
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
