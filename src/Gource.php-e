@@ -36,7 +36,7 @@ class Gource
     /**
      * @var string
      */
-    public $startDate = '2018-09-01';
+    public $startDate = '2017-09-01';
 
     /**
      * Do not re-render the repo video if the render is less than X seconds old. Default is 200s short of a day
