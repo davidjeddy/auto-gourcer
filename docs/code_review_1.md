@@ -4,7 +4,7 @@ $host should probably be just an array or just a string. It has too many types, 
 
 $repoData is also multiple types which leads to the same issues as $host. There are also several things setting $repoData directly, rather than going through a setter of some sort. Careful programming could mean this isn't an issue, but this could be completely avoided.
 
- - Discussed, switching to get/set methods for class properties
+ - Discussed, switching to get/set methods for class properties.
 
 I already mentioned this, but figured I would again for good measure. I prefer to see use statements rather than full namespace paths.
 
