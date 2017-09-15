@@ -52,16 +52,13 @@ class Git
         try {
             // check if folder exists
             if (!\file_exists("/auto_gourcer/repos/{$slug}/")) {
-                $command = "git clone {$uri} /auto_gourcer/repos/{$slug} > /var/log/auto-gourcer/git.log";
+                $command = "git clone {$uri}{$slug} /auto_gourcer/repos/{$slug} 2>> /var/log/auto-gourcer/git.log";
             }
 
             if (\file_exists("/auto_gourcer/repos/{$slug}/")) {
                 // fetch all remote branch
-                $command = "cd /auto_gourcer/repos/{$slug} && git fetch --all /var/log/auto-gourcer/git.log && cd ../";
+                $command = "cd /auto_gourcer/repos/{$slug} && git fetch --all 2>> /var/log/auto-gourcer/git.log && cd ../";
             }
-
-            // TODO remove password so it does not show up in logs
-            echo "Git command: {$command}.\n";
 
             // fetch all remote branch
             \exec($command, $responseData, $errorCode);
