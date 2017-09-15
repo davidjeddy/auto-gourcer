@@ -16,27 +16,29 @@ class Gource
     /**
      * @var string
      */
-    public $slug = '';
+    private $slug = '';
+
+    // Gource CLI options
 
     /**
      * @var int
      */
-    public $frameRate = 30;
+    private $frameRate = 30;
 
     /**
      * @var string
      */
-    public $resolution = '640x480';
+    private $resolution = '640x480';
 
     /**
      * @var string
      */
-    public $basePath = '/auto_gourcer';
+    private $basePath = '/auto_gourcer';
 
     /**
      * @var string
      */
-    public $startDate = '2017-09-01';
+    private $startDate = '2017-09-01';
 
     /**
      * Do not re-render the repo video if the render is less than X seconds old. Default is 200s short of a day
@@ -102,5 +104,42 @@ class Gource
         }
 
         return true;
+    }
+
+    // getter/setters
+
+    /**
+     * @param string $param
+     * @return string
+     */
+    public function setSlug(string $param): self
+    {
+        $this->slug = $param;
+
+        return $this;
+    }
+
+    /**
+     * @param array $configArray
+     * @return Gource
+     */
+    public function setGourceParamaters(array $configArray): self
+    {
+        foreach ($configArray as $key => $value) {
+            $this->{$key} = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $param
+     * @return Gource
+     */
+    public function setBasePath(string $param): self
+    {
+        $this->basePath = $param;
+
+        return $this;
     }
 }

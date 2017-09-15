@@ -7,17 +7,12 @@ class AutoGourcer
     /**
      * @var string
      */
-    public $basePath = '/auto_gourcer';
+    protected $basePath = '/auto_gourcer';
 
     /**
      * @var int
      */
-    public $repoCount = 1;
-
-    /**
-     * @var array
-     */
-    private $repoData = [];
+    private $repoCount = 1;
 
     /**
      * @var \dje\AutoGourcer\Git
@@ -48,11 +43,11 @@ class AutoGourcer
             $repoSlug = $this->gitClass->repoData[$i]['slug'];
 
             // Git commands
-            $this->gitClass->clone($repoUrl, $repoSlug);
+            $this->gitClass->clone($repoSlug);
             $this->gitClass->checkout("{$this->basePath}/repos/{$repoSlug}");
 
             // Gourcer commands
-            $this->gourceClass->slug = $repoSlug;
+            $this->gourceClass->setSlug($repoSlug);
             $this->gourceClass->render("{$this->basePath}/renders/{$repoSlug}.mp4");
         }
 
@@ -73,6 +68,17 @@ class AutoGourcer
         }
 
         $this->gitClass = $class;
+
+        return $this;
+    }
+
+    /**
+     * @param int $param
+     * @return AutoGourcer
+     */
+    public function setCount(int $param): self
+    {
+        $this->repoCount = $param;
 
         return $this;
     }
