@@ -1,12 +1,13 @@
 {
     "name": "davidjeddy/auto_gourcer",
-    "description": "Generate source code visualization using Gource for recently changed repositiories.",
+    "description": "Generate source code visualization using Gource for recently changed repositories.",
     "type": "projects",
     "require": {
         "vlucas/phpdotenv": "^2.4",
         "gentle/bitbucket-api": "^1.0"
     },
     "require-dev": {
+        "php": "^7.0",
         "phpunit/phpunit": "^6.3"
     },
     "license": "MIT",
@@ -16,5 +17,10 @@
             "email": "me@davidjeddy.com"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "dje\\autogourcer\\": "src/"
+        }
+    }
 }
