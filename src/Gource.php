@@ -64,8 +64,12 @@ class Gource
      * @param string $ffmpeg
      * @return bool
      */
-    public function render(string $xvfb =  null, string $gource =  null, string $ffmpeg =  null)
+    public function render(string $outputFilePath, string $xvfb =  null, string $gource =  null, string $ffmpeg =  null)
     {
+        if ($this->doesNewRenderExist($outputFilePath)) {
+            return true;
+        }
+
         // todo abstract these three parts into classes
         if ($xvfb === null) {
             $xvfb = "-a -s '-screen 0 {$this->resolution}x24'";
@@ -94,6 +98,7 @@ class Gource
         // remove file if rendering fails
         if ($errorCode !== 0 && file_exists("{$this->basePath}/renders/{$this->slug}.mp4")) {
             \exec("rm {$this->basePath}/renders/{$this->slug}.mp4");
+            return false;
         }
 
         return true;

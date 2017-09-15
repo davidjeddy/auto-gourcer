@@ -4,6 +4,12 @@ namespace davidjeddy\AutoGourcer;
 
 include_once '/auto_gourcer/vendor/autoload.php';
 
+use \Bitbucket\API\User\Repositories;
+use \Bitbucket\API\Authentication\Basic;
+use \Dotenv\Dotenv;
+use \davidjeddy\AutoGourcer\Git;
+use \davidjeddy\AutoGourcer\Gource;
+
 class AutoGourcer
 {
     /**
@@ -12,7 +18,7 @@ class AutoGourcer
     public $basePath = '/auto_gourcer';
 
     /**
-     * @var array|false|string
+     * @var string
      */
     private $host = '';
 
@@ -22,7 +28,7 @@ class AutoGourcer
     public $repoCount = 1;
 
     /**
-     * @var array|\Buzz\Message\MessageInterface
+     * @var array
      */
     private $repoData = [];
 
@@ -33,24 +39,26 @@ class AutoGourcer
 
     /**
      * AutoGourcer constructor.
-     * @param null $basePath
+     * @param array $configArray
+     * @param \davidjeddy\AutoGourcer\Git $gitClass
+     * @param \davidjeddy\AutoGourcer\Gource $gourceClass
      */
     public function __construct(
         $configArray = [],
-        \davidjeddy\AutoGourcer\Git $gitClass,
-        \davidjeddy\AutoGourcer\Gource $gourceClass
+        Git $gitClass,
+        Gource $gourceClass
     ) {
         // load ENV handler
-        $dotenv = new \Dotenv\Dotenv($this->basePath);
+        $dotenv = new Dotenv($this->basePath);
         $dotenv->load();
-
-        $this->host = \strtolower(getenv('HOST'));
-        echo "Host is {$this->host}.\n";
 
         // class properties
         foreach ($configArray as $key => $value) {
             $this->{$key} = $value;
         }
+
+        $this->host = \strtolower(getenv('HOST'));
+        echo "Host is {$this->host}.\n";
 
         // dependant classes
         $this->depLib['Git']    = new $gitClass();
@@ -58,7 +66,7 @@ class AutoGourcer
     }
 
     /**
-     * Execute the actual logic to get `stuff` done
+     *
      */
     public function run()
     {
@@ -71,33 +79,32 @@ class AutoGourcer
                 break;
             }
 
+            $repoSlug = $this->repoData[$i]['slug'];
+
             if ($this->host === 'bitbucket.org') {
                 // replace with .env values
-                $repoUrl = "https://" . getenv('GITUSER') . ":" . getenv('GITPASS') ."@" .getenv('HOST') . "/" . getenv('ORG') . "/{$this->repoData[$i]['slug']}.git";
+                $repoUrl = "https://" . getenv('GITUSER') . ":" . getenv('GITPASS') ."@" .getenv('HOST') . "/" . getenv('ORG') . "/{$repoSlug}.git";
             }
 
             // Git commands
-            $this->depLib['Git']->clone($repoUrl, $this->repoData[$i]['slug']);
-            $this->depLib['Git']->checkout("{$this->basePath}/repos/{$this->repoData[$i]['slug']}");
+            $this->depLib['Git']->clone($repoUrl, $repoSlug);
+            $this->depLib['Git']->checkout("{$this->basePath}/repos/{$repoSlug}");
 
             // Gourcer commands
-            $filePath = "{$this->basePath}/renders/{$this->repoData[$i]['slug']}.mp4";
-            if ($this->depLib['Gource']->doesNewRenderExist($filePath) === false) {
-                $this->depLib['Gource']->slug = $this->repoData[$i]['slug'];
-                $this->depLib['Gource']->render();
-            }
+            $this->depLib['Gource']->slug = $repoSlug;
+            $this->depLib['Gource']->render("{$this->basePath}/renders/{$repoSlug}.mp4");
         }
     }
 
     /**
-     * @return $this
+     * @return mixed
      */
     public function getRepoList()
     {
         // the output of this if()... block should be a json string
         if ($this->host === 'bitbucket.org') {
-            $bbr = new \Bitbucket\API\User\Repositories();
-            $bbr->setCredentials( new \Bitbucket\API\Authentication\Basic (getenv('BBUSER'), getenv('BBPASS')) );
+            $bbr = new Repositories();
+            $bbr->setCredentials(new Basic (getenv('BBUSER'), getenv('BBPASS')));
             $this->repoData = $bbr->get()->getContent();
         }
 
