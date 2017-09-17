@@ -1,0 +1,6 @@
+version: '2'
+services:
+  gource:
+    build:
+      context: ./docker/dev/php
+      dockerfile: Dockerfile
