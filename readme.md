@@ -17,6 +17,21 @@ Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads y
 
  - Ability to add / edit CRON jobs
 
+# Integrations
+
+Currently only BitBucket is supported.
+
+# RoadMap
+
+ - 0.1.0 Initial Alpha release
+ - 0.1.75 Add initial test suite
+ - 0.2.0 Code Review 1 release
+ - 0.3.0 Add GitHub integration
+ - 0.3.5 Use Monolog et al for logging, remove echo()s.
+ - 0.4.0 Add GitLab integration
+ ...
+ - 1.0.0 Public Release
+
 # Installation
 
     cd {projecr root parent directory}

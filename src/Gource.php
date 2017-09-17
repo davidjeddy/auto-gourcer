@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace davidjeddy\AutoGourcer;
+namespace dje\AutoGourcer;
 
 /**
  * Class Gource
@@ -16,27 +16,29 @@ class Gource
     /**
      * @var string
      */
-    public $slug = '';
+    private $slug = '';
+
+    // Gource CLI options
 
     /**
      * @var int
      */
-    public $frameRate = 30;
+    private $frameRate = 30;
 
     /**
      * @var string
      */
-    public $resolution = '640x480';
+    private $basePath = '/auto_gourcer';
 
     /**
      * @var string
      */
-    public $basePath = '/auto_gourcer';
+    private $resolution = '640x480';
 
     /**
      * @var string
      */
-    public $startDate = '2017-09-01';
+    private $startDate = '2017-09-01';
 
     /**
      * Do not re-render the repo video if the render is less than X seconds old. Default is 200s short of a day
@@ -64,8 +66,12 @@ class Gource
      * @param string $ffmpeg
      * @return bool
      */
-    public function render(string $xvfb =  null, string $gource =  null, string $ffmpeg =  null)
+    public function render(string $outputFilePath, string $xvfb =  null, string $gource =  null, string $ffmpeg =  null)
     {
+        if ($this->doesNewRenderExist($outputFilePath)) {
+            return true;
+        }
+
         // todo abstract these three parts into classes
         if ($xvfb === null) {
             $xvfb = "-a -s '-screen 0 {$this->resolution}x24'";
@@ -79,7 +85,7 @@ class Gource
             $ffmpeg = "-y -r {$this->frameRate} -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 {$this->basePath}/renders/{$this->slug}.mp4";
         }
 
-        $command = "xvfb-run {$xvfb} gource {$gource} | ffmpeg {$ffmpeg}"; // 2>> {$this->basePath}/logs/gource.log";
+        $command = "xvfb-run {$xvfb} gource {$gource} | ffmpeg {$ffmpeg} 2>> /var/log/auto-gourcer/gource.log";
 
         echo ("Running rendering command `{$command}`.\n");
 
@@ -94,8 +100,62 @@ class Gource
         // remove file if rendering fails
         if ($errorCode !== 0 && file_exists("{$this->basePath}/renders/{$this->slug}.mp4")) {
             \exec("rm {$this->basePath}/renders/{$this->slug}.mp4");
+            return false;
         }
 
         return true;
+    }
+
+    // getter/setters
+
+    /**
+     * @param string $param
+     * @return Gource
+     */
+    public function setBasePath(string $param): self
+    {
+        $this->basePath = $param;
+
+        return $this;
+    }
+
+    /**
+     * @param int $param
+     * @return Gource
+     */
+    public function setFramerate(int $param): self
+    {
+        $this->frameRate = $param;
+
+        return $this;
+    }
+
+    /**
+     * @param array $configArray
+     * @return Gource
+     */
+    public function setResolution(string $param): self
+    {
+        $this->resolution = $param;
+
+        return $this;
+    }
+
+    /**
+     * @param string $param
+     * @return string
+     */
+    public function setSlug(string $param): self
+    {
+        $this->slug = $param;
+
+        return $this;
+    }
+
+    public function setStartDate(string $param): self
+    {
+        $this->startDate = $param;
+
+        return $this;
     }
 }
