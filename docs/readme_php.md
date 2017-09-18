@@ -16,41 +16,96 @@
  
 ## Installation
 
- - Via [Composer](https://getcomposer.org/)
+ - Execute the following commands in a shell:
   
     `cd {project root}`
+
     `php composer.phar require davidjeddy/auto_gourcer`
 
 ## Usage
 
-Basic usage is rather streight forward; the classes are loaded using composer's auto-load functionality. You only need
-call the AutoGourcer class with the proper dependencies injected and let the library do the rest.
+Basic usage is rather streight forward; the classes are loaded using [Composer](https://getcomposer.org/)'s auto-load
+functionality. You only need to call the AutoGourcer class with the proper dependencies injected, let the library do
+the rest.
 
 Basic:
 ```PHP
-include_once '../vendor/auto_loader.php');
+<?php
+namespace your/class/namespace;
 
 use \davidjeddy\AutoGourcer\AutoGourcer;
 use \davidjeddy\AutoGourcer\Git;
 use \davidjeddy\AutoGourcer\Gource;
 
-// This is the simplist implimentation. Using all defaults.
-$ag = new AutoGourcer(new Git(), new Gource());
-$ag->run();
+/**
+ * 
+ */
+SomeClass
+{
+    /**
+     * [someMethod description]
+     * @return {[type]} [description]
+     */
+    public function someMethod()
+    {
+        // At the very least we need Git creditials in order to access BitBucket repositories.
+        // Recommenation: DO NOT put your username/password in your code! Use a dotenv library similar to 
+        // https://github.com/vlucas/phpdotenv to handle sensitive datum.
+        $gitClass = new Git();
+        $giClass->setUser(<YOUR GIT USERNAME>);
+        $giClass->setPass(<YOUR GIT PASSWORD>);
+
+        // This is the simplist implimentation. Using library all defaults.
+        $ag = new AutoGourcer($gitClass, new Gource());
+        $ag->run();
+    }
+}
+
 ```
 
 Advanced:
-Basic:
 ```PHP
-include_once '../vendor/auto_loader.php');
+<?php
+namespace your/class/namespace;
 
 use \davidjeddy\AutoGourcer\AutoGourcer;
 use \davidjeddy\AutoGourcer\Git;
 use \davidjeddy\AutoGourcer\Gource;
 
-// This is the simplist implimentation. Using all defaults.
-$ag = new AutoGourcer(new Git(), new Gource(), ['count' =>]);
-$ag->run();
+/**
+ * 
+ */
+SomeClass
+{
+    /**
+     * [someMethod description]
+     * @return {[type]} [description]
+     */
+    public function someMethod()
+    {
+        // At the very least we need Git creditials in order to access BitBucket repositories.
+        // Recommenation: DO NOT put your username/password in your code! Use a dotenv library similar to 
+        // https://github.com/vlucas/phpdotenv to handle sensitive datum.
+        $gitClass = new Git();
+        $giClass->setUser(<YOUR GIT USERNAME>);
+        $giClass->setPass(<YOUR GIT PASSWORD>);
+
+        
+        // Here we override some of the Gource class properties 
+        $gourClass = new Gource();
+        $gourceClass->setFramerate('60');
+        $gourceClass->setResolution('1920x1080');
+
+        // And finally here we override some library defaults
+        $configAry = [
+            'repoCount' => 5
+        ];
+
+        // This is an advanced implimentation. Overriding library defaults.
+        $ag = new AutoGourcer($gitClass, $gourceClass, $configAry);
+        $ag->run();
+    }
+}
 ```
 ## Output
 

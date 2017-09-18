@@ -4,5 +4,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    name:
+      auto_gourcer
     volumes:
       - ./:/auto_gourcer
