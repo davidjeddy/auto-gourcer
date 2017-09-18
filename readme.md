@@ -9,12 +9,12 @@ Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads y
 # Requirements
 
  - Really depends on how you plan to use this library.
- - As a [PHP / Composer package](./docs/readme_php.md)
- - As a [container service](./docs/readme_container_service.md)
+ - As a [container service](./docs/readme_container_service.md) (recommended)
+ - As a [PHP / Composer package](./docs/readme_php.md) (NOT recommended)
 
 # SCM host Integrations
 
-Currently only BitBucket is supported.
+Currently only [BitBucket](https://bitbucket.com) is supported; others are planned.
 
 # RoadMap
 
@@ -22,7 +22,7 @@ Currently only BitBucket is supported.
  - 0.1.75 Add initial test suite
  - 0.2.0 Code Review 1 release
  - 0.3.0 Add GitHub integration
- - 0.3.5 Use Monolog et al for logging, remove echo()s.
  - 0.4.0 Add GitLab integration
+ - 0.4.5 Use Monolog et al for logging, remove echo()s.
  ...
  - 1.0.0 Public Release
