@@ -54,6 +54,3 @@ Currently only [BitBucket](https://bitbucket.com) is supported; others are plann
 From the root of the project run the following command.
 
  - `docker exec -it AutoGourcer ./vendor/bin/phpunit`
-
-# Note
-Change to ./run.php ARE NOT TRACKED by default. To commit changes to this file use GiT's `--no-assume-unchanged` feature.
