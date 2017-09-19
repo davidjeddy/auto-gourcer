@@ -11,14 +11,34 @@ use \Bitbucket\API\Authentication\Basic;
  */
 class Git
 {
-    private $host;
+    /**
+     * @var string
+     */
+    private $host = 'bitbucket.org';
+
+    /**
+     * @var
+     */
     private $org;
+
+    /**
+     * @var
+     */
     private $user;
+
+    /**
+     * @var
+     */
     private $pass;
+
+    /**
+     * @var
+     */
     public $repoData;
 
     /**
      * @return $this
+     * @throws \Exception
      */
     public function getRepoList()
     {
@@ -38,7 +58,6 @@ class Git
     }
 
     /**
-     * @param string $uri
      * @param string $slug
      * @return Git
      */
@@ -51,13 +70,13 @@ class Git
 
         try {
             // check if folder exists
-            if (!\file_exists("/auto_gourcer/repos/{$slug}/")) {
-                $command = "git clone {$uri}{$slug} /auto_gourcer/repos/{$slug} 2>> /var/log/auto-gourcer/git.log";
+            if (!\file_exists("./repos/{$slug}/")) {
+                $command = "git clone {$uri}{$slug} ./repos/{$slug} 2>> /var/log/auto-gourcer/git.log";
             }
 
-            if (\file_exists("/auto_gourcer/repos/{$slug}/")) {
+            if (\file_exists("./repos/{$slug}/")) {
                 // fetch all remote branch
-                $command = "cd /auto_gourcer/repos/{$slug} && git fetch --all 2>> /var/log/auto-gourcer/git.log && cd ../";
+                $command = "cd ./repos/{$slug} && git fetch --all 2>> /var/log/auto-gourcer/git.log && cd ../";
             }
 
             // fetch all remote branch
@@ -70,17 +89,17 @@ class Git
     }
 
     /**
-     * @param null $path
-     * @param string $branch
+     * @param $path
+     * @param null $branch
      * @return Git
+     * @throws \Exception
      */
-    public function checkout($path = null, $branch = null): self
+    public function checkout($path, $branch = null): self
     {
         if ($branch === null) {
             $branch = $this->checkoutLatestchanges($path);
         }
 
-        echo ("Checking out branch {$branch} of repo {$path} .\n");
         \exec ("cd {$path} && git checkout {$branch} 2>> /var/log/auto-gourcer/git.log");
 
         return $this;
@@ -95,9 +114,14 @@ class Git
      * @fork https://gist.github.com/davidjeddy/2b5d9362fb0728a53977364b2a22ab44
      * @param string $path
      * @return string
+     * @throws \Exception
      */
     private function checkoutLatestChanges(string $path): string
     {
+        if (!file_exists($path)) {
+            throw new \Exception("While attempting to checkout repository at {$path}; no path was found.");
+        }
+
         \exec ('cd ' . $path . ' && for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\ $branch; done | sort -r', $responseData, $errorCode);
 
         // parse the string and get the latest branch text
@@ -112,13 +136,27 @@ class Git
 
     /**
      * @return string
+     * @throws \Exception
      */
     private function getRepoListFromBitBucket()
     {
-        // the output of this if()... block should be a json string
-        $bbr = new Repositories();
-        $bbr->setCredentials(new Basic ($this->user, $this->pass));
-        return $bbr->get()->getContent();
+        $returnData = '';
+
+        try {
+            // the output of this if()... block should be a json string
+            $bbr = new Repositories();
+            $bbr->setCredentials(new Basic ($this->user, $this->pass));
+            $returnData = $bbr->get()->getContent();
+
+            if (empty($returnData)) {
+                throw new \Exception('No valid response from ' . $this->host . '. Most likely cause is invalid credentials.');
+            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
+        return $returnData;
+
     }
 
     /**
@@ -142,10 +180,10 @@ class Git
      */
     private function jsonDecode($paramData): array
     {
-        $paramData = \json_decode($paramData, true);
-
-        if (\json_last_error()) {
-            throw new \Exception(\json_last_error_msg());
+        try {
+            $paramData = \json_decode($paramData, true);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
 
         return $paramData;
@@ -156,12 +194,15 @@ class Git
      */
     private function buildHostURL(): string
     {
+        $returnData = '';
+
         if ($this->host === 'bitbucket.org') {
-            // replace with .env values
-            return "https://" .$this->user . ":" . $this->pass ."@" . $this->host . "/" . $this->org;
+            $returnData = "https://" .$this->user . ":" . $this->pass ."@" . $this->host . "/"
+                . ($this->org ? $this->org . '/' : null);
+
         }
 
-        return '';
+        return $returnData;
     }
 
     // getter/setter methods
@@ -169,12 +210,12 @@ class Git
     /**
      * @param $paramData
      * @return Git
-     * @throws \Exception
+     * @throws Exception
      */
     public function setHost($paramData): self
     {
         if (!is_string($paramData)) {
-            throw new \Exception('$this->host must be a string.');
+            throw new Exception('$this->host must be a string.');
         }
 
         $this->host = $paramData;
@@ -185,17 +226,15 @@ class Git
     /**
      * @param $paramData
      * @return Git
-     * @throws \Exception
+     * @throws Exception
      */
-    public function setOrg($paramData = ''): self
+    public function setOrg($paramData): self
     {
         if (!is_string($paramData)) {
-            throw new \Exception('Must be a string.');
+            throw new Exception('Must be a string.');
         }
 
-        if ($paramData !== null) {
-            $this->org = $paramData . '/';
-        }
+        $this->org = $paramData;
 
         return $this;
     }
@@ -203,12 +242,12 @@ class Git
     /**
      * @param $paramData
      * @return Git
-     * @throws \Exception
+     * @throws Exception
      */
     public function setUser($paramData): self
     {
         if (!is_string($paramData)) {
-            throw new \Exception('$this->user must be a string.');
+            throw new Exception('$this->user must be a string.');
         }
 
         $this->user = $paramData;
@@ -219,12 +258,12 @@ class Git
     /**
      * @param $paramData
      * @return Git
-     * @throws \Exception
+     * @throws Exception
      */
     public function setPass($paramData = null): self
     {
         if (!is_string($paramData) || $paramData === null ) {
-            throw new \Exception('$this->pass must be a string.');
+            throw new Exception('$this->pass must be a string.');
         }
 
         $this->pass = $paramData;
@@ -246,8 +285,8 @@ class Git
                 return ($a['utc_last_updated'] <= $b['utc_last_updated']) ? 1 : -1;
             });
             $this->repoData = $paramData;
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
 
         return $this;

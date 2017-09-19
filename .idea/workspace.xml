@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6fc38a73-af96-4fae-8878-a1924d757da0" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/composer.phar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docker-composer.override.yml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run.php" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.env.dist" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/example_usage.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dockerfile" afterPath="$PROJECT_DIR$/Dockerfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker-compose.override.yml.dist" afterPath="$PROJECT_DIR$/docker-compose.override.yml.dist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker-compose.yml" afterPath="$PROJECT_DIR$/docker-compose.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker/dev/php/Dockerfile" afterPath="$PROJECT_DIR$/docker/dev/php/Dockerfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/readme_container.md" afterPath="$PROJECT_DIR$/docs/readme_container.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/readme_php.md" afterPath="$PROJECT_DIR$/docs/readme_php.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AutoGourcer.php" afterPath="$PROJECT_DIR$/src/AutoGourcer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Git.php" afterPath="$PROJECT_DIR$/src/Git.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Gource.php" afterPath="$PROJECT_DIR$/src/Gource.php" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="auto-gourcer" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="Git.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Git.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-185">
+              <caret line="68" column="37" lean-forward="false" selection-start-line="68" selection-start-column="37" selection-end-line="68" selection-end-column="37" />
+              <folding>
+                <element signature="e#139#194#0#PHP" expanded="false" />
+                <element signature="e#211#241#0#PHP" expanded="false" />
+                <element signature="e#284#307#0#PHP" expanded="false" />
+                <element signature="e#331#354#0#PHP" expanded="false" />
+                <element signature="e#379#402#0#PHP" expanded="false" />
+                <element signature="e#427#450#0#PHP" expanded="false" />
+                <element signature="e#541#891#0#PHP" expanded="false" />
+                <element signature="e#612#721#0#PHP" expanded="false" />
+                <element signature="e#731#820#0#PHP" expanded="false" />
+                <element signature="e#897#954#0#PHP" expanded="false" />
+                <element signature="e#3266#3325#0#PHP" expanded="false" />
+                <element signature="e#3330#3968#0#PHP" expanded="false" />
+                <element signature="e#3415#3932#0#PHP" expanded="false" />
+                <element signature="e#3670#3836#0#PHP" expanded="false" />
+                <element signature="e#3847#3932#0#PHP" expanded="false" />
+                <element signature="e#3974#4038#0#PHP" expanded="false" />
+                <element signature="e#4043#4368#0#PHP" expanded="false" />
+                <element signature="e#4133#4342#0#PHP" expanded="false" />
+                <element signature="e#4374#4457#0#PHP" expanded="false" />
+                <element signature="e#4462#4713#0#PHP" expanded="false" />
+                <element signature="e#4523#4679#0#PHP" expanded="false" />
+                <element signature="e#4596#4679#0#PHP" expanded="false" />
+                <element signature="e#4719#4752#0#PHP" expanded="false" />
+                <element signature="e#5111#5191#0#PHP" expanded="false" />
+                <element signature="e#5196#5421#0#PHP" expanded="false" />
+                <element signature="e#5252#5357#0#PHP" expanded="false" />
+                <element signature="e#5427#5507#0#PHP" expanded="false" />
+                <element signature="e#5512#5723#0#PHP" expanded="false" />
+                <element signature="e#5567#5660#0#PHP" expanded="false" />
+                <element signature="e#5729#5809#0#PHP" expanded="false" />
+                <element signature="e#5814#6039#0#PHP" expanded="false" />
+                <element signature="e#5870#5975#0#PHP" expanded="false" />
+                <element signature="e#6045#6125#0#PHP" expanded="false" />
+                <element signature="e#6130#6386#0#PHP" expanded="false" />
+                <element signature="e#6193#6322#0#PHP" expanded="false" />
+                <element signature="e#6392#6480#0#PHP" expanded="false" />
+                <element signature="e#6485#7028#0#PHP" expanded="false" />
+                <element signature="e#6552#6999#0#PHP" expanded="false" />
+                <element signature="e#6725#6862#0#PHP" expanded="false" />
+                <element signature="e#6744#6861#1#PHP" expanded="false" />
+                <element signature="e#6916#6999#0#PHP" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="run.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/run.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="38" column="29" lean-forward="false" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Gource.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Gource.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Exception</find>
+      <find>\Exception</find>
+      <find>jsonDecode</find>
+      <find>$repoUrl</find>
+      <find>[A</find>
+      <find>getRepoListFromBitBucket</find>
+      <find>setRepoData</find>
+      <find>auto_gourcer/repos/</find>
+      <find>buildHostURL</find>
+      <find>clone</find>
+      <find>checkout</find>
+      <find>checkoutLatestchanges</find>
+      <find>auto_gourcer</find>
+      <find>print</find>
+      <find>echo</find>
+      <find>echo</find>
+      <find>checkoutLatestChanges</find>
+      <find>-&gt;checkout</find>
+      <find>Executing rendering...</find>
+      <find>basePath</find>
+      <find>|</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Exception</replace>
+      <replace>auto-gourcer</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/src</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/AutoGourcer.php" />
+        <option value="$PROJECT_DIR$/src/Git.php" />
+        <option value="$PROJECT_DIR$/src/Gource.php" />
+        <option value="$PROJECT_DIR$/run.php" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1920" />
+    <option name="y" value="1076" />
+    <option name="width" value="1863" />
+    <option name="height" value="1084" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="auto-gourcer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="auto-gourcer" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="auto-gourcer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="auto-gourcer" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="avatars" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="auto-gourcer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="auto-gourcer" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="renders" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="AutoGourcer DEV Docker Deployment" type="docker-deploy" factoryName="Docker Deployment" singleton="true" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="JSONFilePath" value="" />
+          <option name="buildOnly" value="true" />
+          <option name="command" value="" />
+          <option name="containerName" value="" />
+          <option name="entrypoint" value="" />
+          <option name="imageTag" value="" />
+          <option name="sourceFilePath" value="docker/dev/php/Dockerfile" />
+          <option name="startBrowserSettings">
+            <browser />
+          </option>
+        </settings>
+      </deployment>
+    </configuration>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Docker Deployment.AutoGourcer DEV Docker Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6fc38a73-af96-4fae-8878-a1924d757da0" name="Default" comment="" />
+      <created>1505785833374</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1505785833374</updated>
+      <workItem from="1505785834743" duration="6924000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="6924000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1920" y="1076" width="1863" height="1084" extended-state="6" />
+    <layout>
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12217942" sideWeight="0.49413735" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36605316" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924336" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5685864" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17006055" sideWeight="0.50586265" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924336" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19325154" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16586152" sideWeight="0.49413735" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36605316" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17006055" sideWeight="0.50586265" order="0" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/readme.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="180">
+            <caret line="10" column="35" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/Core/Core_c.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="284" column="33" lean-forward="true" selection-start-line="284" selection-start-column="26" selection-end-line="284" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AutoGourcer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="44" column="32" lean-forward="false" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Git.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-185">
+          <caret line="68" column="37" lean-forward="false" selection-start-line="68" selection-start-column="37" selection-end-line="68" selection-end-column="37" />
+          <folding>
+            <element signature="e#139#194#0#PHP" expanded="false" />
+            <element signature="e#211#241#0#PHP" expanded="false" />
+            <element signature="e#284#307#0#PHP" expanded="false" />
+            <element signature="e#331#354#0#PHP" expanded="false" />
+            <element signature="e#379#402#0#PHP" expanded="false" />
+            <element signature="e#427#450#0#PHP" expanded="false" />
+            <element signature="e#541#891#0#PHP" expanded="false" />
+            <element signature="e#612#721#0#PHP" expanded="false" />
+            <element signature="e#731#820#0#PHP" expanded="false" />
+            <element signature="e#897#954#0#PHP" expanded="false" />
+            <element signature="e#3266#3325#0#PHP" expanded="false" />
+            <element signature="e#3330#3968#0#PHP" expanded="false" />
+            <element signature="e#3415#3932#0#PHP" expanded="false" />
+            <element signature="e#3670#3836#0#PHP" expanded="false" />
+            <element signature="e#3847#3932#0#PHP" expanded="false" />
+            <element signature="e#3974#4038#0#PHP" expanded="false" />
+            <element signature="e#4043#4368#0#PHP" expanded="false" />
+            <element signature="e#4133#4342#0#PHP" expanded="false" />
+            <element signature="e#4374#4457#0#PHP" expanded="false" />
+            <element signature="e#4462#4713#0#PHP" expanded="false" />
+            <element signature="e#4523#4679#0#PHP" expanded="false" />
+            <element signature="e#4596#4679#0#PHP" expanded="false" />
+            <element signature="e#4719#4752#0#PHP" expanded="false" />
+            <element signature="e#5111#5191#0#PHP" expanded="false" />
+            <element signature="e#5196#5421#0#PHP" expanded="false" />
+            <element signature="e#5252#5357#0#PHP" expanded="false" />
+            <element signature="e#5427#5507#0#PHP" expanded="false" />
+            <element signature="e#5512#5723#0#PHP" expanded="false" />
+            <element signature="e#5567#5660#0#PHP" expanded="false" />
+            <element signature="e#5729#5809#0#PHP" expanded="false" />
+            <element signature="e#5814#6039#0#PHP" expanded="false" />
+            <element signature="e#5870#5975#0#PHP" expanded="false" />
+            <element signature="e#6045#6125#0#PHP" expanded="false" />
+            <element signature="e#6130#6386#0#PHP" expanded="false" />
+            <element signature="e#6193#6322#0#PHP" expanded="false" />
+            <element signature="e#6392#6480#0#PHP" expanded="false" />
+            <element signature="e#6485#7028#0#PHP" expanded="false" />
+            <element signature="e#6552#6999#0#PHP" expanded="false" />
+            <element signature="e#6725#6862#0#PHP" expanded="false" />
+            <element signature="e#6744#6861#1#PHP" expanded="false" />
+            <element signature="e#6916#6999#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="38" column="29" lean-forward="false" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Gource.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
