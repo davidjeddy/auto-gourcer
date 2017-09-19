@@ -1,5 +1,5 @@
 {
-    "name": "davidjeddy/auto_gourcer",
+    "name": "davidjeddy/auto-gourcer",
     "description": "Generate source code visualization using Gource for recently changed repositories.",
     "type": "projects",
     "require": {
@@ -18,7 +18,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "dje\\autogourcer\\": "src/"
+            "dje\\AutoGourcer\\": "src/"
         }
     }
 }
