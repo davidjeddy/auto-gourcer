@@ -7,7 +7,7 @@ class AutoGourcer
     /**
      * @var string
      */
-    protected $basePath = '/auto_gourcer';
+    protected $basePath = '/auto-gourcer';
 
     /**
      * @var int
@@ -26,12 +26,11 @@ class AutoGourcer
 
     /**
      * @return $this
+     * @throws \Exception
      */
     public function run()
     {
         $this->createLogDir();
-
-        $repoUrl = '';
 
         $this->gitClass->getRepoList();
 
@@ -43,12 +42,10 @@ class AutoGourcer
             $repoSlug = $this->gitClass->repoData[$i]['slug'];
 
             // Git commands
-            $this->gitClass->clone($repoSlug);
-            $this->gitClass->checkout("{$this->basePath}/repos/{$repoSlug}");
+            $this->gitClass->clone($repoSlug)->checkout("{$this->basePath}/repos/{$repoSlug}");
 
             // Gourcer commands
-            $this->gourceClass->setSlug($repoSlug);
-            $this->gourceClass->render("{$this->basePath}/renders/{$repoSlug}.mp4");
+            $this->gourceClass->setSlug($repoSlug)->render("{$this->basePath}/renders/{$repoSlug}.mp4");
         }
 
         return $this;
@@ -61,7 +58,7 @@ class AutoGourcer
      * @return $this
      * @throws \Exception
      */
-    public function setGit(\dje\AutoGourcer\Git $class)
+    public function setGit(Git $class)
     {
         if (!$class instanceof \dje\AutoGourcer\Git) {
             throw new \Exception('Git dependency must inherit from class \dje\AutoGourcer\Git');
@@ -76,7 +73,7 @@ class AutoGourcer
      * @param int $param
      * @return AutoGourcer
      */
-    public function setCount(int $param): self
+    public function setRepoCount(int $param): self
     {
         $this->repoCount = $param;
 
@@ -88,7 +85,7 @@ class AutoGourcer
      * @return $this
      * @throws \Exception
      */
-    public function setGource(\dje\AutoGourcer\Gource $class)
+    public function setGource(Gource $class)
     {
         if (!$class instanceof \dje\AutoGourcer\Gource) {
             throw new \Exception('Gource dependency must inherit from class \dje\AutoGourcer\Gource');

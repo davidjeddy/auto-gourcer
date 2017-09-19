@@ -34,11 +34,13 @@ RUN apt-get install -y \
         xfonts-cyrillic \
         gource \
         ffmpeg \
-        libavcodec-extra
+        libavcodec-extra \
+        wget \
+        unzip
 RUN apt remove -y libavcodec-ffmpeg-extra56
 
 # gource installation
-WORKDIR /gource
+WORKDIR /gource_source
 RUN git clone https://github.com/acaudwell/Gource.git ./
 RUN ./autogen.sh && ./configure --with-tinyxml && make && make install
 
@@ -46,12 +48,15 @@ RUN ./autogen.sh && ./configure --with-tinyxml && make && make install
 RUN apt-get install python-software-properties software-properties-common
 RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 RUN apt-get update -y
-RUN apt-get install -y php7.1 php7.1-curl php7.1-dom php7.1-cli php7.1-json php7.1-common php7.1-mbstring php7.1-xml
+RUN apt-get install -y php7.1 php7.1-dom php7.1-cli php7.1-json php7.1-common php7.1-mbstring php7.1-xml php7.1-dom php7.1-curl
+
+# Change back to root of FS
+WORKDIR /auto-gourcer
 
 # Enable xDebug
 RUN apt-get install -y php7.1-dev  php-pear
 RUN pecl install xdebug
 COPY ./20-xdebug.ini /etc/php/7.1/cli/conf.d/20-xdebug.ini
 
-# exec containerp
+# exec container
 CMD ["tail", "-f", "/dev/null"]
