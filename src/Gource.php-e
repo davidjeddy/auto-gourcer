@@ -41,6 +41,11 @@ class Gource
     private $startDate = '2017-09-01';
 
     /**
+     * @var string
+     */
+    private $logDir = '{$this->logDir}';
+
+    /**
      * Do not re-render the repo video if the render is less than X seconds old. Default is 200s short of a day
      *
      * @param string $filePath
@@ -73,7 +78,6 @@ class Gource
             return true;
         }
 
-        // todo abstract these three parts into classes
         if ($xvfb === null) {
             $xvfb = "-a -s '-screen 0 {$this->resolution}x24' ";
         }
@@ -81,7 +85,7 @@ class Gource
         if ($gource === null) {
             $gource = "--path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' \
             --start-date '{$this->startDate}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} \
-            --default-user-image '{$this->basePath}/avatars/Default.jpg' --output-ppm-stream - ";
+            --default-user-image '{$this->basePath}/avatars/Default.jpg' --background 000000 --output-ppm-stream - ";
         }
 
         if ($ffmpeg === null) {
@@ -89,7 +93,7 @@ class Gource
             -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 {$this->basePath}/renders/{$this->slug}.mp4 ";
         }
 
-        $command = "xvfb-run {$xvfb}gource {$gource}| ffmpeg {$ffmpeg}2>> /var/log/auto-gourcer/gource.log";
+        $command = "xvfb-run {$xvfb}gource {$gource}| ffmpeg {$ffmpeg}2>> {$this->logDir}/auto-gourcer/gource.log";
 
         echo ("Running rendering command `{$command}`.\n");
 
@@ -135,7 +139,7 @@ class Gource
     }
 
     /**
-     * @param array $configArray
+     * @param string $param
      * @return Gource
      */
     public function setResolution(string $param): self
@@ -147,7 +151,7 @@ class Gource
 
     /**
      * @param string $param
-     * @return string
+     * @return Gource
      */
     public function setSlug(string $param): self
     {
@@ -156,6 +160,10 @@ class Gource
         return $this;
     }
 
+    /**
+     * @param string $param
+     * @return Gource
+     */
     public function setStartDate(string $param): self
     {
         $this->startDate = $param;

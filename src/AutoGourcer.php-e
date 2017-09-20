@@ -25,6 +25,11 @@ class AutoGourcer
     private $gourceClass;
 
     /**
+     * @var string
+     */
+    private $logDir = '/var/log';
+
+    /**
      * @return $this
      * @throws \Exception
      */
@@ -104,8 +109,8 @@ class AutoGourcer
     private function createLogDir()
     {
         // if log dir does not exist, create it
-        if (!file_exists('/var/log/auto-gourcer')) {
-            exec('mkdir /var/log/auto-gourcer');
+        if (!file_exists("{$this->logDir}/auto-gourcer")) {
+            exec("mkdir {$this->logDir}/auto-gourcer");
         }
     }
 }

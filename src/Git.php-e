@@ -37,6 +37,11 @@ class Git
     public $repoData;
 
     /**
+     * @var string
+     */
+    private $logDir = '/var/log';
+
+    /**
      * @return $this
      * @throws \Exception
      */
@@ -71,12 +76,12 @@ class Git
         try {
             // check if folder exists
             if (!\file_exists("./repos/{$slug}/")) {
-                $command = "git clone {$uri}{$slug} ./repos/{$slug} 2>> /var/log/auto-gourcer/git.log";
+                $command = "git clone {$uri}{$slug} ./repos/{$slug} 2>> {$this->logDir}/auto-gourcer/git.log";
             }
 
             if (\file_exists("./repos/{$slug}/")) {
                 // fetch all remote branch
-                $command = "cd ./repos/{$slug} && git fetch --all 2>> /var/log/auto-gourcer/git.log && cd ../";
+                $command = "cd ./repos/{$slug} && git fetch --all 2>> {$this->logDir}/auto-gourcer/git.log && cd ../";
             }
 
             // fetch all remote branch
@@ -100,7 +105,7 @@ class Git
             $branch = $this->checkoutLatestchanges($path);
         }
 
-        \exec ("cd {$path} && git checkout {$branch} 2>> /var/log/auto-gourcer/git.log");
+        \exec ("cd {$path} && git checkout {$branch} 2>> {$this->logDir}/auto-gourcer/git.log");
 
         return $this;
     }
@@ -165,9 +170,9 @@ class Git
      */
     private function emptyHostResponse(string $repoFile = 'repos.json'): string
     {
-        if (\file_exists("/var/log/auto-gourcer/{$repoFile}")) {
+        if (\file_exists("{$this->logDir}/auto-gourcer/{$repoFile}")) {
             // if no response from remote, use logged data
-            return (string)\file_get_contents("/var/log/auto-gourcer/{$repoFile}");
+            return (string)\file_get_contents("{$this->logDir}/auto-gourcer/{$repoFile}");
         }
 
         return '';
@@ -280,7 +285,7 @@ class Git
     {
         try {
             $paramData = $this->jsonDecode($paramData);
-            \file_put_contents("/var/log/auto-gourcer/repos.json", \json_encode($this->repoData));
+            \file_put_contents("{$this->logDir}/auto-gourcer/repos.json", \json_encode($this->repoData));
             \usort($paramData, function ($a, $b) {
                 return ($a['utc_last_updated'] <= $b['utc_last_updated']) ? 1 : -1;
             });
