@@ -65,7 +65,7 @@ class AutoGourcer
      */
     public function setGit(Git $class)
     {
-        if (!$class instanceof \dje\AutoGourcer\Git) {
+        if (!$class instanceof Git) {
             throw new \Exception('Git dependency must inherit from class \dje\AutoGourcer\Git');
         }
 
@@ -92,7 +92,7 @@ class AutoGourcer
      */
     public function setGource(Gource $class)
     {
-        if (!$class instanceof \dje\AutoGourcer\Gource) {
+        if (!$class instanceof Gource) {
             throw new \Exception('Gource dependency must inherit from class \dje\AutoGourcer\Gource');
         }
 
