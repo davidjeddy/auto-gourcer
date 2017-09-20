@@ -22,7 +22,7 @@ use \dje\AutoGourcer\Gource;
 /**
  * 
  */
-class Rundoc
+class Run
 {
 	/**
 	 * 
