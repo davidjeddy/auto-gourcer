@@ -6,7 +6,6 @@ use \PHPUnit\Framework\TestCase;
 /**
  * Class AutoGourcerTestTest
  *
- * @source https://jtreminio.com/2013/03/unit-testing-tutorial-introduction-to-phpunit/ Thank you!!!
  * @package tests
  */
 class GitTest extends TestCase

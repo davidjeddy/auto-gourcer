@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
 
-include_once '../vendor/autoload.php';
-
 use \PHPUnit\Framework\TestCase;
 use \dje\AutoGourcer\AutoGourcer;
 
