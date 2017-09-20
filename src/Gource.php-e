@@ -28,7 +28,7 @@ class Gource
     /**
      * @var string
      */
-    private $basePath = '/auto_gourcer';
+    private $basePath = '/auto-gourcer';
 
     /**
      * @var string
@@ -49,7 +49,7 @@ class Gource
      */
     public function doesNewRenderExist(string $filePath , int $secondsAgo = 7000): bool
     {
-        echo __METHOD__ . " : Does {$filePath} already exist? ";
+        echo "Does {$filePath} already exist? ";
 
         if (\file_exists($filePath) && \filemtime($filePath) > (\time() - $secondsAgo)) {
             echo "Yes. Not rendering new output for now.\n";
@@ -61,9 +61,10 @@ class Gource
     }
 
     /**
-     * @param string $xvfb
-     * @param string $gource
-     * @param string $ffmpeg
+     * @param string $outputFilePath
+     * @param string|null $xvfb
+     * @param string|null $gource
+     * @param string|null $ffmpeg
      * @return bool
      */
     public function render(string $outputFilePath, string $xvfb =  null, string $gource =  null, string $ffmpeg =  null)
@@ -74,18 +75,21 @@ class Gource
 
         // todo abstract these three parts into classes
         if ($xvfb === null) {
-            $xvfb = "-a -s '-screen 0 {$this->resolution}x24'";
+            $xvfb = "-a -s '-screen 0 {$this->resolution}x24' ";
         }
 
         if ($gource === null) {
-            $gource = "--path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' --start-date '{$this->startDate}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} --default-user-image '{$this->basePath}/avatars/Default.jpg' --output-ppm-stream - ";
+            $gource = "--path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' \
+            --start-date '{$this->startDate}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} \
+            --default-user-image '{$this->basePath}/avatars/Default.jpg' --output-ppm-stream - ";
         }
 
         if ($ffmpeg === null) {
-            $ffmpeg = "-y -r {$this->frameRate} -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 {$this->basePath}/renders/{$this->slug}.mp4";
+            $ffmpeg = "-y -r {$this->frameRate} -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast \
+            -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 {$this->basePath}/renders/{$this->slug}.mp4 ";
         }
 
-        $command = "xvfb-run {$xvfb} gource {$gource} | ffmpeg {$ffmpeg} 2>> /var/log/auto-gourcer/gource.log";
+        $command = "xvfb-run {$xvfb}gource {$gource}| ffmpeg {$ffmpeg}2>> /var/log/auto-gourcer/gource.log";
 
         echo ("Running rendering command `{$command}`.\n");
 
