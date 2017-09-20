@@ -215,12 +215,12 @@ class Git
     /**
      * @param $paramData
      * @return Git
-     * @throws Exception
+     * @throws \Exception
      */
     public function setHost($paramData): self
     {
         if (!is_string($paramData)) {
-            throw new Exception('$this->host must be a string.');
+            throw new \Exception('$this->host must be a string.');
         }
 
         $this->host = $paramData;
@@ -231,12 +231,12 @@ class Git
     /**
      * @param $paramData
      * @return Git
-     * @throws Exception
+     * @throws \Exception
      */
     public function setOrg($paramData): self
     {
         if (!is_string($paramData)) {
-            throw new Exception('Must be a string.');
+            throw new \Exception('Must be a string.');
         }
 
         $this->org = $paramData;
@@ -247,12 +247,12 @@ class Git
     /**
      * @param $paramData
      * @return Git
-     * @throws Exception
+     * @throws \Exception
      */
     public function setUser($paramData): self
     {
         if (!is_string($paramData)) {
-            throw new Exception('$this->user must be a string.');
+            throw new \Exception('$this->user must be a string.');
         }
 
         $this->user = $paramData;
@@ -263,12 +263,12 @@ class Git
     /**
      * @param $paramData
      * @return Git
-     * @throws Exception
+     * @throws \Exception
      */
     public function setPass($paramData = null): self
     {
         if (!is_string($paramData) || $paramData === null ) {
-            throw new Exception('$this->pass must be a string.');
+            throw new \Exception('$this->pass must be a string.');
         }
 
         $this->pass = $paramData;
@@ -290,8 +290,8 @@ class Git
                 return ($a['utc_last_updated'] <= $b['utc_last_updated']) ? 1 : -1;
             });
             $this->repoData = $paramData;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
 
         return $this;
