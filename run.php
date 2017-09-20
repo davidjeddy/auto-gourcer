@@ -22,7 +22,7 @@ use \dje\AutoGourcer\Gource;
 /**
  * 
  */
-class Run
+class Rundoc
 {
 	/**
 	 * 
@@ -33,7 +33,7 @@ class Run
         // Recommendation: DO NOT put your username/password in your code! Use a dotenv library similar to
         // https://github.com/vlucas/phpdotenv to handle sensitive datum.
         $gitClass = new Git();
-        $gitClass->setUser('David_Eddy')->setPass('Asdf1234')->setOrg('Sourcetoad');
+        $gitClass->setUser()->setPass()->setOrg();
 
         // Here we override some of the Gource class properties 
         $gourceClass = new Gource();
