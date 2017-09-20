@@ -187,8 +187,8 @@ class Git
     {
         try {
             $paramData = \json_decode($paramData, true);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
 
         return $paramData;
