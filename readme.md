@@ -43,4 +43,4 @@ Currently only [BitBucket](https://bitbucket.com) is supported; others are plann
 
 From the root of the project run the following command.
 
- - `./vendor/bin/phpunit ./tests`
+ - `docker exec -it AutoGourcer ./vendor/bin/phpunit`
