@@ -24,10 +24,6 @@ Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads y
  - As a [container service](./docs/readme_container.md) (recommended)
  - As a [PHP / Composer package](./docs/readme_php.md) (NOT recommended)
 
-# SCM host Integrations
-
-Currently only [BitBucket](https://bitbucket.com) is supported; others are planned.
-
 # RoadMap
 
  - 0.1.0 Initial Alpha release
@@ -38,3 +34,13 @@ Currently only [BitBucket](https://bitbucket.com) is supported; others are plann
  - 0.4.5 Use Monolog et al for logging, remove echo()s.
  ...
  - 1.0.0 Public Release
+
+# SCM host Integrations
+
+Currently only [BitBucket](https://bitbucket.com) is supported; others are planned.
+
+# Testing
+
+From the root of the project run the following command.
+
+ - `./vendor/bin/phpunit ./tests`
