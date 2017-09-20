@@ -14,5 +14,6 @@ before_install:
   - sudo docker --version
 
 script:
+ - sudo composer install --ansi --profile --prefer-dist -o -vvv
  - sudo docker-compose up --build -d
  - sudo docker exec -it AutoGourcer ./vendor/bin/phpunit
