@@ -28,7 +28,7 @@ Basic usage is rather streight forward; the classes are loaded using [Composer](
 functionality. You only need to call the AutoGourcer class with the proper dependencies injected, let the library do
 the rest.
 
-Basic:
+### Basic
 ```PHP
 <?php
 namespace your/class/namespace;
@@ -52,8 +52,8 @@ SomeClass
         // Recommenation: DO NOT put your username/password in your code! Use a dotenv library similar to 
         // https://github.com/vlucas/phpdotenv to handle sensitive datum.
         $gitClass = new Git();
-        $giClass->setUser(<YOUR GIT USERNAME>);
-        $giClass->setPass(<YOUR GIT PASSWORD>);
+        $gitClass->setUser(<YOUR GIT USERNAME>);
+        $gitClass->setPass(<YOUR GIT PASSWORD>);
 
         // This is the simplist implimentation. Using library all defaults.
         $ag = new AutoGourcer($gitClass, new Gource());
@@ -63,7 +63,7 @@ SomeClass
 
 ```
 
-Advanced:
+### Advanced
 ```PHP
 <?php
 namespace your/class/namespace;
@@ -87,12 +87,12 @@ SomeClass
         // Recommenation: DO NOT put your username/password in your code! Use a dotenv library similar to 
         // https://github.com/vlucas/phpdotenv to handle sensitive datum.
         $gitClass = new Git();
-        $giClass->setUser(<YOUR GIT USERNAME>);
-        $giClass->setPass(<YOUR GIT PASSWORD>);
+        $gitClass->setUser(<YOUR GIT USERNAME>);
+        $gitClass->setPass(<YOUR GIT PASSWORD>);
 
         
         // Here we override some of the Gource class properties 
-        $gourClass = new Gource();
+        $gourceClass = new Gource();
         $gourceClass->setFramerate('60');
         $gourceClass->setResolution('1920x1080');
 

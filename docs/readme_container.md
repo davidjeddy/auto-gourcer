@@ -16,17 +16,21 @@
 
 ## Usage
 
-Basic:
+Start the service using docker compose
+
+    `cd {project root}`
+
+    `docker-composer up --build -d`
+
+### Basic:
 
  - Usage is super simple running the library as a container service. 
 
-    `docker exec auto_gourcer php ./src/run.php`
+    `docker exec -it AutoGourcer php ./run.php`
 
-Advanced: ***TODO***
+### Advanced:
 
- - Copy the file `override.csv.dist` as `override.csv`, change settings as desired, run service.
-
-    `docker exec auto_gourcer php ./src/run.php`
+***TODO***
 
 ## Output
 
