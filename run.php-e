@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-
+// NOTE: no changes to this file are tracked unless GiT's --no-assume-unchanged is set.
+// @source https://stackoverflow.com/questions/9794931/keep-file-in-a-git-repo-but-dont-track-changes
 // if vendors dir does not exist, OR day of mont is 14; get composer.phar
 if (!file_exists('./vendor') || !file_exists('./composer.phar') || date('d') == 14) {
 	\exec('wget https://getcomposer.org/composer.phar -O ./composer.phar');
@@ -30,16 +31,11 @@ class Run
     public static function program()
     {
         // At the very least we need Git credentials in order to access BitBucket repositories.
-        // Recommendation: DO NOT put your username/password in your code! Use a dotenv library similar to
-        // https://github.com/vlucas/phpdotenv to handle sensitive datum.
         $gitClass = new Git();
-        $gitClass->setUser('GiT Username')->setPass('Git Password');
-        // Set organization if applicable.
-        $gitClass->setOrg('SVM Organization');
+        $gitClass->setHost('bitbucket.org')->setUser('GiT Username')->setPass('Git Password')->setOrg('SCM Org');
 
         // Here we override some of the Gource class properties 
         $gourceClass = new Gource();
-        // Set Gource class options for binary
         $gourceClass->setFramerate(30);
 
         // Override the AutoGourcer defaults
