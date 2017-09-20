@@ -1,4 +1,5 @@
-/repos/
+/logs
+/repos
 /vendor/
-/renders/
 docker-compose.override.yml
+.idea/
