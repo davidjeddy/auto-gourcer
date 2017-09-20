@@ -21,7 +21,7 @@ Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads y
 # Requirements
 
  - Really depends on how you plan to use this library.
- - As a [container service](./docs/readme_container_service.md) (recommended)
+ - As a [container service](./docs/readme_container.md) (recommended)
  - As a [PHP / Composer package](./docs/readme_php.md) (NOT recommended)
 
 # SCM host Integrations
