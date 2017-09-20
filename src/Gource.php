@@ -43,7 +43,7 @@ class Gource
     /**
      * @var string
      */
-    private $logDir = '{$this->logDir}';
+    private $logDir = '/var/log';
 
     /**
      * Do not re-render the repo video if the render is less than X seconds old. Default is 200s short of a day
