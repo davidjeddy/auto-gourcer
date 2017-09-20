@@ -89,4 +89,3 @@ The end of render() - you return true regardless, shouldn't you return false in 
 And for the question you know I'm gonna ask? Where be the tests? 😄
 
  - Touche sir. touche. Adding init test suite as of 0.1.75. Added to road map
- 
