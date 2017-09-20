@@ -1,0 +1,18 @@
+language: php
+php:
+  - '7.0'
+  - '7.1'
+
+sudo: required
+
+services:
+ - docker
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - sudo docker --version
+
+script:
+ - sudo docker-compose up --build -d
+ - sudo docker exec -it AutoGourcer ./vendor/bin/phpunit
