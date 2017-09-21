@@ -40,10 +40,6 @@ class AutoGourcer
         $this->gitClass->getRepoList();
 
         for ($i = 0; $i < $this->repoCount; $i++) {
-            if ($i > $this->repoCount) {
-                break;
-            }
-
             $repoSlug = $this->gitClass->repoData[$i]['slug'];
 
             // Git commands
@@ -61,14 +57,9 @@ class AutoGourcer
     /**
      * @param Git $class
      * @return $this
-     * @throws \Exception
      */
     public function setGit(Git $class)
     {
-        if (!$class instanceof Git) {
-            throw new \Exception('Git dependency must inherit from class \dje\AutoGourcer\Git');
-        }
-
         $this->gitClass = $class;
 
         return $this;
@@ -88,14 +79,9 @@ class AutoGourcer
     /**
      * @param Gource $class
      * @return $this
-     * @throws \Exception
      */
     public function setGource(Gource $class)
     {
-        if (!$class instanceof Gource) {
-            throw new \Exception('Gource dependency must inherit from class \dje\AutoGourcer\Gource');
-        }
-
         $this->gourceClass = $class;
 
         return $this;
@@ -110,7 +96,7 @@ class AutoGourcer
     {
         // if log dir does not exist, create it
         if (!file_exists("{$this->logDir}/auto-gourcer")) {
-            exec("mkdir {$this->logDir}/auto-gourcer");
+            mkdir("{$this->logDir}/auto-gourcer");
         }
     }
 }
