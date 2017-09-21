@@ -9,14 +9,22 @@ Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads y
 # Badges
 
 [![Latest Stable Version](https://poser.pugx.org/davidjeddy/auto-gourcer/v/stable?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
+[![Build Status](https://travis-ci.org/davidjeddy/auto-gourcer.svg?branch=master&)](https://travis-ci.org/davidjeddy/auto-gourcer)
 [![Total Downloads](https://poser.pugx.org/davidjeddy/auto-gourcer/downloads?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
-[![Latest Unstable Version](https://poser.pugx.org/davidjeddy/auto-gourcer/v/unstable?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
 [![License](https://poser.pugx.org/davidjeddy/auto-gourcer/license?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1d1a7b75-6eb7-4a4c-8585-9ac9c87370b9/mini.png)](https://insight.sensiolabs.com/projects/1d1a7b75-6eb7-4a4c-8585-9ac9c87370b9)
+
+[![composer.lock](https://poser.pugx.org/davidjeddy/auto-gourcer/composerlock?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
+[![GitHub issues](https://img.shields.io/github/issues/davidjeddy/auto-gourcer.svg?style=flat-square)](https://github.com/davidjeddy/auto-gourcer/issues)
+[![GitHub forks](https://img.shields.io/github/forks/davidjeddy/auto-gourcer.svg?style=flat-square)](https://github.com/davidjeddy/auto-gourcer/network)
+[![GitHub stars](https://img.shields.io/github/stars/davidjeddy/auto-gourcer.svg?style=flat-square)](https://github.com/davidjeddy/auto-gourcer/stargazers)
+
 [![Monthly Downloads](https://poser.pugx.org/davidjeddy/auto-gourcer/d/monthly?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
 [![Daily Downloads](https://poser.pugx.org/davidjeddy/auto-gourcer/d/daily?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
-[![composer.lock](https://poser.pugx.org/davidjeddy/auto-gourcer/composerlock?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1d1a7b75-6eb7-4a4c-8585-9ac9c87370b9/big.png)](https://insight.sensiolabs.com/projects/1d1a7b75-6eb7-4a4c-8585-9ac9c87370b9)
+[![Latest Unstable Version](https://poser.pugx.org/davidjeddy/auto-gourcer/v/unstable?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
+
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/davidjeddy/auto-gourcer/.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
 
 # Requirements
 
