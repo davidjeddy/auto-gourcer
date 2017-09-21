@@ -129,12 +129,7 @@ class Git
 
         \exec ('cd ' . $path . ' && for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\ $branch; done | sort -r', $responseData, $errorCode);
 
-        // parse the string and get the latest branch text
-        $branch = $responseData[0];
-        $branch = \explode(' ', $branch);
-        $branch = $branch[\count($branch) - 1];
-        $branch = \explode('/', $branch);
-        $branch = $branch[\count($branch) - 1];
+        $branch = $this->outputToBranchName($responseData);
 
         return $branch;
     }
@@ -210,51 +205,52 @@ class Git
         return $returnData;
     }
 
+    /**
+     * @param array $paramData
+     * @return string
+     */
+    private function outputToBranchName(array $paramData): string
+    {
+        // parse the string and get the latest branch text
+        $branch = $paramData[0];
+        $branch = \explode(' ', $branch);
+        $branch = $branch[\count($branch) - 1];
+        $branch = \explode('/', $branch);
+        $branch = $branch[\count($branch) - 1];
+
+        return $branch;
+    }
     // getter/setter methods
 
     /**
-     * @param $paramData
+     * @param string $paramData
      * @return Git
-     * @throws \Exception
      */
-    public function setHost($paramData): self
+    public function setHost(string $paramData): self
     {
-        if (!is_string($paramData)) {
-            throw new \Exception('$this->host must be a string.');
-        }
-
         $this->host = $paramData;
 
         return $this;
     }
 
     /**
-     * @param $paramData
+     * @param string $paramData
      * @return Git
      * @throws \Exception
      */
-    public function setOrg($paramData): self
+    public function setOrg(string $paramData): self
     {
-        if (!is_string($paramData)) {
-            throw new \Exception('Must be a string.');
-        }
-
         $this->org = $paramData;
 
         return $this;
     }
 
     /**
-     * @param $paramData
+     * @param string $paramData
      * @return Git
-     * @throws \Exception
      */
-    public function setUser($paramData): self
+    public function setUser(string $paramData): self
     {
-        if (!is_string($paramData)) {
-            throw new \Exception('$this->user must be a string.');
-        }
-
         $this->user = $paramData;
 
         return $this;
@@ -279,7 +275,6 @@ class Git
     /**
      * @param string $paramData
      * @return Git
-     * @throws \Exception
      */
     public function setRepoData(string $paramData): self
     {
@@ -287,11 +282,11 @@ class Git
             $paramData = $this->jsonDecode($paramData);
             \file_put_contents("{$this->logDir}/auto-gourcer/repos.json", \json_encode($this->repoData));
             \usort($paramData, function ($a, $b) {
-                return ($a['utc_last_updated'] <= $b['utc_last_updated']) ? 1 : -1;
+                return ($a['utc_last_updated'] <=> $b['utc_last_updated']);
             });
             $this->repoData = $paramData;
         } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+            return $e->getMessage();
         }
 
         return $this;
