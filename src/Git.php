@@ -95,13 +95,13 @@ class Git
 
     /**
      * @param $path
-     * @param null $branch
+     * @param string $branch
      * @return Git
      * @throws \Exception
      */
-    public function checkout($path, $branch = null): self
+    public function checkout($path, string $branch = ''): self
     {
-        if ($branch === null) {
+        if ($branch === '') {
             $branch = $this->checkoutLatestchanges($path);
         }
 
@@ -167,7 +167,7 @@ class Git
     {
         if (\file_exists("{$this->logDir}/auto-gourcer/{$repoFile}")) {
             // if no response from remote, use logged data
-            return (string)\file_get_contents("{$this->logDir}/auto-gourcer/{$repoFile}");
+            return (string)file_get_contents("{$this->logDir}/auto-gourcer/{$repoFile}");
         }
 
         return '';
@@ -282,7 +282,7 @@ class Git
             $paramData = $this->jsonDecode($paramData);
             \file_put_contents("{$this->logDir}/auto-gourcer/repos.json", \json_encode($this->repoData));
             \usort($paramData, function ($a, $b) {
-                return ($a['utc_last_updated'] <=> $b['utc_last_updated']);
+                return ($a['utc_last_updated'] <= $b['utc_last_updated']) ? 1 : -1;
             });
             $this->repoData = $paramData;
         } catch (\Exception $e) {
