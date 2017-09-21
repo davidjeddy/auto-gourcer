@@ -74,13 +74,11 @@ class Git
         $uri = $this->buildHostURL();
 
         try {
-            // check if folder exists
-            if (!\file_exists("./repos/{$slug}/")) {
-                $command = "git clone {$uri}{$slug} ./repos/{$slug} 2>> {$this->logDir}/auto-gourcer/git.log";
-            } else {
-                // TODO code smells here, better way to do this methods logic?
-                // (\file_exists("./repos/{$slug}/")
-                // fetch all remote branch
+            // default is to clone the repo...
+            $command = "git clone {$uri}{$slug} ./repos/{$slug} 2>> {$this->logDir}/auto-gourcer/git.log";
+
+            // ... but if the repo exists fetch all the branches instead.
+            if (\file_exists("./repos/{$slug}/")) {
                 $command = "cd ./repos/{$slug} && git fetch --all 2>> {$this->logDir}/auto-gourcer/git.log && cd ../";
             }
 
