@@ -21,30 +21,30 @@ use \dje\AutoGourcer\Git;
 use \dje\AutoGourcer\Gource;
 
 /**
- * 
+ *
  */
 class Run
 {
 	/**
-	 * 
+	 *
 	 */
     public static function program()
     {
         // At the very least we need Git credentials in order to access BitBucket repositories.
         $gitClass = new Git();
-        $gitClass->setHost('bitbucket.org')->setUser('GiT Username')->setPass('Git Password')->setOrg('SCM Org');
+        $gitClass->setHost('bitbucket.org')->setUser('David_Eddy')->setPass('~Celcerzero7')->setOrg('Sourcetoad');
 
-        // Here we override some of the Gource class properties 
+        // Here we override some of the Gource class properties
         $gourceClass = new Gource();
         $gourceClass->setFramerate(30);
 
         // Override the AutoGourcer defaults
         $ag = new AutoGourcer();
-        $ag->setRepoCount(1)->setGit($gitClass)->setGource($gourceClass);
+        $ag->setRepoCount(5)->setGit($gitClass)->setGource($gourceClass);
 
         // Finally run the process
         $ag->run();
-	}	
+	}
 }
 
 Run::program();

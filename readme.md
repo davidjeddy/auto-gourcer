@@ -14,6 +14,7 @@ Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads y
 [![License](https://poser.pugx.org/davidjeddy/auto-gourcer/license?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
 [![PHP version](https://badge.fury.io/ph/davidjeddy%2Fauto-gourcer.svg)](https://badge.fury.io/ph/davidjeddy%2Fauto-gourcer)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/1d1a7b75-6eb7-4a4c-8585-9ac9c87370b9/mini.png)](https://insight.sensiolabs.com/projects/1d1a7b75-6eb7-4a4c-8585-9ac9c87370b9)
+[![Dependency Status](https://www.versioneye.com/user/projects/59c42c61368b083227d43f63/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/59c42c61368b083227d43f63)
 
 [![composer.lock](https://poser.pugx.org/davidjeddy/auto-gourcer/composerlock?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
 [![GitHub issues](https://img.shields.io/github/issues/davidjeddy/auto-gourcer.svg?style=flat-square)](https://github.com/davidjeddy/auto-gourcer/issues)
