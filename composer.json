@@ -15,7 +15,7 @@
     "minimum-stability": "stable",
     "name": "davidjeddy/auto-gourcer",
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
         "gentle/bitbucket-api": "^1.0",
         "roave/security-advisories": "dev-master as 1.0"
     },
