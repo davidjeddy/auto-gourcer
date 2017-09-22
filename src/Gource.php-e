@@ -71,8 +71,9 @@ class Gource
      * @param string|null $gource
      * @param string|null $ffmpeg
      * @return bool
+     * @throws \Exception
      */
-    public function render(string $outputFilePath, string $xvfb =  null, string $gource =  null, string $ffmpeg =  null)
+    public function render(string $outputFilePath, string $xvfb = null, string $gource = null, string $ffmpeg = null)
     {
         if ($this->doesNewRenderExist($outputFilePath)) {
             return true;
@@ -105,10 +106,8 @@ class Gource
         echo "Executing rendering...\n";
         \exec($command, $returnData, $errorCode);
 
-        // remove file if rendering fails
-        if ($errorCode !== 0 && file_exists("{$this->basePath}/renders/{$this->slug}.mp4")) {
-            \exec("rm {$this->basePath}/renders/{$this->slug}.mp4");
-            return false;
+        if ($errorCode !== 0) {
+            throw new \Exception('Clone/Fetch command failed with code ' . $errorCode);
         }
 
         return true;
