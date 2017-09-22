@@ -42,16 +42,17 @@ class Git
     private $logDir = '/var/log';
 
     /**
+     * @var string
+     */
+    private $repoDir = './repos';
+
+    /**
      * @return $this
      * @throws \Exception
      */
     public function getRepoList()
     {
-        $returnData = '';
-
-        if ($this->host === 'bitbucket.org') {
-            $returnData = $this->getRepoListFromBitBucket();
-        }
+        $returnData = $this->getRepoListFromBitBucket();
 
         if (empty($returnData)) {
             $returnData = $this->emptyHostResponse();
@@ -68,25 +69,24 @@ class Git
      */
     public function clone(string $slug): self
     {
-        $command    = '';
-        $errorCode  = 0;
-
         $uri = $this->buildHostURL();
 
         try {
-            // check if folder exists
-            if (!\file_exists("./repos/{$slug}/")) {
-                $command = "git clone {$uri}{$slug} ./repos/{$slug} 2>> {$this->logDir}/auto-gourcer/git.log";
-            }
+            // default is to clone the repo...
+            $command = "git clone {$uri}{$slug} {$this->repoDir}/{$slug}" . $this->logOutput();
 
-            if (\file_exists("./repos/{$slug}/")) {
-                // fetch all remote branch
-                $command = "cd ./repos/{$slug} && git fetch --all 2>> {$this->logDir}/auto-gourcer/git.log && cd ../";
+            // ... but if the repo exists fetch all the branches instead.
+            if (\file_exists("{$this->repoDir}/{$slug}/")) {
+                $command = "cd {$this->repoDir}/{$slug} && git fetch --all" . $this->logOutput() . "&& cd ../";
             }
 
             // fetch all remote branch
             \exec($command, $responseData, $errorCode);
-        } catch (\Throwable $e) {
+
+            if ($errorCode !== 0) {
+                throw new \Exception('Clone/Fetch command failed with code ' . $errorCode);
+            }
+        } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
         }
 
@@ -95,17 +95,17 @@ class Git
 
     /**
      * @param $path
-     * @param null $branch
+     * @param string $branch
      * @return Git
      * @throws \Exception
      */
-    public function checkout($path, $branch = null): self
+    public function checkout($path, string $branch = ''): self
     {
-        if ($branch === null) {
+        if ($branch === '') {
             $branch = $this->checkoutLatestchanges($path);
         }
 
-        \exec ("cd {$path} && git checkout {$branch} 2>> {$this->logDir}/auto-gourcer/git.log");
+        \exec ("cd {$path} && git checkout {$branch}" . $this->logOutput());
 
         return $this;
     }
@@ -129,12 +129,7 @@ class Git
 
         \exec ('cd ' . $path . ' && for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\ $branch; done | sort -r', $responseData, $errorCode);
 
-        // parse the string and get the latest branch text
-        $branch = $responseData[0];
-        $branch = \explode(' ', $branch);
-        $branch = $branch[\count($branch) - 1];
-        $branch = \explode('/', $branch);
-        $branch = $branch[\count($branch) - 1];
+        $branch = $this->outputToBranchName($responseData);
 
         return $branch;
     }
@@ -172,7 +167,7 @@ class Git
     {
         if (\file_exists("{$this->logDir}/auto-gourcer/{$repoFile}")) {
             // if no response from remote, use logged data
-            return (string)\file_get_contents("{$this->logDir}/auto-gourcer/{$repoFile}");
+            return (string)file_get_contents("{$this->logDir}/auto-gourcer/{$repoFile}");
         }
 
         return '';
@@ -199,62 +194,67 @@ class Git
      */
     private function buildHostURL(): string
     {
-        $returnData = '';
-
-        if ($this->host === 'bitbucket.org') {
-            $returnData = "https://" .$this->user . ":" . $this->pass ."@" . $this->host . "/"
-                . ($this->org ? $this->org . '/' : null);
-
-        }
+        $returnData = "https://" .$this->user . ":" . $this->pass ."@" . $this->host . "/"
+            . ($this->org ? $this->org . '/' : null);
 
         return $returnData;
+    }
+
+    /**
+     * @param array $paramData
+     * @return string
+     */
+    private function outputToBranchName(array $paramData): string
+    {
+        // parse the string and get the latest branch text
+        $branch = $paramData[0];
+        $branch = \explode(' ', $branch);
+        $branch = $branch[\count($branch) - 1];
+        $branch = \explode('/', $branch);
+        $branch = $branch[\count($branch) - 1];
+
+        return $branch;
+    }
+
+    /**
+     * @return string
+     */
+    private function logOutput(): string
+    {
+        return "2>> {$this->logDir}/auto-gourcer/git.log";
     }
 
     // getter/setter methods
 
     /**
-     * @param $paramData
+     * @param string $paramData
      * @return Git
-     * @throws \Exception
      */
-    public function setHost($paramData): self
+    public function setHost(string $paramData): self
     {
-        if (!is_string($paramData)) {
-            throw new \Exception('$this->host must be a string.');
-        }
-
         $this->host = $paramData;
 
         return $this;
     }
 
     /**
-     * @param $paramData
+     * @param string $paramData
      * @return Git
      * @throws \Exception
      */
-    public function setOrg($paramData): self
+    public function setOrg(string $paramData): self
     {
-        if (!is_string($paramData)) {
-            throw new \Exception('Must be a string.');
-        }
-
         $this->org = $paramData;
 
         return $this;
     }
 
     /**
-     * @param $paramData
+     * @param string $paramData
      * @return Git
-     * @throws \Exception
      */
-    public function setUser($paramData): self
+    public function setUser(string $paramData): self
     {
-        if (!is_string($paramData)) {
-            throw new \Exception('$this->user must be a string.');
-        }
-
         $this->user = $paramData;
 
         return $this;
@@ -265,12 +265,8 @@ class Git
      * @return Git
      * @throws \Exception
      */
-    public function setPass($paramData = null): self
+    public function setPass(string $paramData): self
     {
-        if (!is_string($paramData) || $paramData === null ) {
-            throw new \Exception('$this->pass must be a string.');
-        }
-
         $this->pass = $paramData;
 
         return $this;
@@ -279,7 +275,6 @@ class Git
     /**
      * @param string $paramData
      * @return Git
-     * @throws \Exception
      */
     public function setRepoData(string $paramData): self
     {
@@ -291,7 +286,7 @@ class Git
             });
             $this->repoData = $paramData;
         } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+            echo $e->getMessage();
         }
 
         return $this;
