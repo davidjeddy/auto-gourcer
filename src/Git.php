@@ -47,11 +47,7 @@ class Git
      */
     public function getRepoList()
     {
-        $returnData = '';
-
-        if ($this->host === 'bitbucket.org') {
-            $returnData = $this->getRepoListFromBitBucket();
-        }
+        $returnData = $this->getRepoListFromBitBucket();
 
         if (empty($returnData)) {
             $returnData = $this->emptyHostResponse();
@@ -68,9 +64,6 @@ class Git
      */
     public function clone(string $slug): self
     {
-        $command    = '';
-        $errorCode  = 0;
-
         $uri = $this->buildHostURL();
 
         try {
@@ -84,7 +77,11 @@ class Git
 
             // fetch all remote branch
             \exec($command, $responseData, $errorCode);
-        } catch (\Throwable $e) {
+
+            if ($errorCode !== 0) {
+                throw new \Exception('Clone/Fetch command failed with code ' . $errorCode);
+            }
+        } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
         }
 
@@ -192,13 +189,8 @@ class Git
      */
     private function buildHostURL(): string
     {
-        $returnData = '';
-
-        if ($this->host === 'bitbucket.org') {
-            $returnData = "https://" .$this->user . ":" . $this->pass ."@" . $this->host . "/"
-                . ($this->org ? $this->org . '/' : null);
-
-        }
+        $returnData = "https://" .$this->user . ":" . $this->pass ."@" . $this->host . "/"
+            . ($this->org ? $this->org . '/' : null);
 
         return $returnData;
     }
@@ -259,12 +251,8 @@ class Git
      * @return Git
      * @throws \Exception
      */
-    public function setPass($paramData = null): self
+    public function setPass(string $paramData): self
     {
-        if (!is_string($paramData) || $paramData === null ) {
-            throw new \Exception('$this->pass must be a string.');
-        }
-
         $this->pass = $paramData;
 
         return $this;
@@ -284,7 +272,7 @@ class Git
             });
             $this->repoData = $paramData;
         } catch (\Exception $e) {
-            return $e->getMessage();
+            echo $e->getMessage();
         }
 
         return $this;
