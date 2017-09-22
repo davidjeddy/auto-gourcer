@@ -42,6 +42,11 @@ class Git
     private $logDir = '/var/log';
 
     /**
+     * @var string
+     */
+    private $repoDir = './repos';
+
+    /**
      * @return $this
      * @throws \Exception
      */
@@ -68,11 +73,11 @@ class Git
 
         try {
             // default is to clone the repo...
-            $command = "git clone {$uri}{$slug} ./repos/{$slug} 2>> {$this->logDir}/auto-gourcer/git.log";
+            $command = "git clone {$uri}{$slug} {$this->repoDir}/{$slug}" . $this->logOutput();
 
             // ... but if the repo exists fetch all the branches instead.
-            if (\file_exists("./repos/{$slug}/")) {
-                $command = "cd ./repos/{$slug} && git fetch --all 2>> {$this->logDir}/auto-gourcer/git.log && cd ../";
+            if (\file_exists("{$this->repoDir}/{$slug}/")) {
+                $command = "cd {$this->repoDir}/{$slug} && git fetch --all" . $this->logOutput() . "&& cd ../";
             }
 
             // fetch all remote branch
@@ -100,7 +105,7 @@ class Git
             $branch = $this->checkoutLatestchanges($path);
         }
 
-        \exec ("cd {$path} && git checkout {$branch} 2>> {$this->logDir}/auto-gourcer/git.log");
+        \exec ("cd {$path} && git checkout {$branch}" . $this->logOutput());
 
         return $this;
     }
@@ -210,6 +215,15 @@ class Git
 
         return $branch;
     }
+
+    /**
+     * @return string
+     */
+    private function logOutput(): string
+    {
+        return "2>> {$this->logDir}/auto-gourcer/git.log";
+    }
+
     // getter/setter methods
 
     /**
