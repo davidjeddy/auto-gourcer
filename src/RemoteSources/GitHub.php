@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace dje\AutoGourcer\remote_sources;
+namespace dje\AutoGourcer\RemoteSources;
 
 // classes to interface with GitHub's API easily
 use Github\Client as GHC;

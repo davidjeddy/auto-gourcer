@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace dje\AutoGourcer\remote_sources;
+namespace dje\AutoGourcer\RemoteSources;
 
 /**
  * Interface RemoteHostInterface
@@ -42,5 +42,5 @@ class BaseHost
     protected function getRepoList()
     {
         throw \Exception('No getRepoList() logic defined.');
-    };
+    }
 }
