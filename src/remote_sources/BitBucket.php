@@ -1,15 +1,54 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pheagey
- * Date: 10/8/17
- * Time: 5:40 PM
- */
-
+declare(strict_types=1);
 namespace dje\AutoGourcer\remote_sources;
 
+// classes to interface with BitBucket's API easily
 
-class BitBucket
+use \Bitbucket\API\User\Repositories;
+use \Bitbucket\API\Authentication\Basic;
+
+/**
+ * Class BitBucket
+ * @package dje\AutoGourcer\remote_sources
+ */
+class BitBucket extends BaseHost
 {
+    /**
+     * Remote host base URL
+     */
+    protected const remoteHostBaseURL = 'https://bitbucket.com';
 
+    /**
+     * @throws \Exception
+     */
+    protected function basicAuth()
+    {
+        try {
+            // the output of this if()... block should be a json string
+            $this->remote = new Repositories();
+            $this->remote->setCredentials(new Basic ($this->user, $this->pass));
+
+            if (empty($returnData)) {
+                throw new \Exception("No valid response from {self::remoteHostBaseURL}.\n
+                Most likely cause is invalid credentials or host has gone away.");
+            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * @return string
+     * @throws \Exception
+     */
+    protected function getRepoList()
+    {
+        try {
+            $this->basicAuth();
+
+            return $this->remote->get()->getContent();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 }
