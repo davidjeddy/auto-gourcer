@@ -26,6 +26,11 @@ class BaseHost
     /**
      * @var null
      */
+    protected $org = null;
+
+    /**
+     * @var null
+     */
     protected $remote = null;
 
     /**
@@ -42,5 +47,78 @@ class BaseHost
     protected function getRepoList()
     {
         throw \Exception('No getRepoList() logic defined.');
+    }
+
+
+    /**
+     * @return string
+     */
+    protected function emptyHostResponse(): string
+    {
+        // if no response from remote, use logged data
+        if (\file_exists($this->getRepoListFromLogFile())) {
+            return (string)file_get_contents("{$this->logDir}/auto-gourcer/repos.json");
+        }
+
+        return '';
+    }
+
+    // getter and setters
+
+    /**
+     * @param string $var
+     * @return $this
+     */
+    public function setUser(string $var): self
+    {
+        $this->user = $var;
+
+        return $this;
+    }
+
+    /**
+     * @param string $var
+     * @return $this
+     */
+    public function setPass(string $var): self
+    {
+        $this->pass = $var;
+
+        return $this;
+    }
+
+    /**
+     * @param string $paramData
+     * @return BaseHost
+     */
+    public function setOrg(string $paramData): self
+    {
+        $this->org = $paramData;
+
+        return $this;
+    }
+
+    /**
+     * @return BaseHost
+     */
+    public function getUser(): self
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return BaseHost
+     */
+    public function getPass(): string
+    {
+        return '[REDACTED FOR SECURITY]';
+    }
+
+    /**
+     * @return BaseHost
+     */
+    public function getOrg(): self
+    {
+        return $this->org;
     }
 }

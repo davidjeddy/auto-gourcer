@@ -4,6 +4,7 @@ namespace dje\AutoGourcer;
 
 use \Bitbucket\API\User\Repositories;
 use \Bitbucket\API\Authentication\Basic;
+use dje\AutoGourcer\RemoteSources\BaseHost;
 
 /**
  * Class Git
@@ -12,24 +13,9 @@ use \Bitbucket\API\Authentication\Basic;
 class Git
 {
     /**
-     * @var string
-     */
-    private $host = 'bitbucket.org';
-
-    /**
      * @var
      */
     private $org;
-
-    /**
-     * @var
-     */
-    private $user;
-
-    /**
-     * @var
-     */
-    private $pass;
 
     /**
      * @var
@@ -47,21 +33,9 @@ class Git
     private $repoDir = './repos';
 
     /**
-     * @return $this
-     * @throws \Exception
+     * @class \RemoteSources\BaseHost
      */
-    public function getRepoList()
-    {
-        $returnData = $this->getRepoListFromBitBucket();
-
-        if (empty($returnData)) {
-            $returnData = $this->emptyHostResponse();
-        }
-
-        $this->setRepoData($returnData);
-
-        return $this;
-    }
+    protected $hostClass = null;
 
     /**
      * @param string $slug
@@ -136,44 +110,6 @@ class Git
     }
 
     /**
-     * @return string
-     * @throws \Exception
-     */
-    private function getRepoListFromBitBucket()
-    {
-        $returnData = '';
-
-        try {
-            // the output of this if()... block should be a json string
-            $bbr = new Repositories();
-            $bbr->setCredentials(new Basic ($this->user, $this->pass));
-            $returnData = $bbr->get()->getContent();
-
-            if (empty($returnData)) {
-                throw new \Exception('No valid response from ' . $this->host . '. Most likely cause is invalid credentials.');
-            }
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
-
-        return $returnData;
-
-    }
-
-    /**
-     * @return string
-     */
-    private function emptyHostResponse(): string
-    {
-        // if no response from remote, use logged data
-        if (\file_exists($this->getRepoListFromLogFile())) {
-            return (string)file_get_contents("{$this->logDir}/auto-gourcer/repos.json");
-        }
-
-        return '';
-    }
-
-    /**
      * @param $paramData
      * @return array
      * @throws \Exception
@@ -227,47 +163,12 @@ class Git
     // getter/setter methods
 
     /**
-     * @param string $paramData
-     * @return Git
+     * @param BaseHost $class
+     * @return $this
      */
-    public function setHost(string $paramData): self
+    public function setHostClass(BaseHost $class)
     {
-        $this->host = $paramData;
-
-        return $this;
-    }
-
-    /**
-     * @param string $paramData
-     * @return Git
-     * @throws \Exception
-     */
-    public function setOrg(string $paramData): self
-    {
-        $this->org = $paramData;
-
-        return $this;
-    }
-
-    /**
-     * @param string $paramData
-     * @return Git
-     */
-    public function setUser(string $paramData): self
-    {
-        $this->user = $paramData;
-
-        return $this;
-    }
-
-    /**
-     * @param $paramData
-     * @return Git
-     * @throws \Exception
-     */
-    public function setPass(string $paramData): self
-    {
-        $this->pass = $paramData;
+        $this->hostClass = $class;
 
         return $this;
     }
@@ -290,5 +191,13 @@ class Git
         }
 
         return $this;
+    }
+
+    /**
+     * @return BaseHost
+     */
+    public function getHostClass(): BaseHost
+    {
+        return $this->hostClass;
     }
 }
