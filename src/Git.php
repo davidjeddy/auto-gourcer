@@ -113,7 +113,8 @@ class Git
     // private methods
 
     /**
-     * This is a bit convoluted: Change to repo dir. print reflog, get hash of most recent entry, return hash string.
+     * This is a bit convoluted: Change to repo dir. print `git reflog`, get hash of most recent entry,
+     * ... return commit hash string value.
      *
      * @source https://gist.github.com/jasonrudolph/1810768
      * @fork https://gist.github.com/davidjeddy/2b5d9362fb0728a53977364b2a22ab44
@@ -160,14 +161,13 @@ class Git
     }
 
     /**
-     * @param string $repoFile
      * @return string
      */
-    private function emptyHostResponse(string $repoFile = 'repos.json'): string
+    private function emptyHostResponse(): string
     {
-        if (\file_exists("{$this->logDir}/auto-gourcer/{$repoFile}")) {
-            // if no response from remote, use logged data
-            return (string)file_get_contents("{$this->logDir}/auto-gourcer/{$repoFile}");
+        // if no response from remote, use logged data
+        if (\file_exists($this->getRepoListFromLogFile())) {
+            return (string)file_get_contents("{$this->logDir}/auto-gourcer/repos.json");
         }
 
         return '';
