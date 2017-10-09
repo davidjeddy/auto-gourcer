@@ -32,7 +32,7 @@ class Run
     {
         // At the very least we need Git credentials in order to access BitBucket repositories.
         $gitClass = new Git();
-        $gitClass->setHost('bitbucket.org')->setUser('David_Eddy')->setPass('~Celcerzero7')->setOrg('Sourcetoad');
+        $gitClass->setHost('bitbucket.org')->setUser('')->setPass('')->setOrg('');
 
         // Here we override some of the Gource class properties
         $gourceClass = new Gource();

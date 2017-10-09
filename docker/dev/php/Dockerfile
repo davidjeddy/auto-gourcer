@@ -10,6 +10,7 @@ RUN apt-get install -y \
         software-properties-common \
         python-software-properties
 RUN add-apt-repository ppa:no1wantdthisname/ppa -y
+RUN apt-get update -y
 RUN apt-get install -y \
         autoconf \
         build-essential \

@@ -73,11 +73,11 @@ class Git
 
         try {
             // default is to clone the repo...
-            $command = "git clone {$uri}{$slug} {$this->repoDir}/{$slug}" . $this->logOutput();
+            $command = "git clone {$uri}{$slug} {$this->repoDir}/{$slug} " . $this->logOutput();
 
             // ... but if the repo exists fetch all the branches instead.
             if (\file_exists("{$this->repoDir}/{$slug}/")) {
-                $command = "cd {$this->repoDir}/{$slug} && git fetch --all" . $this->logOutput() . "&& cd ../";
+                $command = "cd {$this->repoDir}/{$slug} && git fetch --all " . $this->logOutput() . "&& cd ../";
             }
 
             // fetch all remote branch
@@ -105,7 +105,7 @@ class Git
             $branch = $this->checkoutLatestchanges($path);
         }
 
-        \exec ("cd {$path} && git checkout {$branch}" . $this->logOutput());
+        \exec ("cd {$path} && git checkout {$branch} " . $this->logOutput());
 
         return $this;
     }
