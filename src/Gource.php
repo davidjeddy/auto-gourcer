@@ -38,7 +38,7 @@ class Gource
     /**
      * @var string
      */
-    private $startDate = '2017-09-01';
+    private $startDate = null;
 
     /**
      * @var string
@@ -84,8 +84,8 @@ class Gource
         }
 
         if ($gource === null) {
-            $gource = "--path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' \
-            --start-date '{$this->startDate}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} \
+            $gource = "--key --path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' \
+            --start-date '{$this->getStartDate()}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} \
             --default-user-image '{$this->basePath}/avatars/Default.jpg' --background 000000 --output-ppm-stream - ";
         }
 
@@ -114,6 +114,14 @@ class Gource
     }
 
     // getter/setters
+
+    /**
+     * @return string
+     */
+    public function getStartDate(): string
+    {
+        return $this->startDate;
+    }
 
     /**
      * @param string $param
@@ -160,11 +168,15 @@ class Gource
     }
 
     /**
-     * @param string $param
+     * @param string|null $param
      * @return Gource
      */
-    public function setStartDate(string $param): self
+    public function setStartDate(string $param = null): self
     {
+        if ($param === null) {
+            $param = date('Y-m-d', strtotime("first day of last month"));
+        }
+
         $this->startDate = $param;
 
         return $this;

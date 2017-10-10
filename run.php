@@ -4,7 +4,7 @@ declare(strict_types=1);
 // @source https://stackoverflow.com/questions/9794931/keep-file-in-a-git-repo-but-dont-track-changes
 // if vendors dir does not exist, OR day of mont is 14; get composer.phar
 if (!file_exists('./vendor') || !file_exists('./composer.phar') || date('d') == 14) {
-	\exec('wget https://getcomposer.org/composer.phar -O ./composer.phar');
+    \exec('wget https://getcomposer.org/composer.phar -O ./composer.phar');
 }
 
 // install dependencies if not already installed
@@ -25,9 +25,9 @@ use \dje\AutoGourcer\Gource;
  */
 class Run
 {
-	/**
-	 *
-	 */
+    /**
+     * @throws Exception
+     */
     public static function program()
     {
         // At the very least we need Git credentials in order to access BitBucket repositories.
@@ -44,7 +44,7 @@ class Run
 
         // Finally run the process
         $ag->run();
-	}
+    }
 }
 
 Run::program();
