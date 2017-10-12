@@ -4,6 +4,7 @@ namespace dje\AutoGourcer;
 
 use \Bitbucket\API\User\Repositories;
 use \Bitbucket\API\Authentication\Basic;
+use dje\AutoGourcer\RemoteHost\BaseHost;
 
 /**
  * Class Git
@@ -12,24 +13,9 @@ use \Bitbucket\API\Authentication\Basic;
 class Git
 {
     /**
-     * @var string
-     */
-    private $host = 'bitbucket.org';
-
-    /**
      * @var
      */
-    private $org;
-
-    /**
-     * @var
-     */
-    private $user;
-
-    /**
-     * @var
-     */
-    private $pass;
+    protected $remoteHost;
 
     /**
      * @var
@@ -73,11 +59,11 @@ class Git
 
         try {
             // default is to clone the repo...
-            $command = "git clone {$uri}{$slug} {$this->repoDir}/{$slug} " . $this->logOutput();
+            $command = "git clone {$uri}{$slug} {$this->repoDir}/{$slug}" . $this->logOutput();
 
             // ... but if the repo exists fetch all the branches instead.
             if (\file_exists("{$this->repoDir}/{$slug}/")) {
-                $command = "cd {$this->repoDir}/{$slug} && git fetch --all " . $this->logOutput() . "&& cd ../";
+                $command = "cd {$this->repoDir}/{$slug} && git fetch --all" . $this->logOutput() . "&& cd ../";
             }
 
             // fetch all remote branch
@@ -105,7 +91,7 @@ class Git
             $branch = $this->checkoutLatestchanges($path);
         }
 
-        \exec ("cd {$path} && git checkout {$branch} " . $this->logOutput());
+        \exec ("cd {$path} && git checkout {$branch}" . $this->logOutput());
 
         return $this;
     }
@@ -145,11 +131,11 @@ class Git
         try {
             // the output of this if()... block should be a json string
             $bbr = new Repositories();
-            $bbr->setCredentials(new Basic ($this->user, $this->pass));
+            $bbr->setCredentials(new Basic ($this->remoteHost->user, $this->remoteHost->pass));
             $returnData = $bbr->get()->getContent();
 
             if (empty($returnData)) {
-                throw new \Exception('No valid response from ' . $this->host . '. Most likely cause is invalid credentials.');
+                throw new \Exception('No valid response from ' . $this->remoteHost::HOST . '. Most likely cause is invalid credentials.');
             }
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
@@ -194,8 +180,8 @@ class Git
      */
     private function buildHostURL(): string
     {
-        $returnData = "https://" .$this->user . ":" . $this->pass ."@" . $this->host . "/"
-            . ($this->org ? $this->org . '/' : null);
+        $returnData = $this->remoteHost->protocol . "://" .$this->remoteHost->user . ":" . $this->remoteHost->pass ."@"
+            . $this->remoteHost::HOST . "/" . ($this->remoteHost->org ? $this->remoteHost->org . '/' : null);
 
         return $returnData;
     }
@@ -221,55 +207,7 @@ class Git
      */
     private function logOutput(): string
     {
-        return "2>> {$this->logDir}/auto-gourcer/git.log";
-    }
-
-    // getter/setter methods
-
-    /**
-     * @param string $paramData
-     * @return Git
-     */
-    public function setHost(string $paramData): self
-    {
-        $this->host = $paramData;
-
-        return $this;
-    }
-
-    /**
-     * @param string $paramData
-     * @return Git
-     * @throws \Exception
-     */
-    public function setOrg(string $paramData): self
-    {
-        $this->org = $paramData;
-
-        return $this;
-    }
-
-    /**
-     * @param string $paramData
-     * @return Git
-     */
-    public function setUser(string $paramData): self
-    {
-        $this->user = $paramData;
-
-        return $this;
-    }
-
-    /**
-     * @param $paramData
-     * @return Git
-     * @throws \Exception
-     */
-    public function setPass(string $paramData): self
-    {
-        $this->pass = $paramData;
-
-        return $this;
+        return " 2>> {$this->logDir}/auto-gourcer/git.log";
     }
 
     /**
@@ -288,6 +226,27 @@ class Git
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
+
+        return $this;
+    }
+
+    // getter / setters
+
+    /**
+     * @return mixed
+     */
+    public function getRemoteHost()
+    {
+        return $this->remoteHost;
+    }
+
+    /**
+     * @param BaseHost $param
+     * @return Git
+     */
+    public function setRemoteHost(BaseHost $param): self
+    {
+        $this->remoteHost = $param;
 
         return $this;
     }

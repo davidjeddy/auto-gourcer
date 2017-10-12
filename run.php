@@ -8,7 +8,7 @@ if (!file_exists('./vendor') || !file_exists('./composer.phar') || date('d') == 
 }
 
 // install dependencies if not already installed
-\exec('php composer.phar install --ansi --profile --prefer-dist -o -vvv');
+//\exec('php composer.phar install --ansi --profile --prefer-dist -o -vvv');
 
 // include everything needed to run the application
 include_once '/auto-gourcer/vendor/autoload.php';
@@ -37,8 +37,8 @@ class Run
         $remoteHost->setUser('')->setPass('')->setOrg('');
 
         // Using remote host, GiT repos
-        $gitClass = new Git($remoteHost);
-        $gitClass->setRepoCount(5)->getRepos(); // not sure if we want to keep this or auto-trigger 'getRepos()'.
+        $gitClass = new Git();
+        $gitClass->setRemoteHost($remoteHost)->setRepoCount(5)->getRepos(); // not sure if we want to keep this or auto-trigger 'getRepos()'.
 
 
         // Here we override some of the Gource class properties
