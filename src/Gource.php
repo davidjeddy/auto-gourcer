@@ -120,6 +120,11 @@ class Gource
      */
     public function getStartDate(): string
     {
+        // if date not set, set default
+        if ($this->startDate === null) {
+            $this->setStartDate();
+        }
+
         return $this->startDate;
     }
 
