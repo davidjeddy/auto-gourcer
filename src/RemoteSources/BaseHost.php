@@ -9,29 +9,34 @@ namespace dje\AutoGourcer\RemoteSources;
 class BaseHost
 {
     /**
-     * Remote host base URL
+     * @const string
      */
-    protected const remoteHostBaseURL = null;
+    public const HOST = '';
 
     /**
-     * @var null
+     * @var string
      */
-    protected $user = null;
+    protected $user ='';
 
     /**
-     * @var null
+     * @var string
      */
-    protected $pass = null;
+    protected $pass ='';
 
     /**
-     * @var null
+     * @var string
      */
-    protected $org = null;
+    protected $org ='';
 
     /**
-     * @var null
+     * @var string
      */
-    protected $remote = null;
+    protected $remote ='';
+
+    /**
+     * @var string
+     */
+    protected $logDir ='';
 
     /**
      * throw \Exception
@@ -67,7 +72,7 @@ class BaseHost
 
     /**
      * @param string $var
-     * @return $this
+     * @return self
      */
     public function setUser(string $var): self
     {
@@ -78,7 +83,7 @@ class BaseHost
 
     /**
      * @param string $var
-     * @return $this
+     * @return self
      */
     public function setPass(string $var): self
     {
@@ -89,7 +94,7 @@ class BaseHost
 
     /**
      * @param string $paramData
-     * @return BaseHost
+     * @return self
      */
     public function setOrg(string $paramData): self
     {
@@ -99,15 +104,15 @@ class BaseHost
     }
 
     /**
-     * @return BaseHost
+     * @return string
      */
-    public function getUser(): self
+    public function getUser(): string
     {
         return $this->user;
     }
 
     /**
-     * @return BaseHost
+     * @return string
      */
     public function getPass(): string
     {
@@ -115,9 +120,9 @@ class BaseHost
     }
 
     /**
-     * @return BaseHost
+     * @return string
      */
-    public function getOrg(): self
+    public function getOrg(): string
     {
         return $this->org;
     }

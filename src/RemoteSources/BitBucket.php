@@ -16,7 +16,7 @@ class BitBucket extends BaseHost
     /**
      * Remote host base URL
      */
-    protected const remoteHostBaseURL = 'https://bitbucket.com';
+    public const HOST = 'bitbucket.com';
 
     /**
      * @throws \Exception
@@ -41,7 +41,7 @@ class BitBucket extends BaseHost
      * @return string
      * @throws \Exception
      */
-    protected function getRepoList()
+    public function getRepoList()
     {
         try {
             $this->basicAuth();

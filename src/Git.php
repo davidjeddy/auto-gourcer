@@ -15,11 +15,6 @@ class Git
     /**
      * @var
      */
-    private $org;
-
-    /**
-     * @var
-     */
     public $repoData;
 
     /**
@@ -130,8 +125,8 @@ class Git
      */
     private function buildHostURL(): string
     {
-        $returnData = "https://" .$this->user . ":" . $this->pass ."@" . $this->host . "/"
-            . ($this->org ? $this->org . '/' : null);
+        $returnData = "https://" .$this->hostClass->user . ":" . $this->hostClass->pass ."@" . $this->hostClass::HOST . "/"
+            . ($this->hostClass->org ? $this->hostClass->org . '/' : null);
 
         return $returnData;
     }
@@ -164,13 +159,13 @@ class Git
 
     /**
      * @param BaseHost $class
-     * @return $this
+     * @return string
      */
-    public function setHostClass(BaseHost $class)
+    public function setHostClass(BaseHost $class): string
     {
         $this->hostClass = $class;
 
-        return $this;
+        return $this->hostClass::HOST;
     }
 
     /**
@@ -199,5 +194,13 @@ class Git
     public function getHostClass(): BaseHost
     {
         return $this->hostClass;
+    }
+
+    /**
+     *
+     */
+    public function getRepoList()
+    {
+        return $this->hostClass->getRepoList();
     }
 }

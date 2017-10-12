@@ -14,7 +14,7 @@ class GitHub extends BaseHost
     /**
      * Remote host base URL
      */
-    protected const remoteHostBaseURL = 'https://github.com';
+    public const HOST = 'github.com';
 
     /**
      * @throws \Exception
@@ -39,7 +39,7 @@ class GitHub extends BaseHost
      * @return string
      * @throws \Exception
      */
-    protected function getRepoList()
+    public function getRepoList()
     {
         try {
             $this->basicAuth();

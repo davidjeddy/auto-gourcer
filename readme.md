@@ -57,3 +57,4 @@ From the root of the project run the following command.
 
 # Note
 Change to ./run.php ARE NOT TRACKED by default. To commit changes to this file use GiT's `--no-assume-unchanged` feature.
+Sourced from https://stackoverflow.com/questions/9794931/keep-file-in-a-git-repo-but-dont-track-changes
