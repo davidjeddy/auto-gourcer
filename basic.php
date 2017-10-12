@@ -37,8 +37,8 @@ class Run
         $remoteHost->setHost('bitbucket.org')->setUser('{USER}')->setPass('{PASS}')->setOrg('{ORGANIZATION}');
 
         // Using remote host, GiT repos
-        $gitClass = new Git($remoteHost);
-        $gitClass->setRepoCount(5)->getRepos(); // not sure if we want to keep this or auto-trigger 'getRepos()'.
+        $gitClass = new Git();
+        $gitClass->setRemoteHost($remoteHost)->setRepoCount(5)->getRepos(); // not sure if we want to keep this or auto-trigger 'getRepos()'.
 
         // Here we override some of the Gource class properties
         $gourceClass = new Gource();
