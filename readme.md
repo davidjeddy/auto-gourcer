@@ -20,9 +20,25 @@ Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads y
 
 # Requirements
 
- - Really depends on how you plan to use this library.
- - As a [container service](./docs/readme_container_service.md) (recommended)
- - As a [PHP / Composer package](./docs/readme_php.md) (NOT recommended)
+## As a container service (recommended):
+## General Requirements
+
+ - Shell / Terminal access: execute commands
+ - [Docker](https://www.docker.com): library execution in isolation
+ - [Git](https://git-scm.com/): library installation
+
+## As an included PHP library package (NOT recommended):
+
+ - [BitBucket](https://bitbucket.org): project source code repositories
+ - [Composer](https://getcomposer.org/): library installation
+ - [ffmpeg](https://www.ffmpeg.org/): video rendering
+ - [Git](https://git-scm.com/): library installation
+ - [Gource](http://gource.io/): render source code as a visual image
+ - [PHP](http://php.net/): language library is written in
+ - [VLC](https://www.videolan.org/vlc/index.html): view resulting video
+ - [xvfb](wikipedia): render images into video w/o a display device
+
+ *** Remove any container service / docker related prepended commands herein if used as an included library. ***
 
 # SCM host Integrations
 
@@ -51,16 +67,23 @@ If using a creditials system like [dotenv](https://github.com/vlucas/phpdotenv),
 
     `copy .env.dist .env`, then edit values as appropriate
 
+# Testing
+
+To execute the unit test suite run the following command:
+
+On host: `./vendor/bin/phpunit`
+In container: `docker exec -it AutoGourcer ./vendor/bin/phpunit`
+
 # Usage
-
-### Basic:
-
-     - Edit `./basic.php` and populate with creditials. !!! DO NOT COMMIT THIS CHANGE TO ANY REPOSITORY! !!!
 
 ### Dot ENV
 
     - `cp .env.dist .env`
     - Populate `.env` with appropriate values
+
+### Basic (NOT RECOMMENDED):
+
+     - Edit `./basic.php` and populate with creditials. !!! DO NOT COMMIT THIS CHANGE TO ANY REPOSITORY! !!!
 
 ### All
 

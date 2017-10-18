@@ -7,7 +7,8 @@
         "vlucas/phpdotenv": "^2.4"
     },
     "require-dev": {
-        "php": "^7.0"
+        "php": "^7.0",
+        "phpunit/phpunit": "^6.2"
     },
     "license": "MIT",
     "authors": [
