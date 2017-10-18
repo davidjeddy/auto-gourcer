@@ -53,5 +53,8 @@ RUN apt-get install -y php7.1 php7.1-dom php7.1-cli php7.1-json php7.1-common ph
 # Change back to root of FS
 WORKDIR /auto-gourcer
 
+# get composer
+RUN wget https://getcomposer.org/composer.phar -o composer.phar
+
 # exec container
 CMD ["tail", "-f", "/dev/null"]
