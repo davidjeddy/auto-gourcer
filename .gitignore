@@ -2,7 +2,6 @@
 /logs/
 /repos/
 /vendor/
-/.idea/
 
 # single files
 docker-compose.override.yml
