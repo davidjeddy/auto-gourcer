@@ -1,5 +1,9 @@
+# directories
 /logs
 /repos
-/vendor/
+/vendor
+/.idea
+
+# single files
 docker-compose.override.yml
-.idea/
+.env

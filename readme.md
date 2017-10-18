@@ -38,3 +38,34 @@ Currently only [BitBucket](https://bitbucket.com) is supported; others are plann
  - 0.4.5 Use Monolog et al for logging, remove echo()s.
  ...
  - 1.0.0 Public Release
+
+# Install
+
+The best way to install the library is via PHP's dependency manager [composer](https://getcomposer.org):
+
+    `composer require davidjeddy/auto-gourcer`
+
+# Configure
+
+If using a creditials system like [dotenv](https://github.com/vlucas/phpdotenv), configure creditials:
+
+    `copy .env.dist .env`, then edit values as appropriate
+
+# Usage
+
+### Basic:
+
+     - Edit `./basic.php` and populate with creditials. !!! DO NOT COMMIT THIS CHANGE TO ANY REPOSITORY! !!!
+
+### Dot ENV
+
+    - `cp .env.dist .env`
+    - Populate `.env` with appropriate values
+
+### All
+
+     - `docker-compose up --build -d`
+     - Wait for the build process to complete
+     - `docker exec AutoGourcer php ./basic.php`
+     - Wait until the render process/s complete
+     - Collect Bacon in `./renders` directory

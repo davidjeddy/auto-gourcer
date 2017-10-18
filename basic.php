@@ -4,11 +4,11 @@ declare(strict_types=1);
 // @source https://stackoverflow.com/questions/9794931/keep-file-in-a-git-repo-but-dont-track-changes
 // if vendors dir does not exist, OR day of mont is 14; get composer.phar
 if (!file_exists('./vendor') || !file_exists('./composer.phar') || date('d') == 14) {
-    \exec('wget https://getcomposer.org/composer.phar -O ./composer.phar');
+    \exec('cd ../ && wget https://getcomposer.org/composer.phar -O ./composer.phar');
 }
 
 // install dependencies if not already installed
-\exec('php composer.phar install --ansi --profile --prefer-dist -o -vvv');
+\exec('cd ../ && php composer.phar install --ansi --profile --prefer-dist -o -vvv');
 
 // include everything needed to run the application
 include_once '/auto-gourcer/vendor/autoload.php';
@@ -32,7 +32,7 @@ class Run
     {
         // At the very least we need Git credentials in order to access BitBucket repositories.
         $gitClass = new Git();
-        $gitClass->setHost('bitbucket.org')->setUser('')->setPass('')->setOrg('');
+        $gitClass->setHost('bitbucket.org')->setUser('{USER}')->setPass('{PASS}')->setOrg('{ORGANIZATION}');
 
         // Here we override some of the Gource class properties
         $gourceClass = new Gource();

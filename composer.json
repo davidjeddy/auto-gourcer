@@ -3,7 +3,8 @@
     "description": "Generate source code visualization using Gource for recently changed repositories.",
     "type": "projects",
     "require": {
-        "gentle/bitbucket-api": "^1.0"
+        "gentle/bitbucket-api": "^1.0",
+        "vlucas/phpdotenv": "^2.4"
     },
     "require-dev": {
         "php": "^7.0"

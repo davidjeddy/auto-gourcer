@@ -120,6 +120,10 @@ class Gource
      */
     public function getStartDate(): string
     {
+        if (!$this->startDate) {
+            $this->setStartDate();
+        }
+
         return $this->startDate;
     }
 
