@@ -59,5 +59,8 @@ RUN apt-get install -y php7.1-dev  php-pear
 RUN pecl install xdebug
 COPY ./20-xdebug.ini /etc/php/7.1/cli/conf.d/20-xdebug.ini
 
+# get composer
+RUN wget https://getcomposer.org/composer.phar -o composer.phar
+
 # exec container
 CMD ["tail", "-f", "/dev/null"]
