@@ -43,6 +43,7 @@ Currently only [BitBucket](https://bitbucket.com) is supported; others are plann
  - 0.3.0 Add GitHub integration
  - 0.4.0 Add GitLab integration
  - 0.4.5 Use Monolog et al for logging, remove echo()s.
+ - 0.5.0 Ignore common dependency directories: node_modules, vendor, bower, etc
  ...
  - 1.0.0 Public Release
 
