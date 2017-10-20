@@ -51,10 +51,12 @@ RUN apt-get update -y
 RUN apt-get install -y php7.1 php7.1-dom php7.1-cli php7.1-json php7.1-common php7.1-mbstring php7.1-xml php7.1-dom php7.1-curl
 
 # Change back to root of FS
+COPY ./ /auto-gourcer
 WORKDIR /auto-gourcer
 
 # get composer
-RUN wget https://getcomposer.org/composer.phar -o composer.phar
+RUN wget https://getcomposer.org/composer.phar -O composer.phar
+RUN php composer.phar install --ansi --prefer-dist --profile -o -vvv
 
 # exec container
-CMD ["tail", "-f", "/dev/null"]
+CMD ["php", "dotenv.php"]

@@ -31,6 +31,7 @@ class Run
 
         // Init. the Gource class with default properties
         $gourceClass = new Gource();
+            $gourceClass->setResolution('1920x1080');
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
