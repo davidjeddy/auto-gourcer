@@ -13,10 +13,10 @@ class Runner
     /**
      * @throws \Exception
      */
-    public static function program()
+    public function program()
     {
         // load dotenv values. If this is already done in your project, you will not need to do this again.
-        $dotenv = new Dotenv(__DIR__);
+        $dotenv = new Dotenv(__DIR__ . '/../');
         $dotenv->load();
 
         // Init. Git class.
