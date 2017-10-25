@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-include_once './vendor/autoload.php';
+namespace dje\AutoGourcer;
 
 use \dje\AutoGourcer\AutoGourcer;
 use \dje\AutoGourcer\Git;
@@ -13,7 +13,7 @@ use \dje\AutoGourcer\Gource;
 class Run
 {
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public static function program()
     {
@@ -31,7 +31,7 @@ class Run
 
         // Init. the Gource class with default properties
         $gourceClass = new Gource();
-            $gourceClass->setResolution('1920x1080');
+            $gourceClass->setResolution('720x680');
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
@@ -41,6 +41,9 @@ class Run
 
         // Finally run the process.
         $ag->run();
+
+        $hb = new \dje\AutoGourcer\HandBrake();
+        $hb->transcodeAll('./renders');
     }
 }
 
