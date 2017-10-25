@@ -68,5 +68,5 @@ RUN wget https://getcomposer.org/composer.phar -O composer.phar
 RUN php composer.phar install --ansi --prefer-dist --profile -o -vvv
 
 # exec container
-#CMD ["php", "dotenv.php"]
+#CMD ["php", "run.php"]
 CMD ["tail", "-f", "/dev/null"]
