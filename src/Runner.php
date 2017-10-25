@@ -1,16 +1,14 @@
 <?php
 declare(strict_types=1);
-
 namespace dje\AutoGourcer;
 
-use \dje\AutoGourcer\AutoGourcer;
-use \dje\AutoGourcer\Git;
-use \dje\AutoGourcer\Gource;
+use Dotenv\Dotenv;
 
 /**
- *
+ * Class Runner
+ * @package dje\AutoGourcer
  */
-class Run
+class Runner
 {
     /**
      * @throws \Exception
@@ -18,7 +16,7 @@ class Run
     public static function program()
     {
         // load dotenv values. If this is already done in your project, you will not need to do this again.
-        $dotenv = new Dotenv\Dotenv(__DIR__);
+        $dotenv = new Dotenv(__DIR__);
         $dotenv->load();
 
         // Init. Git class.
@@ -42,9 +40,8 @@ class Run
         // Finally run the process.
         $ag->run();
 
-        $hb = new \dje\AutoGourcer\HandBrake();
+        // Transcode for a smaller file size
+        $hb = new HandBrake();
         $hb->transcodeAll('./renders');
     }
 }
-
-Run::program();

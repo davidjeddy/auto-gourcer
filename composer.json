@@ -3,13 +3,12 @@
     "description": "Generate source code visualization using Gource for recently changed repositories.",
     "type": "projects",
     "require": {
+        "php": "^7.0",
         "gentle/bitbucket-api": "^1.0",
         "vlucas/phpdotenv": "^2.4"
     },
     "require-dev": {
-        "php": "^7.0",
         "phpunit/phpunit": "^6.2",
-        "vlucas/phpdotenv": "^2.4",
         "php-composter/php-composter-phpcs-psr2": "dev-master"
     },
     "license": "MIT",
