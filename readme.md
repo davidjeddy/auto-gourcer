@@ -8,6 +8,8 @@ Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads y
 
 # Badges
 
+## Repository Stats
+
 [![Latest Stable Version](https://poser.pugx.org/davidjeddy/auto-gourcer/v/stable?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
 [![Total Downloads](https://poser.pugx.org/davidjeddy/auto-gourcer/downloads?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
 [![Latest Unstable Version](https://poser.pugx.org/davidjeddy/auto-gourcer/v/unstable?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
@@ -15,6 +17,19 @@ Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads y
 [![Monthly Downloads](https://poser.pugx.org/davidjeddy/auto-gourcer/d/monthly?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
 [![Daily Downloads](https://poser.pugx.org/davidjeddy/auto-gourcer/d/daily?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
 [![composer.lock](https://poser.pugx.org/davidjeddy/auto-gourcer/composerlock?format=flat-square)](https://packagist.org/packages/davidjeddy/auto-gourcer)
+
+## Code Climate 
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/61f99e48e1e1f2ab7119/maintainability)](https://codeclimate.com/github/davidjeddy/auto-gourcer/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/61f99e48e1e1f2ab7119/test_coverage)](https://codeclimate.com/github/davidjeddy/auto-gourcer/test_coverage)
+
+## Scrutinizer CI
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/davidjeddy/auto-gourcer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/davidjeddy/auto-gourcer/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/davidjeddy/auto-gourcer/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/davidjeddy/auto-gourcer/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/davidjeddy/auto-gourcer/badges/build.png?b=master)](https://scrutinizer-ci.com/g/davidjeddy/auto-gourcer/build-status/master)
+
+## Sensio Lab's Insight
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/1d1a7b75-6eb7-4a4c-8585-9ac9c87370b9/big.png)](https://insight.sensiolabs.com/projects/1d1a7b75-6eb7-4a4c-8585-9ac9c87370b9)
 

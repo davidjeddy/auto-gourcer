@@ -35,6 +35,7 @@ class Run
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
         $ag->setGit($gitClass)
+            ->setRepoCount(10)
             ->setGource($gourceClass);
 
         // Finally run the process.
