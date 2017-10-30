@@ -5,10 +5,11 @@ RUN export TERM=xterm
 RUN apt-get clean -y
 
 # ffmpeg installation
-RUN apt-get update -y
+RUN apt-get update -y --fix-missing
 RUN apt-get install -y \
         software-properties-common \
         python-software-properties
+
 RUN add-apt-repository ppa:no1wantdthisname/ppa -y
 RUN apt-get install -y \
         autoconf \
@@ -17,6 +18,7 @@ RUN apt-get install -y \
         pkg-config \
         gcc \
         git \
+        handbrake-cli \
         libsdl2-dev \
         libsdl2-image-dev \
         libpcre3-dev \
@@ -38,14 +40,10 @@ RUN apt-get install -y \
         libavcodec-extra \
         wget \
         unzip
+
 RUN apt remove -y libavcodec-ffmpeg-extra56
 
-RUN add-apt-repository ppa:stebbins/handbrake-releases
-RUN apt-get update -y
-RUN apt-get install HandBrakeCLI
-
 # gource installation
-WORKDIR /gource_source
 RUN git clone https://github.com/acaudwell/Gource.git ./
 RUN ./autogen.sh && ./configure --with-tinyxml && make && make install
 
