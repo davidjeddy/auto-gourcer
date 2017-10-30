@@ -29,7 +29,7 @@ class Runner
 
         // Init. the Gource class with default properties
         $gourceClass = new Gource();
-            $gourceClass->setResolution('720x680');
+            $gourceClass->setResolution('240x160');
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
