@@ -18,9 +18,8 @@ class HandBrake
         $dirFiles = scandir($param);
 
         foreach ($dirFiles as $key => $fileName) {
-            if (substring($fileName, 0, -3) === $format) {
-                // transcode only files of the specified format
-
+            if (substr($fileName, 0, -2) === $format) {
+                // transcode only files of specified format
                 $this->transcode($fileName);
             }
         }
@@ -35,17 +34,19 @@ class HandBrake
     public function transcode(string $param = ''): bool
     {
         try {
+            print_r('Transcoding via Handbrake...');
             $command = "HandBrakeCLI -i $param -e x264 -q 15 -o transcoded_$param";
 
-            echo "Transcoding rendered video...\n";
+            echo "Transcoding rendered video...";
 
             \exec($command, $returnData, $errorCode);
 
-            if ($errorCode === 0) {
+            if (!$errorCode) {
                 unlink($param);
                 rename("transcoded_$param", $param);
             }
 
+            print_r('Done.\n');
             return true;
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";

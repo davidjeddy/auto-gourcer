@@ -120,7 +120,7 @@ class Gource
         \exec($command, $returnData, $errorCode);
 
         if ($errorCode !== 0) {
-            throw new \Exception('Clone/Fetch command failed with code ' . $errorCode);
+            throw new \Exception('Rendering command failed with code ' . $errorCode . '. Command was: ' . $command);
         }
 
         return true;
