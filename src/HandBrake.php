@@ -13,14 +13,16 @@ class HandBrake
      * @param string $format
      * @return bool
      */
-    public function transcodeAll(string $param = './renders', string $format = 'mp4'): bool
+    public function transcodeAll(string $param = './renders/', string $format = 'mp4'): bool
     {
-        $dirFiles = \exec('find $param  -printf "%f\n" | grep $format');
-        $dirFiles = \explode('\n', $dirFiles);
+        $dirFiles = scandir($param);
 
         foreach ($dirFiles as $key => $fileName) {
-            // remove old file, rename new file to the old's value if transcoding is successful
-            $this->transcode($fileName);
+            if (substring($fileName, 0, -3) === $format) {
+                // transcode only files of the specified format
+
+                $this->transcode($fileName);
+            }
         }
 
         return true;
@@ -39,7 +41,7 @@ class HandBrake
 
             \exec($command, $returnData, $errorCode);
 
-            if (!$errorCode) {
+            if ($errorCode === 0) {
                 unlink($param);
                 rename("transcoded_$param", $param);
             }
