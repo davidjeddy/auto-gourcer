@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+namespace dje\AutoGourcer\Tests;
 
 use \PHPUnit\Framework\TestCase;
 use \dje\AutoGourcer\AutoGourcer;
