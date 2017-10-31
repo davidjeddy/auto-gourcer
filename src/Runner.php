@@ -29,12 +29,13 @@ class Runner
 
         // Init. the Gource class with default properties
         $gourceClass = new Gource();
-            $gourceClass->setResolution('240x160');
+            $gourceClass->setResolution('1920x1080')
+                ->setStartDate('2017-10-01');
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
         $ag->setGit($gitClass)
-            ->setRepoCount(10)
+            ->setRepoCount(5)
             ->setGource($gourceClass);
 
         // Finally run the process.
