@@ -8,45 +8,53 @@ namespace dje\AutoGourcer;
  */
 class HandBrake
 {
+
     /**
-     * @param string $param
-     * @param string $format
+     * @var
+     */
+    public $path = './renders';
+
+    /**
+     * @var
+     */
+    public $file = '';
+
+    /**
+     * @var
+     */
+    public $ext = 'mp4';
+
+    /**
      * @return bool
      */
-    public function transcodeAll(string $param = './renders/', string $format = 'mp4'): bool
+    public function transcodeAll(): bool
     {
-        $dirFiles = scandir($param);
-
-        foreach ($dirFiles as $key => $fileName) {
-            if (substr($fileName, 0, -2) === $format) {
-                // transcode only files of specified format
-                $this->transcode($fileName);
-            }
+        $dirFiles = glob("$this->path/*.mp4");
+        foreach ($dirFiles as $key => $filePathName) {
+            // remove old file, rename new file to the old's value if transcoding is successful
+            $this->transcode($filePathName);
         }
 
         return true;
     }
 
     /**
-     * @param string $param
+     * @param string $source
      * @return bool
      */
-    public function transcode(string $param = ''): bool
+    public function transcode(string $source): bool
     {
         try {
-            print_r('Transcoding via Handbrake...');
-            $command = "HandBrakeCLI -i $param -e x264 -q 15 -o transcoded_$param";
+            echo "Transcoding rendered $source video...";
 
-            echo "Transcoding rendered video...";
+            $command = "HandBrakeCLI -i $source -e x264 -q 15 -o {$source}_";
 
             \exec($command, $returnData, $errorCode);
+            \unlink($source);
+            \rename("{$source}_", "$source");
 
-            if (!$errorCode) {
-                unlink($param);
-                rename("transcoded_$param", $param);
-            }
+            echo "completed.\n";
 
-            print_r('Done.\n');
             return true;
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
@@ -55,3 +63,4 @@ class HandBrake
         return true;
     }
 }
+
