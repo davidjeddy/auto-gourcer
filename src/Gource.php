@@ -46,13 +46,18 @@ class Gource
     private $logDir = '/var/log';
 
     /**
+     * @var bool
+     */
+    private $key = false;
+
+    /**
      * Do not re-render the repo video if the render is less than X seconds old. Default is 200s short of a day
      *
      * @param string $filePath
      * @param int $secondsAgo
      * @return bool
      */
-    public function doesNewRenderExist(string $filePath , int $secondsAgo = 7000): bool
+    public function doesNewRenderExist(string $filePath, int $secondsAgo = 7000): bool
     {
         echo "Does {$filePath} already exist? ";
 
@@ -84,14 +89,22 @@ class Gource
         }
 
         if ($gource === null) {
-            $gource = "--key --path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' \
-            --start-date '{$this->getStartDate()}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} \
-            --default-user-image '{$this->basePath}/avatars/Default.jpg' --background 000000 --output-ppm-stream - ";
+            $gource = "\
+                --key {$this->key} \
+                --path '{$this->basePath}/repos/{$this->slug}/' \
+                --user-image-dir '{$this->basePath}/avatars/' \
+                --start-date '{$this->getStartDate()}' \
+                --viewport '{$this->resolution}' \
+                --output-framerate {$this->frameRate} \
+                --default-user-image '{$this->basePath}/avatars/Default.jpg' \
+                --background 000000 \
+                --max-user-speed  500 \
+                --output-ppm-stream - ";
         }
 
         if ($ffmpeg === null) {
             $ffmpeg = "-y -r {$this->frameRate} -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast \
-            -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 {$this->basePath}/renders/{$this->slug}.mp4 ";
+                -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 {$this->basePath}/renders/{$this->slug}.mp4 ";
         }
 
         $command = "xvfb-run {$xvfb}gource {$gource}| ffmpeg {$ffmpeg}2>> {$this->logDir}/auto-gourcer/gource.log";
@@ -107,7 +120,7 @@ class Gource
         \exec($command, $returnData, $errorCode);
 
         if ($errorCode !== 0) {
-            throw new \Exception('Clone/Fetch command failed with code ' . $errorCode);
+            throw new \Exception('Rendering command failed with code ' . $errorCode . '. Command was: ' . $command);
         }
 
         return true;
@@ -182,6 +195,17 @@ class Gource
         }
 
         $this->startDate = $param;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $param
+     * @return Gource
+     */
+    public function setKeyVisibility(bool $param): self
+    {
+        $this->key = $param;
 
         return $this;
     }
