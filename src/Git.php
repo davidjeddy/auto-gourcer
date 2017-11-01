@@ -105,7 +105,7 @@ class Git
             $branch = $this->checkoutLatestchanges($path);
         }
 
-        \exec ("cd {$path} && git checkout {$branch} " . $this->logOutput());
+        \exec("cd {$path} && git checkout {$branch} " . $this->logOutput());
 
         return $this;
     }
@@ -127,7 +127,8 @@ class Git
             throw new \Exception("While attempting to checkout repository at {$path}; no path was found.");
         }
 
-        \exec ('cd ' . $path . ' && for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\ $branch; done | sort -r', $responseData, $errorCode);
+        \exec('cd ' . $path . ' && for branch in `git branch -r | grep -v HEAD`;do echo -e \
+        `git show --format="%ci %cr" $branch | head -n 1` \\ $branch; done | sort -r', $responseData, $errorCode);
 
         $branch = $this->outputToBranchName($responseData);
 
@@ -138,25 +139,23 @@ class Git
      * @return string
      * @throws \Exception
      */
-    private function getRepoListFromBitBucket()
+    private function getRepoListFromBitBucket(): string
     {
-        $returnData = '';
-
         try {
             // the output of this if()... block should be a json string
             $bbr = new Repositories();
-            $bbr->setCredentials(new Basic ($this->user, $this->pass));
+            $bbr->setCredentials(new Basic($this->user, $this->pass));
             $returnData = $bbr->get()->getContent();
 
             if (empty($returnData)) {
-                throw new \Exception('No valid response from ' . $this->host . '. Most likely cause is invalid credentials.');
+                throw new \Exception('No valid response from ' . $this->host . '. \
+                Most likely cause is invalid credentials.');
             }
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
 
         return $returnData;
-
     }
 
     /**
