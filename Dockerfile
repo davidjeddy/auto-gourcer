@@ -1,6 +1,6 @@
-MAINTAINER David J Eddy <me@davidjeddy.com>
-
 FROM ubuntu:16.04
+
+MAINTAINER David J Eddy <me@davidjeddy.com>
 
 RUN export TERM=xterm
 
@@ -52,7 +52,7 @@ RUN ./autogen.sh && ./configure --with-tinyxml && make && make install
 # php 7.1 installation
 RUN apt-get install -y \
     python-software-properties \
-    software-properties-common
+    software-properties-common \
     --no-install-recommends
 
 RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
@@ -62,7 +62,7 @@ RUN apt-get install -y \
     php7.1-dom \
     php7.1-cli \
     php7.1-json \
-    php7.1-common \clear
+    php7.1-common \
     php7.1-mbstring \
     php7.1-xml \
     php7.1-dom \
@@ -83,5 +83,4 @@ RUN curl https://getcomposer.org/composer.phar -O composer.phar
 RUN php composer.phar install --ansi --prefer-dist --profile -o -vvv
 
 # exec container
-#CMD ["php", "run.php"]
-CMD ["tail", "-f", "/dev/null"]
+CMD ["php", "run.php"]
