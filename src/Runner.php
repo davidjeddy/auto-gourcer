@@ -42,7 +42,7 @@ class Runner
         $ag->run();
 
         // Transcode for a smaller file size
-        $hb = new HandBrake();
-        $hb->transcodeAll('./renders');
+        $handBrake = new HandBrake();
+        $handBrake->transcodeAll('./renders');
     }
 }

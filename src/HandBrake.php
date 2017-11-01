@@ -26,11 +26,12 @@ class HandBrake
 
     /**
      * @return bool
+     * @throws \Exception
      */
     public function transcodeAll(): bool
     {
         $dirFiles = glob("$this->path/*.mp4");
-        foreach ($dirFiles as $key => $filePathName) {
+        foreach ($dirFiles as $filePathName) {
             // remove old file, rename new file to the old's value if transcoding is successful
             $this->transcode($filePathName);
         }
@@ -41,24 +42,23 @@ class HandBrake
     /**
      * @param string $source
      * @return bool
+     * @throws \Exception
      */
     public function transcode(string $source): bool
     {
-        try {
-            echo "Transcoding rendered $source video...";
+        echo "Transcoding rendered $source video...";
 
+        try {
             $command = "HandBrakeCLI -i $source -e x264 -q 15 -o {$source}_";
 
             \exec($command, $returnData, $errorCode);
             \unlink($source);
             \rename("{$source}_", "$source");
-
-            echo "completed.\n";
-
-            return true;
         } catch (\Exception $e) {
-            echo $e->getMessage() . "\n";
+            throw $e;
         }
+
+        echo "completed.\n";
 
         return true;
     }
