@@ -25,10 +25,10 @@ class HandBrake
     public $ext = 'mp4';
 
     /**
-     * @return bool
+     * @return HandBrake
      * @throws \Exception
      */
-    public function transcodeAll(): bool
+    public function transcodeAll(): self
     {
         $dirFiles = glob("$this->path/*.mp4");
         foreach ($dirFiles as $filePathName) {
@@ -36,15 +36,15 @@ class HandBrake
             $this->transcode($filePathName);
         }
 
-        return true;
+        return $this;
     }
 
     /**
      * @param string $source
-     * @return bool
+     * @return HandBrake
      * @throws \Exception
      */
-    public function transcode(string $source): bool
+    public function transcode(string $source): self
     {
         echo "Transcoding rendered $source video...";
 
@@ -60,6 +60,6 @@ class HandBrake
 
         echo "completed.\n";
 
-        return true;
+        return $this;
     }
 }

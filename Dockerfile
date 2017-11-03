@@ -63,8 +63,8 @@ RUN apt-get install -y \
         --no-install-recommends
 
 # Clean up time
-RUN apt remove -y libavcodec-ffmpeg-extra56
-RUN apt autoremove -y
+RUN apt-get remove -y libavcodec-ffmpeg-extra56
+RUN apt-get autoremove -y
 RUN apt-get clean -y
 RUN rm -rf /var/lib/apt/lists/
 

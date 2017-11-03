@@ -105,7 +105,14 @@ class Git
             $branch = $this->checkoutLatestchanges($path);
         }
 
-        \exec("cd {$path} && git checkout {$branch} " . $this->logOutput());
+        $command = "cd {$path} && git checkout {$branch} $this->logOutput()";
+
+        \exec($command, $responseData, $errorCode);
+
+        if ($errorCode !== 0) {
+            // catch none 0 command exits
+            throw new \Exception($responseData);
+        }
 
         return $this;
     }
@@ -152,7 +159,7 @@ class Git
                 Most likely cause is invalid credentials.');
             }
         } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+            throw $e;
         }
 
         return $returnData;
