@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+namespace dje\AutoGourcer\Tests;
 
 use \PHPUnit\Framework\TestCase;
 use \dje\AutoGourcer\AutoGourcer;
@@ -15,13 +16,13 @@ class AutoGourcerTest extends TestCase
     /**
      * @var null
      */
-    protected $ag = null;
+    protected $autoGourcer = null;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->ag = new AutoGourcer();
+        $this->autoGourcer = new AutoGourcer();
     }
 
     /**
@@ -35,7 +36,7 @@ class AutoGourcerTest extends TestCase
 
     public function testClassInstanceOfAfterSetRepoCountMethod()
     {
-        $this->ag->setRepoCount(1);
-        $this->assertInstanceOf(AutoGourcer::class, $this->ag);
+        $this->autoGourcer->setRepoCount(1);
+        $this->assertInstanceOf(AutoGourcer::class, $this->autoGourcer);
     }
 }

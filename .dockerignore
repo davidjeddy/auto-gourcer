@@ -1,1 +1,4 @@
-*/*.mp4
+renders/
+!renders/.gitignore
+repos/
+!repos/.gitignore

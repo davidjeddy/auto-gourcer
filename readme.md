@@ -2,7 +2,7 @@
 
 # What does this do?
 
-Using [Gource](http://gource.io) and [PHP](http://php.net ) this library reads your top active repositories and renders the history in a cool looking video.
+Reads your active repositories and renders the history in a cool looking video.
 
 [Gource Examples](https://github.com/acaudwell/Gource/wiki/Videos)
 
@@ -61,6 +61,12 @@ Currently only [BitBucket](https://bitbucket.com) is supported; others are plann
  - 0.5.0 Ignore common dependency directories: node_modules, vendor, bower, etc
  ...
  - 1.0.0 Public Release
+
+# Change Log
+
+## 0.2.5
+ - Drop support for native execution
+ - ADDED .env configuration system
 
 # Configure
 

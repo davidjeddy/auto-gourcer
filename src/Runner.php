@@ -1,24 +1,22 @@
 <?php
 declare(strict_types=1);
+namespace dje\AutoGourcer;
 
-include_once './vendor/autoload.php';
-
-use \dje\AutoGourcer\AutoGourcer;
-use \dje\AutoGourcer\Git;
-use \dje\AutoGourcer\Gource;
+use Dotenv\Dotenv;
 
 /**
- *
+ * Class Runner
+ * @package dje\AutoGourcer
  */
-class Run
+class Runner
 {
     /**
-     * @throws Exception
+     * @throws \Exception
      */
-    public static function program()
+    public function program()
     {
         // load dotenv values. If this is already done in your project, you will not need to do this again.
-        $dotenv = new Dotenv\Dotenv(__DIR__);
+        $dotenv = new Dotenv(__DIR__ . '/../');
         $dotenv->load();
 
         // Init. Git class.
@@ -31,17 +29,20 @@ class Run
 
         // Init. the Gource class with default properties
         $gourceClass = new Gource();
-            $gourceClass->setResolution('1920x1080');
+            $gourceClass->setResolution('1920x1080')
+                ->setStartDate('2017-10-01');
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
         $ag->setGit($gitClass)
-            ->setRepoCount(10)
+            ->setRepoCount(5)
             ->setGource($gourceClass);
 
         // Finally run the process.
         $ag->run();
+
+        // Transcode for a smaller file size
+        $handBrake = new HandBrake();
+        $handBrake->transcodeAll('./renders');
     }
 }
-
-Run::program();

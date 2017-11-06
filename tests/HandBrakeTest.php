@@ -1,14 +1,15 @@
 <?php
 declare(strict_types=1);
+namespace dje\AutoGourcer\Tests;
 
 use \PHPUnit\Framework\TestCase;
 
 /**
- * Class AutoGourcerTestTest
+ * Class HandBrakeTest
  *
  * @package tests
  */
-class GourceTest extends TestCase
+class HandBrakeTest extends TestCase
 {
     public function testTrueIsTrue()
     {
