@@ -67,7 +67,6 @@ Currently only [BitBucket](https://bitbucket.com) is supported; others are plann
  1 Copy `.env.dist` as `.env`
  2 Edit `.env` values as appropriate
 
-
 # Usage
 
 One single command to execute the rendering process: `./run.sh`
