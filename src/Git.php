@@ -105,7 +105,7 @@ class Git
             $branch = $this->checkoutLatestchanges($path);
         }
 
-        $command = "cd {$path} && git checkout {$branch} $this->logOutput()";
+        $command = "cd {$path} && git checkout {$branch} " . $this->logOutput();
 
         \exec($command, $responseData, $errorCode);
 
