@@ -7,4 +7,4 @@ docker run \
     -v $PWD/repos:/auto-gourcer/repos \
     -v $PWD/renders:/auto-gourcer/renders \
     --name=auto-gourcer \
-    auto-gourcer
+    davidjeddy/auto-gourcer
