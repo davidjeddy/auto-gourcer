@@ -67,7 +67,7 @@ class Git
      * @param string $slug
      * @return Git
      */
-    public function clone(string $slug): self
+    public function getRepoData(string $slug): self
     {
         $uri = $this->buildHostURL();
 
