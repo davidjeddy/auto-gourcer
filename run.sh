@@ -6,5 +6,6 @@ docker pull davidjeddy/auto-gourcer
 docker run \
     -v $PWD/repos:/auto-gourcer/repos \
     -v $PWD/renders:/auto-gourcer/renders \
-    --name=auto-gourcer \
-    davidjeddy/auto-gourcer
+    --name=auto_gourcer \
+    --rm \
+    'davidjeddy/auto-gourcer'

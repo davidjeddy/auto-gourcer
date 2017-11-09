@@ -14,7 +14,7 @@ RUN apt-get install -y \
         --no-install-recommends
 
 # Install Gource dependencies
-RUN add-apt-repository ppa:no1wantdthisname/ppa -y
+RUN add-apt-repository -y ppa:no1wantdthisname/ppa
 RUN apt-get update -y --fix-missing
 RUN apt-get install -y \
         autoconf \
@@ -48,7 +48,7 @@ RUN apt-get install -y \
         --no-install-recommends
 
 # php 7.1 installation
-RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
+RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 RUN apt-get update -y --fix-missing
 RUN apt-get install -y \
         php7.1 \
