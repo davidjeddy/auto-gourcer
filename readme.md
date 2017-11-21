@@ -35,16 +35,9 @@ Reads your active repositories and renders the history in a cool looking video.
 
 # Requirements
 
-## As a container service (recommended):
-## General Requirements
-
  - Shell / Terminal access: execute commands
- - [Docker](https://www.docker.com): library execution in isolation
- - [Git](https://git-scm.com/): library installation
-
-## As an included PHP library package (NOT recommended):
-
- * Due to the high number of system level services, non container operation will not be documented
+ - [Docker](https://www.docker.com): isolated process execution
+ - [Git](https://git-scm.com/): package installation
 
 # SCM host Integrations
 
@@ -67,40 +60,17 @@ Currently only [BitBucket](https://bitbucket.com) is supported; others are plann
 ## 0.2.5
  - Drop support for native execution
  - ADDED .env configuration system
+ - Added Handbrake 2nd path transcoding
 
 # Configure
 
-If using a creditials system like [dotenv](https://github.com/vlucas/phpdotenv), configure creditials:
-
-    copy .env.dist .env
-
-Edit values as appropriate
+ 1 Copy `.env.dist` as `.env`
+ 2 Edit `.env` values as appropriate
 
 # Usage
 
-### Dot ENV
-
-Populate `.env` with appropriate values
-
-    docker-compose up --build -d
-
-Wait for the build process to complete
-
-Install dependencies via composer [composer](https://getcomposer.org)
-
-    docker exec AutoGourcer php composer.phar install --ansi --profile --prefer-dist --no-dev -o -vvv
-
-Run the rendering process
-
-    docker exec AutoGourcer php ./dotenv.php
-
-Wait until the render process/s complete
-
-Collect Bacon in `./renders` directory
+One single command to execute the rendering process: `./run.sh`
 
 # Testing
 
-To execute the unit test suite run the following commands:
-
-    docker exec AutoGourcer php composer.phar install --ansi --profile --prefer-source -o -vvv
-    docker exec -it AutoGourcer ./vendor/bin/phpunit
+Execute the following: `docker exec -it auto-gourcer ./vendor/bin/phpunit`

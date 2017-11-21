@@ -47,7 +47,7 @@ class AutoGourcer
             $repoSlug = $this->gitClass->repoData[$i]['slug'];
 
             // Git commands
-            $this->gitClass->clone($repoSlug)->checkout("{$this->basePath}/repos/{$repoSlug}");
+            $this->gitClass->getRepoData($repoSlug)->checkout("{$this->basePath}/repos/{$repoSlug}");
 
             // Gourcer commands
             $this->gourceClass->setSlug($repoSlug)->render("{$this->basePath}/renders/{$repoSlug}.mp4");
