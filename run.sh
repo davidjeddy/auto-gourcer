@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export PWD=`$(pwd)`
+export PWD=$(pwd)
 
 # docker pull davidjeddy/auto-gourcer
 
@@ -10,4 +10,4 @@ docker run \
     --rm \
     'davidjeddy/auto-gourcer'
 
-docker stop --rm  auto_gourcer
+docker stop --rm auto_gourcer

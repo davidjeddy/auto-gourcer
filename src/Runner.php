@@ -30,7 +30,7 @@ class Runner
         // Init. the Gource class with default properties
         $gourceClass = new Gource();
             $gourceClass->setResolution('1920x1080')
-                ->setStartDate(date('Y-m-d', 'first day of last month'));
+                ->setStartDate('2017-11-15');
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
