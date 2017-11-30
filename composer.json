@@ -9,7 +9,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^6.2",
-        "php-composter/php-composter-phpcs-psr2": "dev-master"
+        "php-composter/php-composter-phpcs-psr2": "dev-master",
+        "phpstan/phpstan": "^0.9.0@dev"
     },
     "license": "MIT",
     "authors": [

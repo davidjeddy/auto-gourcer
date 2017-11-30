@@ -1,4 +1,23 @@
+# files
+.DS_Store
+.dockerignore
+.env.dist
+.gitignore
+.travis.yml
+
+docker-compose.override.yml.dist
+docker-compose.yml
+Dockerfile
+license
+readme.md
+
+# dirs
+.idea/
+docker/
+docs/
 renders/
-!renders/.gitignore
 repos/
+
+# overrides
+!renders/.gitignore
 !repos/.gitignore

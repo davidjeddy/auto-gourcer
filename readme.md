@@ -62,6 +62,10 @@ Currently only [BitBucket](https://bitbucket.com) is supported; others are plann
  - ADDED .env configuration system
  - Added Handbrake 2nd path transcoding
 
+## 0.2.6
+ - ADDED PHPStan as a `require-dev` dependency, UPDATED README with usage
+ - UPDATED ./.dockerignore
+
 # Configure
 
  1 Copy `.env.dist` as `.env`
@@ -73,4 +77,6 @@ One single command to execute the rendering process: `./run.sh`
 
 # Testing
 
-Execute the following: `docker exec -it auto-gourcer ./vendor/bin/phpunit`
+Execute the following:
+`docker exec -it auto-gourcer ./vendor/bin/phpunit`
+`docker exec -it auto-gourcer ./vendor/bin/phpstan analyse ./src tests`
