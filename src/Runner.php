@@ -28,9 +28,11 @@ class Runner
             ->setOrg(getenv('organization'));
 
         // Init. the Gource class with default properties
+        // @source https://stackoverflow.com/questions/9735604/the-best-way-to-get-the-first-and-last-day-of-last-month
+        $month = new DateTime("first day of last month");
         $gourceClass = new Gource();
             $gourceClass->setResolution('1920x1080')
-                ->setStartDate('2017-11-15');
+                ->setStartDate($month->format('Y-m-d'));
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
