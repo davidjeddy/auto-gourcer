@@ -152,6 +152,17 @@ class Gource
     }
 
     /**
+     * @param bool $param
+     * @return Gource
+     */
+    public function setDryRun($param = false): self
+    {
+        $this->dryRun = $param;
+
+        return $this;
+    }
+
+    /**
      * @param int $param
      * @return Gource
      */
