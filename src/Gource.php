@@ -33,7 +33,7 @@ class Gource
     /**
      * @var string
      */
-    private $resolution = '640x480';
+    private $resolution = '1920x1080';
 
     /**
      * @var string
