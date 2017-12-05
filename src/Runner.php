@@ -31,8 +31,9 @@ class Runner
         // @source https://stackoverflow.com/questions/9735604/the-best-way-to-get-the-first-and-last-day-of-last-month
         $month = new \DateTime("first day of last month");
         $gourceClass = new Gource();
-            $gourceClass->setResolution('1920x1080')
-                ->setStartDate($month->format('Y-m-d'));
+            $gourceClass->setResolution((getenv('screen_res') ?: '1920x1080'))
+                ->setStartDate((getenv('start_date') ?: $month->format('Y-m-d')))
+                ->setDryRun(true);
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
