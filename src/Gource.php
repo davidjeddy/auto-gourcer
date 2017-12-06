@@ -83,9 +83,18 @@ class Gource
         }
 
         if ($gource === null) {
-            $gource = "--path '{$this->basePath}/repos/{$this->slug}/' --user-image-dir '{$this->basePath}/avatars/' \
-            --start-date '{$this->startDate}' --viewport '{$this->resolution}' --output-framerate {$this->frameRate} \
-            --default-user-image '{$this->basePath}/avatars/Default.jpg' --background 000000 --output-ppm-stream - ";
+            $gource = "--path '{$this->basePath}/repos/{$this->slug}/' \
+            --start-date '{$this->startDate}' \
+            --viewport '{$this->resolution}' \
+            --output-framerate {$this->frameRate} \
+            --background 000000 \
+            --output-ppm-stream - ";
+        }
+
+        if (file_exists("{$this->basePath}/avatars/Default.jpg")) {
+            $gource .= "\
+            --default-user-image '{$this->basePath}/avatars/Default.jpg' \
+            --user-image-dir '{$this->basePath}/avatars/'";
         }
 
         if ($ffmpeg === null) {
