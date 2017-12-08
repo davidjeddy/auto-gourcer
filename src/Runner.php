@@ -31,14 +31,13 @@ class Runner
         // @source https://stackoverflow.com/questions/9735604/the-best-way-to-get-the-first-and-last-day-of-last-month
         $month = new \DateTime("first day of last month");
         $gourceClass = new Gource();
-            $gourceClass->setResolution((getenv('screen_res') ?: '1920x1080'))
-                ->setStartDate((getenv('start_date') ?: $month->format('Y-m-d')))
-                ->setDryRun(true);
+        #$gourceClass->setResolution((getenv('screen_res') ?: '1920x1080'))
+        $gourceClass->setStartDate((getenv('start_date') ?: $month->format('Y-m-d')));
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
         $ag->setGit($gitClass)
-            ->setRepoCount(1)
+            ->setRepoCount(((int)getenv('repo_count') ?: 1))
             ->setGource($gourceClass);
 
         // Finally run the process.

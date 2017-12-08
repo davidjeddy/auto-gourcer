@@ -75,39 +75,52 @@ class Gource
      * @param string|null $xvfb
      * @param string|null $gource
      * @param string|null $ffmpeg
+     * @param bool $logging
      * @return bool
-     * @throws \Exception
      */
-    public function render(string $outputFilePath, string $xvfb = null, string $gource = null, string $ffmpeg = null)
-    {
+    public function render(
+        string $outputFilePath,
+        string $xvfb = null,
+        string $gource = null,
+        string $ffmpeg = null,
+        bool $logging = true
+    ) {
         if ($this->doesNewRenderExist($outputFilePath)) {
             return true;
         }
 
         if ($xvfb === null) {
-            $xvfb = "-a -s '-screen 0 {$this->resolution}x24' ";
+            $xvfb = "xvfb-run -a -s '-screen 0 {$this->resolution}x24' ";
         }
 
         if ($gource === null) {
-            $gource = "\
-                --key {$this->key} \
-                --path '{$this->basePath}/repos/{$this->slug}/' \
-                --user-image-dir '{$this->basePath}/avatars/' \
-                --start-date '{$this->getStartDate()}' \
-                --viewport '{$this->resolution}' \
-                --output-framerate {$this->frameRate} \
-                --default-user-image '{$this->basePath}/avatars/Default.jpg' \
-                --background 000000 \
-                --max-user-speed  500 \
-                --output-ppm-stream - ";
+            # can not use window resizing arguments: https://github.com/acaudwell/Gource/issues/137
+            # --viewport '{$this->resolution}' \
+            #             --fullscreen \
+            $gource = "gource \
+            --background 000000 \
+            --path '{$this->basePath}/repos/{$this->slug}/' \
+            --output-framerate {$this->frameRate} \
+            --output-ppm-stream -\
+            --start-date '{$this->startDate}'";
+        }
+
+        if (file_exists("{$this->basePath}/avatars/Default.jpg")) {
+            $gource .= "\
+            --default-user-image '{$this->basePath}/avatars/Default.jpg' \
+            --user-image-dir '{$this->basePath}/avatars/'";
         }
 
         if ($ffmpeg === null) {
-            $ffmpeg = "-y -r {$this->frameRate} -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast \
-                -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 {$this->basePath}/renders/{$this->slug}.mp4 ";
+            $ffmpeg = "ffmpeg -y -r {$this->frameRate} -f image2pipe -vcodec ppm -i - -vcodec libx264 \
+            -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 {$this->basePath}/renders/{$this->slug}.mp4";
         }
 
-        $command = "xvfb-run {$xvfb}gource {$gource}| ffmpeg {$ffmpeg}2>> {$this->logDir}/auto-gourcer/gource.log";
+        if ($logging === true) {
+            $logging = "2>> {$this->logDir}/auto-gourcer/gource.log";
+        }
+
+        $command = "{$xvfb} {$gource} | {$ffmpeg} {$logging}";
 
         echo ("Running rendering command `{$command}`.\n");
 
@@ -119,8 +132,10 @@ class Gource
         echo "Executing rendering...\n";
         \exec($command, $returnData, $errorCode);
 
-        if ($errorCode !== 0) {
-            throw new \Exception('Rendering command failed with code ' . $errorCode . '. Command was: ' . $command);
+        // remove file if rendering fails
+        if ($errorCode !== 0 && file_exists("{$this->basePath}/renders/{$this->slug}.mp4")) {
+            \exec("rm {$this->basePath}/renders/{$this->slug}.mp4");
+            return false;
         }
 
         return true;
