@@ -11,7 +11,7 @@ class AutoGourcer
     /**
      * @var string
      */
-    protected $basePath = '/auto-gourcer';
+    protected $basePath = '.';
 
     /**
      * @var int
@@ -73,7 +73,7 @@ class AutoGourcer
      * @param int $param
      * @return AutoGourcer
      */
-    public function setRepoCount(int $param): self
+    public function setRepoCount(int $param = 1): self
     {
         $this->repoCount = $param;
 

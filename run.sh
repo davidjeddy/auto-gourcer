@@ -10,4 +10,4 @@ docker run \
     --rm \
     'davidjeddy/auto-gourcer'
 
-docker stop --rm auto_gourcer
+docker stop AutoGourcer

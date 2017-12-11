@@ -29,16 +29,12 @@ class Runner
 
         // Init. the Gource class with default properties
         // @source https://stackoverflow.com/questions/9735604/the-best-way-to-get-the-first-and-last-day-of-last-month
-        $month = new \DateTime("first day of last month");
         $gourceClass = new Gource();
-        #$gourceClass->setResolution((getenv('screen_res') ?: '1920x1080'))
-        $gourceClass->setStartDate((getenv('start_date') ?: $month->format('Y-m-d')));
+        $gourceClass->dryRun(true);
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
-        $ag->setGit($gitClass)
-            ->setRepoCount(((int)getenv('repo_count') ?: 1))
-            ->setGource($gourceClass);
+        $ag->setGit($gitClass)->setGource($gourceClass);
 
         // Finally run the process.
         $ag->run();

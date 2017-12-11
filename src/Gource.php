@@ -28,12 +28,12 @@ class Gource
     /**
      * @var string
      */
-    private $basePath = '/auto-gourcer';
+    private $basePath = '.';
 
     /**
      * @var string
      */
-    private $resolution = '640x480';
+    private $resolution = '1920x1080';
 
     /**
      * @var string
@@ -90,19 +90,17 @@ class Gource
         }
 
         if ($xvfb === null) {
-            $xvfb = "xvfb-run -a -s '-screen 0 {$this->resolution}x24' ";
+            $xvfb = "xvfb-run -a -s '-screen 0 {$this->resolution}x24'";
         }
 
         if ($gource === null) {
-            # can not use window resizing arguments: https://github.com/acaudwell/Gource/issues/137
-            # --viewport '{$this->resolution}' \
-            #             --fullscreen \
             $gource = "gource \
             --background 000000 \
             --path '{$this->basePath}/repos/{$this->slug}/' \
             --output-framerate {$this->frameRate} \
-            --output-ppm-stream -\
-            --start-date '{$this->startDate}'";
+            --output-ppm-stream - \
+            --start-date '($this->startDate !== null ? $this->startDate : $this->getStartDate())' \
+            --viewport '{$this->resolution}'";
         }
 
         if (file_exists("{$this->basePath}/avatars/Default.jpg")) {
@@ -120,6 +118,7 @@ class Gource
             $logging = "2>> {$this->logDir}/auto-gourcer/gource.log";
         }
 
+        // concat and execute the actual command
         $command = "{$xvfb} {$gource} | {$ffmpeg} {$logging}";
 
         echo ("Running rendering command `{$command}`.\n");
