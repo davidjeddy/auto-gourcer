@@ -7,3 +7,5 @@ services:
     container_name: AutoGourcer
     volumes:
       - ./:/auto-gourcer
+    expose:
+      - 5566

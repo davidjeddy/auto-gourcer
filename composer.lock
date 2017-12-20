@@ -1701,12 +1701,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1b2f933d5775f9237369deaa2d2bfbf9d652be4c"
+                "reference": "6224cb834a6b0b432741393b0ce313517da3f47e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1b2f933d5775f9237369deaa2d2bfbf9d652be4c",
-                "reference": "1b2f933d5775f9237369deaa2d2bfbf9d652be4c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6224cb834a6b0b432741393b0ce313517da3f47e",
+                "reference": "6224cb834a6b0b432741393b0ce313517da3f47e",
                 "shasum": ""
             },
             "require": {
@@ -1777,11 +1777,11 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-10T08:06:19+00:00"
+            "time": "2017-12-12T05:55:06+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "dev-master",
+            "version": "5.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
@@ -2481,12 +2481,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "7ac027409e2e660417df5c3fc63c7fb68a6650fc"
+                "reference": "ef32e56e171450cd48e4d8f117a6e744d77707e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/7ac027409e2e660417df5c3fc63c7fb68a6650fc",
-                "reference": "7ac027409e2e660417df5c3fc63c7fb68a6650fc",
+                "url": "https://api.github.com/repos/symfony/console/zipball/ef32e56e171450cd48e4d8f117a6e744d77707e1",
+                "reference": "ef32e56e171450cd48e4d8f117a6e744d77707e1",
                 "shasum": ""
             },
             "require": {
@@ -2541,7 +2541,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-12-08T15:58:51+00:00"
+            "time": "2017-12-12T08:59:50+00:00"
         },
         {
             "name": "symfony/finder",

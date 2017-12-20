@@ -21,6 +21,7 @@ RUN apt-get install -y \
         automake \
         build-essential \
         curl \
+        dbus \
         pkg-config \
         gcc \
         git \
@@ -79,8 +80,8 @@ WORKDIR /auto-gourcer
 
 # get composer
 RUN curl https://getcomposer.org/composer.phar -o composer.phar
-RUN php composer.phar install --ansi --prefer-dist --profile -o -vvv
+RUN php composer.phar update --ansi --prefer-dist --profile -o -vvv
 
 # exec container
-#CMD ["tail", "-f", "/dev/null"]
-CMD ["php", "run.php"]
+CMD ["tail", "-f", "/dev/null"]
+#CMD ["php", "run.php"]

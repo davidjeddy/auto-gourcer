@@ -30,7 +30,7 @@ class Runner
         // Init. the Gource class with default properties
         // @source https://stackoverflow.com/questions/9735604/the-best-way-to-get-the-first-and-last-day-of-last-month
         $gourceClass = new Gource();
-        $gourceClass->dryRun(true);
+        $gourceClass->dryRun = true;
 
         // Init. AutoGourcer with default settings.
         $ag = new AutoGourcer();
