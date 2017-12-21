@@ -49,9 +49,9 @@ ls -a
 shopt -s dotglob
 shopt -s nullglob
 array=(*/)
-for dir in "${array[@]}"; doecho "$dir"; done
+for dir in "${array[@]}"; do echo "$dir"; done
 for dir in */; do
-    echo "$dir";
+    echo "Starting rendering of ${dir} project.";
     REPO=./${dir}
     gource \
         --auto-skip-seconds 1 \
@@ -64,8 +64,12 @@ for dir in */; do
         --start-date '2017-01-01' \
         --seconds-per-day 2.4 \
         --stop-date '2017-12-31' \
-        --title ${REPO} \
+        --title ${dir} \
         --user-image-dir './../avatars/' \
         --viewport '1920x1080' | \
-    ffmpeg -y -r 30 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 ./${REPO}.mp4
+    ffmpeg -y -r 30 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 ./${dir}.mp4
+    HandBrakeCLI -i ./${dir}.mp4 -e x264 -q 15 -o ./_${dir}.mp4
+    rm ${dir}.mp4
+    mv _${dir}.mp4 ${dir}.mp4
+    echo "...completed.\n";
 done
