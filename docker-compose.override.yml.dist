@@ -1,0 +1,14 @@
+version: '2'
+services:
+  gource:
+    build:
+      context: ./docker/dev/php
+      dockerfile: Dockerfile
+    container_name: AutoGourcer
+    environment:
+        TERM: xterm
+        XDEBUG_CONFIG: "remote_host=10.254.254.254"
+        PHP_IDE_CONFIG: "serverName="
+    tty: true
+    volumes:
+      - ./:/auto-gourcer

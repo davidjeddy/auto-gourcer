@@ -1,0 +1,8 @@
+# directories
+/logs/
+/repos/
+/vendor/
+
+# single files
+docker-compose.override.yml
+.env
